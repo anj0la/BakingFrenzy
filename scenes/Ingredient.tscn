@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://6gofu3xm83fx"]
+
+[ext_resource type="Script" path="res://scripts/Ingredient.gd" id="1_s48xm"]
+[ext_resource type="Texture2D" uid="uid://uw01w40pmj3y" path="res://art/rect_purple.png" id="1_uyc37"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5q3xf"]
+size = Vector2(76, 74)
+
+[node name="Ingredient" type="CharacterBody2D"]
+position = Vector2(500, -50)
+script = ExtResource("1_s48xm")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_uyc37")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5q3xf")

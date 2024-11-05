@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends CharacterBody2D
 	
 """
 An ingredient represents an object a player can collide with.
@@ -10,6 +10,16 @@ we simply need to get the name and change the default image texture of the Sprit
 """
 
 var ingredient_names = ["purple", "pink", "blue"] # Currently, only one ingredient name for now
+const GRAVITY = 200.0 # in pixels 
+@export var speed = 6.0
+
+func _physics_process(delta):
+	move_and_collide(Vector2(0, speed))
+	
+	#velocity.y += delta * GRAVITY
+
+	#var motion = velocity * delta
+	#move_and_collide(motion)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
