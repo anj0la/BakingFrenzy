@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://ohh7bftd3kvo"]
+
+[ext_resource type="Script" path="res://scripts/Game.gd" id="1_6itma"]
+[ext_resource type="PackedScene" uid="uid://6gofu3xm83fx" path="res://scenes/Ingredient.tscn" id="2_8ut5c"]
+[ext_resource type="PackedScene" uid="uid://du048arfkmk7" path="res://scenes/Player.tscn" id="3_5vw5y"]
+
+[sub_resource type="Curve2D" id="Curve2D_gi6cn"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1920, 0)
+}
+point_count = 2
+
+[node name="Game" type="Node"]
+script = ExtResource("1_6itma")
+ingredient_scene = ExtResource("2_8ut5c")
+
+[node name="Player" parent="." instance=ExtResource("3_5vw5y")]
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(100, 960)
+
+[node name="IngredientTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="IngredientPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_gi6cn")
+
+[node name="IngredientSpawnLocation" type="PathFollow2D" parent="IngredientPath"]
+
+[node name="StartTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="IngredientTimer" to="." method="_on_ingredient_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
