@@ -29,6 +29,6 @@ func _on_start_timer_timeout() -> void:
 	$IngredientTimer.start()
 	print('Started ingredient timer.')
 
-
-func _on_player_hit(body) -> void:
-	print(body)
+func _on_player_hit(body: Node2D) -> void:
+	# Remove the collided ingredient from the scene.
+	body.queue_free()
