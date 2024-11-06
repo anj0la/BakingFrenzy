@@ -31,4 +31,5 @@ func _on_start_timer_timeout() -> void:
 
 func _on_player_hit(body: Node2D) -> void:
 	# Remove the collided ingredient from the scene.
-	body.queue_free()
+	if body.name == "Ingredient":
+		body.queue_free()
