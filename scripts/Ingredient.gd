@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends StaticBody2D
 
 """
 An ingredient represents an object a player can collide with.
@@ -14,9 +14,7 @@ var ingredient_names = ["purple", "pink", "blue"] # Currently, only one ingredie
 @export var speed = 6.0
 
 func _physics_process(_delta):
-	var collision = move_and_collide(Vector2(0, speed))
-	if collision:
-		pass
+	move_and_collide(Vector2(0, speed))
 		# print("I collided with ", collision.get_collider().name)
 		#await get_tree().create_timer(0.2).timeout
 		#queue_free()

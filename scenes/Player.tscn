@@ -23,10 +23,11 @@ radius = 55.0
 height = 136.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sq8fm"]
-radius = 58.0
-height = 154.0
+radius = 62.6667
+height = 150.667
 
 [node name="Player" type="CharacterBody2D"]
+scale = Vector2(1.5, 1.5)
 collision_layer = 4
 collision_mask = 11
 script = ExtResource("1_04t02")
