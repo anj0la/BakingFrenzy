@@ -24,8 +24,14 @@ func _ready() -> void:
 	var rand_index = randi() % ingredient_names.size()
 	$Sprite2D.texture = _get_texture(rand_index)
 	
-# Gets an ingredient image texture based on its index
+# Gets an ingredient image texture based on its index.
 func _get_texture(index: int) -> Texture2D:
 	var image_path = "res://art/rect_" + ingredient_names[index] + ".png"
 	var texture = load(image_path)
 	return texture
+
+# Sets the ingredient's sprite image based on the passed name.
+func set_texture(ingredient_name: String):
+	var image_path = "res://art/rect_" + ingredient_name + ".png" 	# Assumes that name is in ingredient_names.
+	$Sprite2D.texture = load(image_path)
+	
