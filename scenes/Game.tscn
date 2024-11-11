@@ -1,9 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://ohh7bftd3kvo"]
+[gd_scene load_steps=8 format=3 uid="uid://ohh7bftd3kvo"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_6itma"]
 [ext_resource type="PackedScene" uid="uid://6gofu3xm83fx" path="res://scenes/Ingredient.tscn" id="2_8ut5c"]
 [ext_resource type="PackedScene" uid="uid://du048arfkmk7" path="res://scenes/Player.tscn" id="3_5vw5y"]
+[ext_resource type="PackedScene" uid="uid://bgdmk5wd6i8uo" path="res://scenes/Recipe.tscn" id="3_eot5w"]
 [ext_resource type="Texture2D" uid="uid://cl3afyaiaw7yt" path="res://art/game_background_outline.png" id="3_k6h8b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xyenl"]
+size = Vector2(1921, 202)
 
 [sub_resource type="Curve2D" id="Curve2D_gi6cn"]
 _data = {
@@ -19,7 +23,23 @@ ingredient_scene = ExtResource("2_8ut5c")
 position = Vector2(960, 540)
 texture = ExtResource("3_k6h8b")
 
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(-8, 0)
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Floor"]
+offset_left = 8.0
+offset_top = 880.0
+offset_right = 1928.0
+offset_bottom = 1080.0
+color = Color(0.247059, 1, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(967.5, 981)
+shape = SubResource("RectangleShape2D_xyenl")
+
 [node name="Player" parent="." instance=ExtResource("3_5vw5y")]
+collision_mask = 3
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(300, 700)
@@ -35,6 +55,8 @@ position = Vector2(256, 0)
 
 [node name="StartTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Recipe" parent="." instance=ExtResource("3_eot5w")]
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="IngredientTimer" to="." method="_on_ingredient_timer_timeout"]

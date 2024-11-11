@@ -22,9 +22,8 @@ animations = [{
 radius = 55.0
 height = 136.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sq8fm"]
-radius = 62.6667
-height = 150.667
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3nflb"]
+size = Vector2(105.333, 35.3333)
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(1.5, 1.5)
@@ -46,6 +45,7 @@ collision_layer = 4
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CapsuleShape2D_sq8fm")
+position = Vector2(-0.666667, 11)
+shape = SubResource("RectangleShape2D_3nflb")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

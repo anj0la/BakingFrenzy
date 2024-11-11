@@ -9,19 +9,18 @@ At the beginning (before ready), we'll need to have a list of ingredient names. 
 we simply need to get the name and change the default image texture of the Sprite2D.
 """
 
-var ingredient_names = ["purple", "pink", "blue"] # Currently, only one ingredient name for now
+var ingredient_names = ["blue", "red", "white", "green", "yellow"]
 
-@export var speed = 6.0
+@export var speed: int = 6.0
+@export var ingredient_name: String
 
 func _physics_process(_delta):
 	move_and_collide(Vector2(0, speed))
-		# print("I collided with ", collision.get_collider().name)
-		#await get_tree().create_timer(0.2).timeout
-		#queue_free()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var rand_index = randi() % ingredient_names.size()
+	ingredient_name = ingredient_names[rand_index] 
 	$Sprite2D.texture = _get_texture(rand_index)
 	
 # Gets an ingredient image texture based on its index.
@@ -34,4 +33,8 @@ func _get_texture(index: int) -> Texture2D:
 func set_texture(ingredient_name: String):
 	var image_path = "res://art/rect_" + ingredient_name + ".png" 	# Assumes that name is in ingredient_names.
 	$Sprite2D.texture = load(image_path)
-	
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	print(body.name)
+	if body.name == 'Floor':
+		queue_free()
