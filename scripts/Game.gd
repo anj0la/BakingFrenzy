@@ -45,8 +45,6 @@ func _on_player_hit(body: Node2D) -> void:
 			else:
 				print('Uh oh. Collected the wrong ingredient!')
 				$Recipe.mark_incorrect_ingredient()
-				
-			body.queue_free()
 			
-		# TODO: Somehow set it so that the ingredients fall behind the player?
-		# We can see that the collision is ignore
+			# Remove the ingredient from the scene
+			body.queue_free()

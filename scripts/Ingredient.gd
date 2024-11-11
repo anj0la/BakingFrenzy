@@ -15,7 +15,9 @@ var ingredient_names = ["blue", "red", "white", "green", "yellow"]
 @export var ingredient_name: String
 
 func _physics_process(_delta):
-	move_and_collide(Vector2(0, speed))
+	var collision = move_and_collide(Vector2(0, speed))
+	if collision and collision.get_collider().name == 'Floor':
+		queue_free()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -33,8 +35,3 @@ func _get_texture(index: int) -> Texture2D:
 func set_texture(ingredient_name: String):
 	var image_path = "res://art/rect_" + ingredient_name + ".png" 	# Assumes that name is in ingredient_names.
 	$Sprite2D.texture = load(image_path)
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	print(body.name)
-	if body.name == 'Floor':
-		queue_free()
