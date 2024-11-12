@@ -9,6 +9,7 @@ func _ready():
 	$Recipe.initialize_recipe()
 	print($Recipe.selected_recipe)
 
+# Creates a new ingredient every time the timer is completed.
 func _on_ingredient_timer_timeout() -> void:
 	# Create a new instance of the Ingredient scene.
 	var ingredient = ingredient_scene.instantiate()
@@ -26,17 +27,19 @@ func _on_ingredient_timer_timeout() -> void:
 	
 	# Spawn the ingredient by adding it to the Game scene.
 	add_child(ingredient)
-
+	
+# Starts all necessary timers for the game.
 func _on_start_timer_timeout() -> void:
 	$IngredientTimer.start()
-	print('Started ingredient timer.')
+	# print('Started ingredient timer.')
 
-# The problem arises when the ingredient hits the ground. need to add collision to ingredient to be destroyed when it touches the floor
-
+# Called every time an object enters the player's body.
 func _on_player_hit(body: Node2D) -> void:
-	# Check if collided ingredient is a part of the selected recipe.
-	if body.name == "Ingredient":
-		print(body.ingredient_name)
+	# Check if active collided ingredient is a part of the selected recipe.
+	if body.is_in_group("active_ingredient"):
+		# print(body.ingredient_name)
+		print('Recipe completed: ', $Recipe.completed)
+		print('Incorrect ingredient: ', $Recipe.incorrect_ingredient)
 		# Ignore collision detection if the recipe has been completed or the player has collected the wrong ingredient.
 		if not $Recipe.completed and not $Recipe.incorrect_ingredient:
 			if $Recipe.check_if_in_recipe(body.ingredient_name):

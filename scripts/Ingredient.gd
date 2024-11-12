@@ -1,29 +1,21 @@
 extends StaticBody2D
 
-"""
-An ingredient represents an object a player can collide with.
-
-If the player collides with the ingreident, we simply output in the terminal "Collided!" for now.
-
-At the beginning (before ready), we'll need to have a list of ingredient names. Ingredients appear at random, so
-we simply need to get the name and change the default image texture of the Sprite2D.
-"""
-
 var ingredient_names = ["blue", "red", "white", "green", "yellow"]
 
 @export var speed: int = 6.0
 @export var ingredient_name: String
 
+# Called before physics step and in sync with physics server.
 func _physics_process(_delta):
-	var collision = move_and_collide(Vector2(0, speed))
-	if collision and collision.get_collider().name == 'Floor':
-		queue_free()
+	move_and_collide(Vector2(0, speed))
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var rand_index = randi() % ingredient_names.size()
 	ingredient_name = ingredient_names[rand_index] 
 	$Sprite2D.texture = _get_texture(rand_index)
+	# Make ingredient available to player for collision detection.
+	add_to_group("active_ingredient")
 	
 # Gets an ingredient image texture based on its index.
 func _get_texture(index: int) -> Texture2D:
@@ -35,3 +27,10 @@ func _get_texture(index: int) -> Texture2D:
 func set_texture(ingredient_name: String):
 	var image_path = "res://art/rect_" + ingredient_name + ".png" 	# Assumes that name is in ingredient_names.
 	$Sprite2D.texture = load(image_path)
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.name == 'Floor':
+		# Make ingredient inactive (cannot be collected by player).
+		remove_from_group("active_ingredient")
+		add_to_group("inactive_ingredient")
+		queue_free()

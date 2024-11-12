@@ -23,12 +23,11 @@ radius = 55.0
 height = 136.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3nflb"]
-size = Vector2(105.333, 35.3333)
+size = Vector2(116, 35.3333)
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(1.5, 1.5)
 collision_layer = 4
-collision_mask = 11
 script = ExtResource("1_04t02")
 metadata/_edit_group_ = true
 
@@ -42,10 +41,10 @@ shape = SubResource("CapsuleShape2D_0m1q0")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 11
+collision_mask = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-0.666667, 11)
+position = Vector2(1.3113e-06, 11)
 shape = SubResource("RectangleShape2D_3nflb")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

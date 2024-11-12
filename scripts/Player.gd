@@ -4,7 +4,7 @@ signal hit
 
 const WALK_SPEED = 600
 var screen_size
-var y_pos
+var y_pos # Used to keep player on the same location on the y-axis at all times.
 
 # Called before physics step and in sync with physics server.
 func _physics_process(_delta):
@@ -23,9 +23,10 @@ func _physics_process(_delta):
 	else:
 		$AnimatedSprite2D.stop()
 
+	# Move the player.
 	move_and_slide()
 	
-	# Keep Player at same positiion on the y-axis.
+	# Keep player at same positiion on the y-axis.
 	position.y = y_pos
 	
 # Called when the node enters the scene tree for the first time.
@@ -33,7 +34,8 @@ func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	hide() # Hides the player by default
 	
-func start(pos):
+# Positions and shows the player at the specified location.
+func start(pos: Vector2) -> void:
 	position = pos
 	y_pos = position.y
 	show()
