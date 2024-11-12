@@ -1,6 +1,7 @@
 extends Node2D
 
 signal recipe_completed
+signal recipe_ready_to_be_sold
 
 var recipes: Dictionary = {"purple": ["red", "blue", "white"], "cyan": ["blue", "green", "white"], "pink": ["red", "yellow", "white"]}
 var selected_recipe: Array
@@ -16,14 +17,16 @@ func _ready() -> void:
 	seen_ingredients = Array() # Initalizes an empty array
 	# initialize_recipe()
 	
-# Initalizes the recipe scene.
-func initialize_recipe():
+# Generates a new recipe.
+func generate_recipe():
 	selected_recipe = _select_recipe()
 	seen_ingredients.clear() # Clear all seen ingredients
 	ingredient_count = selected_recipe[1].size()
 	collected_ingredient_count = 0
 	completed = false
 	incorrect_ingredient = false 
+	recipe_ready = false
+	
 	print('Collected ingredient count: ', collected_ingredient_count)
 	print('Ingredient count: ', ingredient_count)
 	
@@ -45,7 +48,7 @@ func increase_collected_count(collided_ingredient: String) -> void:
 		# All ingredients have been collected and can be put into the oven.
 		if collected_ingredient_count == ingredient_count:
 			mark_recipe_completed()
-			recipe_completed.emit(true)
+			recipe_completed.emit() # completed == true at this point.
 			print('Onto the Oven stage!')
 	else:
 		print('Did not collect anything!\n')
@@ -55,7 +58,6 @@ func increase_collected_count(collided_ingredient: String) -> void:
 	
 # Checks if the collided ingredient is in the recipe.
 func check_if_in_recipe(collided_ingredient: String) -> bool:
-	print('collided_ingredient: ', collided_ingredient)
 	if collided_ingredient in selected_recipe[1]: # selected_recipe[1] = ["ingredient_1", ... "ingredient_n"] 
 		return true
 	return false
@@ -71,3 +73,9 @@ func reset_incorrect_ingredient() -> void:
 # Sets the completed flag to true.
 func mark_recipe_completed() -> void:
 	completed = true
+	
+func mark_recipe_ready() -> void:
+	recipe_ready = true
+	recipe_ready_to_be_sold.emit("Ready to sell recipe!") # Signals that recipe is ready for collection.
+	
+	

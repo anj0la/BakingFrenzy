@@ -1,19 +1,23 @@
 extends StaticBody2D
 
-signal something
+signal completed_baking
+
+var activated: bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	activated = false
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	# When the player comes into contact with the oven, we want to check whether the player can use the oven or not.
-	# We need to check how much ingredients the player has collected already.
-	# So we need to implement the Recipe scene
-	something.emit(body)
+# Handles oven detection, activating a timer to represent the baking process.
+func _on_area_2d_body_entered(_body: Node2D) -> void:
+	if activated:
+		print('Activated.')
+		print('Baking...')
+		await get_tree().create_timer(0.5).timeout # Wait 0.5 seconds for baking process.
+		activated = false # Stops oven detection.
+		# Emit signal that the oven process is done.
+		completed_baking.emit("Completed baking!")
+		
+# Activates oven detection.
+func activate_oven_detection():
+	activated = true

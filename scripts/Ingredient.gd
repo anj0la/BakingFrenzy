@@ -2,7 +2,7 @@ extends StaticBody2D
 
 var ingredient_names = ["blue", "red", "white", "green", "yellow"]
 
-@export var speed: int = 6.0
+@export var speed: float = 6.0
 @export var ingredient_name: String
 
 # Called before physics step and in sync with physics server.
@@ -22,11 +22,6 @@ func _get_texture(index: int) -> Texture2D:
 	var image_path = "res://art/rect_" + ingredient_names[index] + ".png"
 	var texture = load(image_path)
 	return texture
-
-# Sets the ingredient's sprite image based on the passed name.
-func set_texture(ingredient_name: String):
-	var image_path = "res://art/rect_" + ingredient_name + ".png" 	# Assumes that name is in ingredient_names.
-	$Sprite2D.texture = load(image_path)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == 'Floor':
