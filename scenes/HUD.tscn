@@ -1,3 +1,140 @@
-[gd_scene format=3 uid="uid://dqfwvvi6rb8gb"]
+[gd_scene load_steps=6 format=3 uid="uid://dqfwvvi6rb8gb"]
+
+[ext_resource type="Texture2D" uid="uid://c1uakdggq2pls" path="res://art/game_background_outline_recipe.png" id="1_cyc50"]
+[ext_resource type="Texture2D" uid="uid://dmd8bi6t15j6f" path="res://art/gold_coin.png" id="1_r51x3"]
+[ext_resource type="Texture2D" uid="uid://c0by4gbg7w3xs" path="res://art/customer_icon.png" id="2_xlj4a"]
+[ext_resource type="Texture2D" uid="uid://bjtah45epwl36" path="res://art/menu_icon.png" id="3_oqgce"]
+[ext_resource type="Texture2D" uid="uid://cbnbca3ng6pt7" path="res://art/rect_white.png" id="4_ygfvq"]
 
 [node name="HUD" type="CanvasLayer"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_cyc50")
+
+[node name="MainControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameStatsContainer" type="HBoxContainer" parent="MainControl"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -216.0
+offset_top = 10.0
+offset_bottom = 66.0
+grow_horizontal = 0
+
+[node name="Coins" type="Label" parent="MainControl/GameStatsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "0"
+
+[node name="CoinsImage" type="TextureRect" parent="MainControl/GameStatsContainer"]
+layout_mode = 2
+texture = ExtResource("1_r51x3")
+stretch_mode = 2
+
+[node name="Customers" type="Label" parent="MainControl/GameStatsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "0 "
+
+[node name="CustomersImage" type="TextureRect" parent="MainControl/GameStatsContainer"]
+layout_mode = 2
+texture = ExtResource("2_xlj4a")
+stretch_mode = 2
+
+[node name="MenuButton" type="TextureButton" parent="MainControl/GameStatsContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_oqgce")
+
+[node name="GoalsContainer" type="VBoxContainer" parent="MainControl"]
+layout_mode = 2
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 251.0
+offset_bottom = 98.0
+
+[node name="FirstGoal" type="Label" parent="MainControl/GoalsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Goal: Earn 500 Coins"
+
+[node name="SecondGoal" type="Label" parent="MainControl/GoalsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Goal: Serve 10 Customers"
+
+[node name="StatusTimeContainer" type="VBoxContainer" parent="MainControl"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -110.5
+offset_top = 10.0
+offset_right = 110.5
+offset_bottom = 115.0
+grow_horizontal = 2
+
+[node name="OpenStatus" type="Label" parent="MainControl/StatusTimeContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "OPEN"
+horizontal_alignment = 1
+
+[node name="TimeIndicator" type="Label" parent="MainControl/StatusTimeContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 54
+text = "XX:XX AM"
+horizontal_alignment = 1
+
+[node name="RecipeStatusContainer" type="VBoxContainer" parent="MainControl"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -224.0
+offset_right = 178.0
+grow_vertical = 0
+
+[node name="CompletedStatus" type="Label" parent="MainControl/RecipeStatusContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "COMPLETED"
+
+[node name="RecipeImage" type="TextureRect" parent="MainControl/RecipeStatusContainer"]
+layout_mode = 2
+texture = ExtResource("4_ygfvq")
+expand_mode = 4
+
+[node name="RecipeStateContainer" type="HBoxContainer" parent="MainControl"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -122.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="RecipeState" type="Label" parent="MainControl/RecipeStateContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "BAKING"
