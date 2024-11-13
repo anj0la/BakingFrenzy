@@ -1,14 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqfwvvi6rb8gb"]
+[gd_scene load_steps=7 format=3 uid="uid://dqfwvvi6rb8gb"]
 
 [ext_resource type="Texture2D" uid="uid://c1uakdggq2pls" path="res://art/game_background_outline_recipe.png" id="1_cyc50"]
 [ext_resource type="Texture2D" uid="uid://dmd8bi6t15j6f" path="res://art/gold_coin.png" id="1_r51x3"]
+[ext_resource type="Script" path="res://scripts/HUD.gd" id="1_xlsrd"]
 [ext_resource type="Texture2D" uid="uid://c0by4gbg7w3xs" path="res://art/customer_icon.png" id="2_xlj4a"]
 [ext_resource type="Texture2D" uid="uid://bjtah45epwl36" path="res://art/menu_icon.png" id="3_oqgce"]
 [ext_resource type="Texture2D" uid="uid://cbnbca3ng6pt7" path="res://art/rect_white.png" id="4_ygfvq"]
 
 [node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_xlsrd")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("1_cyc50")
@@ -98,7 +101,7 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 54
-text = "XX:XX AM"
+text = "08:00 AM"
 horizontal_alignment = 1
 
 [node name="RecipeStatusContainer" type="VBoxContainer" parent="MainControl"]

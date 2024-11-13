@@ -74,5 +74,5 @@ one_shot = true
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="recipe_completed" from="Recipe" to="." method="_on_recipe_completed"]
 [connection signal="recipe_completed" from="Recipe" to="." method="_on_recipe_recipe_completed"]
-[connection signal="recipe_ready_to_be_sold" from="Recipe" to="." method="_on_recipe_recipe_ready_to_be_sold"]
 [connection signal="recipe_ready_to_be_sold" from="Recipe" to="." method="_on_recipe_ready_to_be_sold"]
+[connection signal="recipe_ready_to_be_sold" from="Recipe" to="." method="_on_recipe_recipe_ready_to_be_sold"]
