@@ -1,6 +1,8 @@
 extends Node
 
 @export var ingredient_scene: PackedScene
+var coins_earned: int
+var customers_served: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -8,6 +10,8 @@ func _ready():
 	$StartTimer.start()
 	$Recipe.generate_recipe()
 	print($Recipe.selected_recipe)
+	coins_earned = 0
+	customers_served = 0
 
 # Creates a new ingredient every time the timer is completed.
 func _on_ingredient_timer_timeout() -> void:
@@ -71,10 +75,12 @@ func _on_oven_completed_baking(test_string) -> void:
 
 func _on_sale_counter_recipe_sold(test_string) -> void:
 	print(test_string)
+	coins_earned += 100
+	customers_served += 1
 	# Wait for recipe to be sold from SaleCounter.
 	# Once sold, generate a new recipe.
 	# Generate a new recipe (resets all flags).
+	print("Current coins earned: ", coins_earned)
+	print("Total customers served: ", customers_served)
 	$Recipe.generate_recipe()
 	print($Recipe.selected_recipe)
-
-# IT ACTUALLY WORKS! WOAH WOAH WOAH!!!!!
