@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 const BASE_RATE: int = 5
+# May store the following array into a CustomResource file.
+const GOALS: Array = [{"name": "goal_coins", "target": 500}, {"name": "goal_customers", "target": 10}]
 @export var seconds_per_in_game_hour: int # 6, 12, 18
 var current_in_game_hour: float # 8.0, 8.1
 var increment_interval: int # Define the interval at which to increment in-game time by 0.1 hours.
@@ -10,6 +12,7 @@ func _ready() -> void:
 	increment_interval = int(seconds_per_in_game_hour / BASE_RATE) # 6 / 5 = 
 	current_in_game_hour = 8.0 # Start at 8:00 AM.
 	display_time_in_hud(current_in_game_hour)
+	display_goal()
 
 # Updates the in-game time based on the remaining seconds.
 # IMPORTANT NOTES
@@ -46,12 +49,41 @@ func display_time_in_hud(in_game_hour: float) -> void:
 	var in_game_hour_str = str(display_hour) + ":" + display_minutes + am_pm_indicator
 	print(str(display_hour) + ":" + display_minutes + am_pm_indicator)
 	$MainControl/StatusTimeContainer/TimeIndicator.text = in_game_hour_str
-	
-	
 
 func reset_time_indicator() -> void:
 	current_in_game_hour = 8.0 # Start at 8:00 AM.
 	display_time_in_hud(current_in_game_hour)
+	
+func update_coins(coins: int) -> void:
+	$MainControl/GameStatsContainer/Coins.text = str(coins)
+	
+func update_customers_served(customers_served: int) -> void:
+	$MainControl/GameStatsContainer/Customers.text = str(customers_served)
+	
+func display_goal(show_second_goal: bool = false) -> void:
+	$MainControl/GoalsContainer/FirstGoal.text = generate_goal()
+	$MainControl/GoalsContainer/SecondGoal.visible = show_second_goal
+	
+	# Generate and display second objective.
+	if show_second_goal:
+		$MainControl/GoalsContainer/SecondGoal.text = generate_goal()
+
+# Generates a goal.
+# To do so, need to have goals separated into 2 categories: goal_coins & goal_customers
+# Take a goal from the list of goals. The goals is of the format: {name: goal_coins, target: 500}, {name: goal_customers, target: 10}
+# if name == goal_coins , then string is Earn ____ coins with the coins image later.
+# if name == goal_customers, then string is Serve ______ customers with customers image later.
+func generate_goal() -> String:
+	var rand_index = randi() % GOALS.size()
+	var goal = GOALS[rand_index]
+	
+	if goal.name == "goal_coins":
+		return "Earn " + str(goal.target) + " coins"
+	# Then goal.name == goal_customers.
+	else:
+		return "Serve " + str(goal.target) + " customers"
+
+	
 
 		
 		

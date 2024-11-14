@@ -3,7 +3,9 @@ extends Node2D
 signal recipe_completed
 signal recipe_ready_to_be_sold
 
+# May store the following array into a CustomResource file.
 var recipes: Dictionary = {"purple": ["red", "blue", "white"], "cyan": ["blue", "green", "white"], "pink": ["red", "yellow", "white"]}
+
 var selected_recipe: Array
 var seen_ingredients: Array
 var ingredient_count: int
