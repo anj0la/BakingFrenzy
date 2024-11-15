@@ -3,7 +3,10 @@ extends Node
 @export var ingredient_scene: PackedScene
 var coins_earned: int
 var customers_served: int
-var time_left: int
+var elapsed_time: float
+var stars_earned: int 
+# Will store the Goals array into a CustomResource file. to get the goal and divide it into 3 to get to 1 star, 2 stars and 3 stars (completing the goal).
+const GOALS: Array = [{"name": "goal_coins", "target": 500}, {"name": "goal_customers", "target": 10}]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,11 +18,20 @@ func _ready():
 	print($NPC.selected_order)
 	coins_earned = 0
 	customers_served = 0
-	time_left = 120
+	elapsed_time = 0.0
+	stars_earned = 1
 	# Updates the coins and customers served.
 	$HUD.update_coins(coins_earned)
 	$HUD.update_customers_served(customers_served)
 	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	elapsed_time += delta
+	if elapsed_time >= 1.0:
+		$HUD.update_time_indicator(int($Timer.time_left))
+		elapsed_time = 0.0
+	
+# Resets the game.
 func reset_game():
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
@@ -30,19 +42,15 @@ func reset_game():
 	print($NPC.selected_order)
 	coins_earned = 0
 	customers_served = 0
-	time_left = 120
 	# Updates the coins and customers served.
 	$HUD.update_coins(coins_earned)
 	$HUD.update_customers_served(customers_served)
 	
+# Ends the game.
 func _on_countdown_timer_timeout() -> void:
-	time_left -= 1
-	if time_left >= 0:
-		$HUD.update_time_indicator(time_left)
-	else:
-		print('GAME OVER!')
-		# NOTE: We would display a popup screen showing the coins earned, customers served, total coins earned, and total customers served.
-		# NOTE: Then, we would change the scene back to either a) the main menu or b) the level menu.
+	print("GAME OVER!")
+	# NOTE: Day is put as 1, will change because we will have set the day from the level scene.
+	$GameOverMenu.display_game_over_menu(1, stars_earned, coins_earned, customers_served)
 
 # Creates a new ingredient every time the timer is completed.
 func _on_ingredient_timer_timeout() -> void:
@@ -67,6 +75,7 @@ func _on_ingredient_timer_timeout() -> void:
 func _on_start_timer_timeout() -> void:
 	$IngredientTimer.start()
 	$CountdownTimer.start()
+	$Timer.start()
 	# print('Started ingredient timer.')
 
 # Called every time an object enters the player's body.

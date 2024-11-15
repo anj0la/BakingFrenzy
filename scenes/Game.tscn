@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ohh7bftd3kvo"]
+[gd_scene load_steps=13 format=3 uid="uid://ohh7bftd3kvo"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_6itma"]
 [ext_resource type="PackedScene" uid="uid://6gofu3xm83fx" path="res://scenes/Ingredient.tscn" id="2_8ut5c"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://wm64m4p8ix3d" path="res://scenes/SaleCounter.tscn" id="7_pwdfb"]
 [ext_resource type="PackedScene" uid="uid://dqfwvvi6rb8gb" path="res://scenes/HUD.tscn" id="8_660gl"]
 [ext_resource type="PackedScene" uid="uid://dmh4v6n6e4d3g" path="res://scenes/TrashCan.tscn" id="9_dushb"]
+[ext_resource type="PackedScene" uid="uid://dgh7j3kb520y4" path="res://scenes/GameOverMenu.tscn" id="10_15l6u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xyenl"]
 size = Vector2(1921, 202)
@@ -76,6 +77,11 @@ position = Vector2(2020, 700)
 [node name="HUD" parent="." instance=ExtResource("8_660gl")]
 
 [node name="CountdownTimer" type="Timer" parent="."]
+wait_time = 120.0
+one_shot = true
+
+[node name="GameOverMenu" parent="." instance=ExtResource("10_15l6u")]
+visible = false
 
 [connection signal="completed_baking" from="Oven" to="." method="_on_oven_completed_baking"]
 [connection signal="display_baking_indicator" from="Oven" to="." method="_on_oven_display_baking_indicator"]
