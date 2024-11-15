@@ -55,8 +55,8 @@ func _physics_process(delta):
 		
 		# Delays reentering of NPC.
 		if _is_off_screen():
-			movement_stage = MovementStage.REENTERING
-			$ExitTimer.start()
+			movement_stage = MovementStage.ENTERING
+			# $ExitTimer.start()
 
 	# Animate the NPC movement.
 	if velocity.x != 0:
@@ -130,6 +130,7 @@ func enter() -> void:
 	
 # Moves the NPC out of the screen.
 func exit() -> void:
+	npc_at_counter = false # Make sure npc_at_counter is false when exiting.
 	movement_stage = MovementStage.EXITING
 	
 # Selects a random order. TODO: Update to select a random NPC which will have an order attached to them to make gameplay more realistic.
@@ -138,16 +139,16 @@ func _select_random_order() -> Array:
 	var rand_key = orders.keys()[rand_index]
 	return [rand_key, orders[rand_key]] # selected_order[0] = recipe name, selected_order[1] = ["ingredient_1", ... "ingredient_n"] 
 	
-func _on_exit_timer_timeout():
-	# Set movement stage to ENTERING.
-	movement_stage = MovementStage.ENTERING
-	# Set NPC counter flag to false.
-	npc_at_counter = false
-	
 # Checks if the NPC is out of the screen.
 func _is_off_screen():
 	return position.x > screen_size.x + OFFSET
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	print('NPC at counter: ', npc_at_counter)
+	print('The body the NPC entered in is: ', body.name)
 	if body.name == 'SaleCounter':
 		npc_at_counter = true
+		print('NPC at counter inside: ', npc_at_counter)
+		# movement_stage = MovementStage.WAITING
+		# Allow NPC to collide into Area2D again.
+		$Area2D/CollisionShape2D.set_deferred("disabled", false)

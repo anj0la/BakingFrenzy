@@ -10,16 +10,14 @@ func _ready() -> void:
 
 # Handles sale counter detection, activating a timer to represent the baking process.
 func _on_area_2d_body_entered(_body: Node2D) -> void:
-	print('ACTIVATED?: ', activated)
 	if activated:
 		print('Activated.')
 		print('Selling...')
 		# await get_tree().create_timer(0.25).timeout # Wait 0.25 seconds for selling process. 
 		activated = false # Stops oven detection.
-		# Emit signal that the recipe has been sold.
-		order_sold.emit("Sold recipe!")
+		# Emit signal that the order has been sold.
+		order_sold.emit("Sold order!")
 	
 # Activates sale counter detection.	
 func activate_sale_detection():
-	print('DOES THIS WORK?')
 	activated = true

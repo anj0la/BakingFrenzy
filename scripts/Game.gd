@@ -22,7 +22,12 @@ func _ready():
 	
 func _on_countdown_timer_timeout() -> void:
 	time_left -= 1
-	$HUD.update_time_indicator(time_left)
+	if time_left >= 0:
+		$HUD.update_time_indicator(time_left)
+	else:
+		print('GAME OVER!')
+		# NOTE: We would display a popup screen showing the coins earned, customers served, total coins earned, and total customers served.
+		# NOTE: Then, we would change the scene back to either a) the main menu or b) the level menu.
 
 # Creates a new ingredient every time the timer is completed.
 func _on_ingredient_timer_timeout() -> void:
@@ -61,6 +66,7 @@ func _on_player_hit(body: Node2D) -> void:
 			if $NPC.check_if_in_order(body.ingredient_name):
 				print('Collected a correct ingredient!')
 				$NPC.increase_collected_count(body.ingredient_name)
+				$HUD.update_ingredient_completion(body.ingredient_name)
 			else:
 				print('Uh oh. Collected the wrong ingredient!')
 				$NPC.mark_incorrect_ingredient()
@@ -70,6 +76,7 @@ func _on_player_hit(body: Node2D) -> void:
 
 # Activates oven detection to bake the ingredients.
 func _on_npc_bake_ingredients() -> void:
+	$HUD.update_order_status(true)
 	$Oven.activate_oven_detection()
 	
 # Activates sale counter detection to sell the order.
@@ -89,11 +96,12 @@ func _on_sale_counter_order_sold(test_string) -> void:
 	$NPC.exit()
 	coins_earned += 100
 	customers_served += 1
-	# Wait for recipe to be sold from SaleCounter.
-	# Once sold, generate a new recipe.
-	# Generate a new recipe (resets all flags).
-	print("Current coins earned: ", coins_earned)
-	print("Total customers served: ", customers_served)
+	$HUD.update_coins(coins_earned)
+	$HUD.update_customers_served(customers_served)
+	$HUD.update_order_status(false)
 	$NPC.generate_order()
+	# NOTE: Temp function to display ingredients. Replace with $HUD.update_order_image(selected_order[0])
+	$HUD.reset_ingredient_completion()
+	$HUD.update_list_ingredients($NPC.selected_order[1][0], $NPC.selected_order[1][1], $NPC.selected_order[1][2])
 	# $NPC.enter()
 	print($NPC.selected_order)

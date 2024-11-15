@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 const BASE_RATE: int = 5
+const FINAL_HOUR: int = 5
+const CLOSED_HOUR: int = 6
 # May store the following array into a CustomResource file.
 const GOALS: Array = [{"name": "goal_coins", "target": 500}, {"name": "goal_customers", "target": 10}]
 @export var seconds_per_in_game_hour: int = 12 # 6, 12, 18
@@ -35,6 +37,7 @@ func update_time_indicator(remaining_seconds: int) -> void:
 			
 	# Display in HUD
 	_display_time_in_hud(current_in_game_hour)
+	_update_open_status(current_in_game_hour)
 
 # Resets the time indicator.
 func reset_time_indicator() -> void:
@@ -74,6 +77,17 @@ func update_order(recipe_name: String) -> void:
 func update_order_state(new_state: String) -> void:
 	$MainControl/OrderStateContainer/OrderState.text = new_state
 	
+	
+func _update_open_status(in_game_hour: float) -> void:
+	if int(in_game_hour) == FINAL_HOUR:
+		# NOTE: We would add flashing animations to showcase that the store is closing soon.
+		$MainControl/StatusTimeContainer/OpenStatus.text = "CLOSING"
+		$MainControl/StatusTimeContainer/OpenStatus.add_theme_color_override("font_color", Color.ORANGE)
+	elif int(in_game_hour) == CLOSED_HOUR:
+		$MainControl/StatusTimeContainer/OpenStatus.text = "CLOSED"
+		$MainControl/StatusTimeContainer/OpenStatus.add_theme_color_override("font_color", Color.BLACK)
+		
+
 # Displays the in-game time on the HUD.
 func _display_time_in_hud(in_game_hour: float) -> void:
 	# Get hours, minutes and AM/PM indicator.
@@ -89,7 +103,7 @@ func _display_time_in_hud(in_game_hour: float) -> void:
 	# Format minutes with padding.
 	var display_minutes = str(minutes).pad_zeros(2)
 	var in_game_hour_str = str(display_hour) + ":" + display_minutes + am_pm_indicator
-	print(str(display_hour) + ":" + display_minutes + am_pm_indicator)
+	# print(str(display_hour) + ":" + display_minutes + am_pm_indicator)
 	$MainControl/StatusTimeContainer/TimeIndicator.text = in_game_hour_str
 	
 # Updates the list of ingredients. TODO: Replace with order image.
@@ -97,6 +111,19 @@ func update_list_ingredients(first_name: String, second_name: String, third_name
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.text = first_name
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.text = second_name
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientName.text = third_name
+
+func update_ingredient_completion(ingredient_name: String) -> void:
+	if $MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.text == ingredient_name:
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.add_theme_color_override("font_color", Color.LIME_GREEN)
+	elif $MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.text == ingredient_name:
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.add_theme_color_override("font_color", Color.LIME_GREEN)
+	else:
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientName.add_theme_color_override("font_color", Color.LIME_GREEN)
+
+func reset_ingredient_completion() -> void:
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.add_theme_color_override("font_color", Color.BLACK)
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.add_theme_color_override("font_color", Color.BLACK)
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientName.add_theme_color_override("font_color", Color.BLACK)
 
 # Generates a goal.
 # To do so, need to have goals separated into 2 categories: goal_coins & goal_customers
