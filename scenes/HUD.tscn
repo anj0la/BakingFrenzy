@@ -90,12 +90,17 @@ offset_right = 110.5
 offset_bottom = 115.0
 grow_horizontal = 2
 
-[node name="OpenStatus" type="Label" parent="MainControl/StatusTimeContainer"]
+[node name="OpenStatus" type="RichTextLabel" parent="MainControl/StatusTimeContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
-text = "OPEN"
-horizontal_alignment = 1
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=black]OPEN[/color][/center]"
+fit_content = true
+scroll_active = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+visible_characters = 8
+visible_ratio = 1.33333
 
 [node name="TimeIndicator" type="Label" parent="MainControl/StatusTimeContainer"]
 layout_mode = 2

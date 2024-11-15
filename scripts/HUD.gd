@@ -81,11 +81,10 @@ func _update_open_status(in_game_hour: float) -> void:
 	if int(in_game_hour) == FINAL_HOUR:
 		# NOTE: We would add flashing animations to showcase that the store is closing soon.
 		# NOTE: Use tween to animate 
-		$MainControl/StatusTimeContainer/OpenStatus.text = "CLOSING"
-		$MainControl/StatusTimeContainer/OpenStatus.add_theme_color_override("font_color", Color.ORANGE)
+		$MainControl/StatusTimeContainer/OpenStatus.text = "[center][color=orangered][pulse freq=1.0 color=##FFA500 ease=-2.0]CLOSING[/pulse]
+[/color][/center]"
 	elif int(in_game_hour) == CLOSED_HOUR:
-		$MainControl/StatusTimeContainer/OpenStatus.text = "CLOSED"
-		$MainControl/StatusTimeContainer/OpenStatus.add_theme_color_override("font_color", Color.BLACK)
+		$MainControl/StatusTimeContainer/OpenStatus.text = "[center][color=black]CLOSED[/color][/center]"
 		
 # Displays the in-game time on the HUD.
 func _display_time_in_hud(in_game_hour: float) -> void:
