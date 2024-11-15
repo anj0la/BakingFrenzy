@@ -3,17 +3,19 @@ extends CanvasLayer
 const BASE_RATE: int = 5
 # May store the following array into a CustomResource file.
 const GOALS: Array = [{"name": "goal_coins", "target": 500}, {"name": "goal_customers", "target": 10}]
-@export var seconds_per_in_game_hour: int # 6, 12, 18
+@export var seconds_per_in_game_hour: int = 12 # 6, 12, 18
 var current_in_game_hour: float # 8.0, 8.1
 var increment_interval: int # Define the interval at which to increment in-game time by 0.1 hours.
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void: 
-	increment_interval = int(seconds_per_in_game_hour / BASE_RATE) # 6 / 5 = 
+	increment_interval = seconds_per_in_game_hour / BASE_RATE # 6 / 5 = 
+	print('increment interval: ', increment_interval)
 	current_in_game_hour = 8.0 # Start at 8:00 AM.
 	_display_time_in_hud(current_in_game_hour)
 	display_goal()
-	update_recipe_status(false)
+	update_order_status(false)
+	update_order_state("")
 
 # Updates the in-game time based on the remaining seconds.
 # IMPORTANT NOTES
@@ -22,9 +24,10 @@ func _ready() -> void:
 # 12 seconds = 1 hour (10 minutes per 2 seconds): 10 hours in-game takes 120 seconds.
 # 18 seconds = 1 hour (10 minutes per 3 seconds): 10 hours in-game takes 180 seconds.
 func update_time_indicator(remaining_seconds: int) -> void:
+
 	# Currently, hour changes every 24 seconds. 8.0 -> 8.5 -> 9.0.
 	if remaining_seconds % increment_interval == 0:
-		if current_in_game_hour - floor(current_in_game_hour) < 0.5:
+		if current_in_game_hour - floor(current_in_game_hour) < 0.49: # 0.5 makes the following check false.
 			current_in_game_hour += 0.1
 		else:
 			# Move to next full hour if we're at 0.5
@@ -56,20 +59,20 @@ func display_goal(show_second_goal: bool = false) -> void:
 		$MainControl/GoalsContainer/SecondGoal.text = _generate_goal()
 		
 # Updates recipe order status, whether it is completed (green) or not (grey).
-func update_recipe_status(completed: bool) -> void:
+func update_order_status(completed: bool) -> void:
 	if completed:
-		$MainControl/RecipeStatusContainer/CompletedStatus.add_theme_color_override("font_color", Color.LIME_GREEN)
+		$MainControl/OrderStatusContainer/CompletedStatus.add_theme_color_override("font_color", Color.LIME_GREEN)
 	else:
-		$MainControl/RecipeStatusContainer/CompletedStatus.add_theme_color_override("font_color", Color.WEB_GRAY)
+		$MainControl/OrderStatusContainer/CompletedStatus.add_theme_color_override("font_color", Color.WEB_GRAY)
 
-# Updates the recipe order.
-func update_recipe(recipe_name: String) -> void:
+# Updates the order.
+func update_order(recipe_name: String) -> void:
 	var image_path = "res://art/rect_" + recipe_name + ".png" # TODO: change rect_ to actual order / recipe names.
-	$MainControl/RecipeStatusContainer/RecipeImage.texture = load(image_path)
+	$MainControl/OrderStatusContainer/OrderImage.texture = load(image_path)
 
-# Updates the recipe order state.
-func update_recipe_state(new_state: String) -> void:
-	$MainControl/RecipeStateContainer/RecipeState.text = new_state
+# Updates the order state.
+func update_order_state(new_state: String) -> void:
+	$MainControl/OrderStateContainer/OrderState.text = new_state
 	
 # Displays the in-game time on the HUD.
 func _display_time_in_hud(in_game_hour: float) -> void:
@@ -89,6 +92,12 @@ func _display_time_in_hud(in_game_hour: float) -> void:
 	print(str(display_hour) + ":" + display_minutes + am_pm_indicator)
 	$MainControl/StatusTimeContainer/TimeIndicator.text = in_game_hour_str
 	
+# Updates the list of ingredients. TODO: Replace with order image.
+func update_list_ingredients(first_name: String, second_name: String, third_name: String) -> void:
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.text = first_name
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.text = second_name
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientName.text = third_name
+
 # Generates a goal.
 # To do so, need to have goals separated into 2 categories: goal_coins & goal_customers
 # Take a goal from the list of goals. The goals is of the format: {name: goal_coins, target: 500}, {name: goal_customers, target: 10}

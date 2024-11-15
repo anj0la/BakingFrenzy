@@ -51,12 +51,14 @@ bake_or_sell={
 2d_render/layer_4="ingredients"
 2d_render/layer_5="oven"
 2d_render/layer_6="sale_counter"
+2d_render/layer_7="npc"
 2d_physics/layer_1="walls"
 2d_physics/layer_2="floor"
 2d_physics/layer_3="player"
 2d_physics/layer_4="ingredients"
 2d_physics/layer_5="oven"
 2d_physics/layer_6="sale_counter"
+2d_physics/layer_7="npc"
 
 [rendering]
 

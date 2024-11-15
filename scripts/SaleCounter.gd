@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-signal recipe_sold
+signal order_sold
 
 var activated: bool
 
@@ -17,7 +17,7 @@ func _on_area_2d_body_entered(_body: Node2D) -> void:
 		# await get_tree().create_timer(0.25).timeout # Wait 0.25 seconds for selling process. 
 		activated = false # Stops oven detection.
 		# Emit signal that the recipe has been sold.
-		recipe_sold.emit("Sold recipe!")
+		order_sold.emit("Sold recipe!")
 	
 # Activates sale counter detection.	
 func activate_sale_detection():

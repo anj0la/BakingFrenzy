@@ -2,12 +2,12 @@ extends StaticBody2D
 
 var ingredient_names = ["blue", "red", "white", "green", "yellow"]
 
-@export var speed: float = 6.0
+@export var speed: float = 400.0 # WAS SUPPOSED TO BE DELTA ALL ALONG
 @export var ingredient_name: String
 
 # Called before physics step and in sync with physics server.
-func _physics_process(_delta):
-	move_and_collide(Vector2(0, speed))
+func _physics_process(delta):
+	move_and_collide(Vector2(0, speed * delta))
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

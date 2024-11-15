@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://bgdmk5wd6i8uo"]
+
+[ext_resource type="Script" path="res://scripts/NPC.gd" id="1_j31ml"]
+[ext_resource type="Texture2D" uid="uid://f83poylmr03n" path="res://art/npcRed_walk1.png" id="2_33on6"]
+[ext_resource type="Texture2D" uid="uid://dpdsgk8pdvyil" path="res://art/npcRed_walk2.png" id="3_58tco"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p6b5s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_33on6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_58tco")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_374m2"]
+radius = 56.0
+height = 144.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_igwdh"]
+radius = 85.3333
+height = 170.667
+
+[node name="NPC" type="CharacterBody2D"]
+position = Vector2(1744, 840)
+scale = Vector2(1.5, 1.5)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("1_j31ml")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_p6b5s")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CapsuleShape2D_374m2")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_igwdh")
+
+[node name="ExitTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="ExitTimer" to="." method="_on_exit_timer_timeout"]

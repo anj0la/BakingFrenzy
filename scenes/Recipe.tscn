@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bgdmk5wd6i8uo"]
-
-[ext_resource type="Script" path="res://scripts/Recipe.gd" id="1_j31ml"]
-
-[node name="Recipe" type="Node2D"]
-script = ExtResource("1_j31ml")
-metadata/_edit_group_ = true

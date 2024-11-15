@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://ohh7bftd3kvo"]
+[gd_scene load_steps=11 format=3 uid="uid://ohh7bftd3kvo"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_6itma"]
 [ext_resource type="PackedScene" uid="uid://6gofu3xm83fx" path="res://scenes/Ingredient.tscn" id="2_8ut5c"]
 [ext_resource type="PackedScene" uid="uid://du048arfkmk7" path="res://scenes/Player.tscn" id="3_5vw5y"]
-[ext_resource type="PackedScene" uid="uid://bgdmk5wd6i8uo" path="res://scenes/Recipe.tscn" id="3_eot5w"]
+[ext_resource type="PackedScene" uid="uid://bgdmk5wd6i8uo" path="res://scenes/NPC.tscn" id="3_eot5w"]
 [ext_resource type="Texture2D" uid="uid://cl3afyaiaw7yt" path="res://art/game_background_outline.png" id="3_k6h8b"]
 [ext_resource type="PackedScene" uid="uid://dv4baml1twpu2" path="res://scenes/Oven.tscn" id="6_8y440"]
 [ext_resource type="PackedScene" uid="uid://wm64m4p8ix3d" path="res://scenes/SaleCounter.tscn" id="7_pwdfb"]
+[ext_resource type="PackedScene" uid="uid://dqfwvvi6rb8gb" path="res://scenes/HUD.tscn" id="8_660gl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xyenl"]
 size = Vector2(1921, 202)
@@ -65,14 +66,18 @@ position = Vector2(256, 0)
 [node name="StartTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="Recipe" parent="." instance=ExtResource("3_eot5w")]
+[node name="NPC" parent="." instance=ExtResource("3_eot5w")]
+position = Vector2(2020, 700)
+
+[node name="HUD" parent="." instance=ExtResource("8_660gl")]
+
+[node name="CountdownTimer" type="Timer" parent="."]
 
 [connection signal="completed_baking" from="Oven" to="." method="_on_oven_completed_baking"]
-[connection signal="recipe_sold" from="SaleCounter" to="." method="_on_sale_counter_recipe_sold"]
+[connection signal="order_sold" from="SaleCounter" to="." method="_on_sale_counter_order_sold"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="IngredientTimer" to="." method="_on_ingredient_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
-[connection signal="recipe_completed" from="Recipe" to="." method="_on_recipe_completed"]
-[connection signal="recipe_completed" from="Recipe" to="." method="_on_recipe_recipe_completed"]
-[connection signal="recipe_ready_to_be_sold" from="Recipe" to="." method="_on_recipe_ready_to_be_sold"]
-[connection signal="recipe_ready_to_be_sold" from="Recipe" to="." method="_on_recipe_recipe_ready_to_be_sold"]
+[connection signal="bake_ingredients" from="NPC" to="." method="_on_npc_bake_ingredients"]
+[connection signal="order_completed" from="NPC" to="." method="_on_npc_order_completed"]
+[connection signal="timeout" from="CountdownTimer" to="." method="_on_countdown_timer_timeout"]

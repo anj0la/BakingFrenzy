@@ -3,15 +3,26 @@ extends Node
 @export var ingredient_scene: PackedScene
 var coins_earned: int
 var customers_served: int
+var time_left: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
-	$Recipe.generate_recipe()
-	print($Recipe.selected_recipe)
+	$NPC.generate_order()
+	# NOTE: Temp function to display ingredients. Replace with $HUD.update_order_image(selected_order[0])
+	$HUD.update_list_ingredients($NPC.selected_order[1][0], $NPC.selected_order[1][1], $NPC.selected_order[1][2])
+	print($NPC.selected_order)
 	coins_earned = 0
 	customers_served = 0
+	time_left = 120
+	# Updates the coins and customers served.
+	$HUD.update_coins(coins_earned)
+	$HUD.update_customers_served(customers_served)
+	
+func _on_countdown_timer_timeout() -> void:
+	time_left -= 1
+	$HUD.update_time_indicator(time_left)
 
 # Creates a new ingredient every time the timer is completed.
 func _on_ingredient_timer_timeout() -> void:
@@ -32,9 +43,10 @@ func _on_ingredient_timer_timeout() -> void:
 	# Spawn the ingredient by adding it to the Game scene.
 	add_child(ingredient)
 	
-# Starts all necessary timers for the game.
+# Starts all necessary timers for the Game scene.
 func _on_start_timer_timeout() -> void:
 	$IngredientTimer.start()
+	$CountdownTimer.start()
 	# print('Started ingredient timer.')
 
 # Called every time an object enters the player's body.
@@ -45,36 +57,36 @@ func _on_player_hit(body: Node2D) -> void:
 		#print('Recipe completed: ', $Recipe.completed)
 		#print('Incorrect ingredient: ', $Recipe.incorrect_ingredient)
 		# Ignore collision detection if the recipe has been completed or the player has collected the wrong ingredient.
-		if not $Recipe.completed and not $Recipe.incorrect_ingredient:
-			if $Recipe.check_if_in_recipe(body.ingredient_name):
+		if not $NPC.completed_ingredient_collection and not $NPC.incorrect_ingredient:
+			if $NPC.check_if_in_order(body.ingredient_name):
 				print('Collected a correct ingredient!')
-				$Recipe.increase_collected_count(body.ingredient_name)
+				$NPC.increase_collected_count(body.ingredient_name)
 			else:
 				print('Uh oh. Collected the wrong ingredient!')
-				$Recipe.mark_incorrect_ingredient()
+				$NPC.mark_incorrect_ingredient()
 			
 			# Remove the ingredient from the scene
-			body.queue_free()
+			body.queue_free()	
 
-func _on_recipe_completed() -> void:
+# Activates oven detection to bake the ingredients.
+func _on_npc_bake_ingredients() -> void:
 	$Oven.activate_oven_detection()
-
-# Called once the recipe is ready to be sold.
-func _on_recipe_ready_to_be_sold(test_string) -> void:
+	
+# Activates sale counter detection to sell the order.
+func _on_npc_order_completed(test_string) -> void:
 	print(test_string)
-	# Sell recipe.
 	$SaleCounter.activate_sale_detection()
-	# In the area2d detection, we deactivate the sale counter.
-	pass # Replace with function body.
 
 # Called once the completed baking signal has been emitted from the Oven scene.
 func _on_oven_completed_baking(test_string) -> void:
 	print(test_string)
-	# Mark recipe ready to be sold.
-	$Recipe.mark_recipe_ready()
+	# Mark order as completed (emits the order completed signal).
+	$NPC.mark_order_completed()
 
-func _on_sale_counter_recipe_sold(test_string) -> void:
+# Called once the order has been sold.
+func _on_sale_counter_order_sold(test_string) -> void:
 	print(test_string)
+	$NPC.exit()
 	coins_earned += 100
 	customers_served += 1
 	# Wait for recipe to be sold from SaleCounter.
@@ -82,5 +94,6 @@ func _on_sale_counter_recipe_sold(test_string) -> void:
 	# Generate a new recipe (resets all flags).
 	print("Current coins earned: ", coins_earned)
 	print("Total customers served: ", customers_served)
-	$Recipe.generate_recipe()
-	print($Recipe.selected_recipe)
+	$NPC.generate_order()
+	# $NPC.enter()
+	print($NPC.selected_order)
