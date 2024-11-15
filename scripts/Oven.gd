@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 signal completed_baking
+signal display_baking_indicator
 
 var activated: bool
 
@@ -13,6 +14,8 @@ func _on_area_2d_body_entered(_body: Node2D) -> void:
 	if activated:
 		print('Activated.')
 		print('Baking...')
+		# Displays baking indicator for 0.5 seconds (TODO: implement progress bar)
+		display_baking_indicator.emit()
 		await get_tree().create_timer(0.5).timeout # Wait 0.5 seconds for baking process.
 		activated = false # Stops oven detection.
 		# Emit signal that the oven process is done.

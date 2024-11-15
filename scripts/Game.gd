@@ -20,6 +20,21 @@ func _ready():
 	$HUD.update_coins(coins_earned)
 	$HUD.update_customers_served(customers_served)
 	
+func reset_game():
+	$Player.start($StartPosition.position)
+	$StartTimer.start()
+	$NPC.generate_order()
+	$HUD.reset_time_indicator()
+	# NOTE: Temp function to display ingredients. Replace with $HUD.update_order_image(selected_order[0])
+	$HUD.update_list_ingredients($NPC.selected_order[1][0], $NPC.selected_order[1][1], $NPC.selected_order[1][2])
+	print($NPC.selected_order)
+	coins_earned = 0
+	customers_served = 0
+	time_left = 120
+	# Updates the coins and customers served.
+	$HUD.update_coins(coins_earned)
+	$HUD.update_customers_served(customers_served)
+	
 func _on_countdown_timer_timeout() -> void:
 	time_left -= 1
 	if time_left >= 0:
@@ -70,6 +85,8 @@ func _on_player_hit(body: Node2D) -> void:
 			else:
 				print('Uh oh. Collected the wrong ingredient!')
 				$NPC.mark_incorrect_ingredient()
+				# Activate trash detection to throw away the wrong ingredient.
+				$TrashCan.activate_trash_detection()
 			
 			# Remove the ingredient from the scene
 			body.queue_free()	
@@ -93,6 +110,7 @@ func _on_oven_completed_baking(test_string) -> void:
 # Called once the order has been sold.
 func _on_sale_counter_order_sold(test_string) -> void:
 	print(test_string)
+	$HUD.update_order_state("SOLD")
 	$NPC.exit()
 	coins_earned += 100
 	customers_served += 1
@@ -105,3 +123,11 @@ func _on_sale_counter_order_sold(test_string) -> void:
 	$HUD.update_list_ingredients($NPC.selected_order[1][0], $NPC.selected_order[1][1], $NPC.selected_order[1][2])
 	# $NPC.enter()
 	print($NPC.selected_order)
+
+# Activates ingredient collection again.	
+func _on_trash_can_ingredient_discarded(test_string) -> void:
+	print("Thrown ingredient!")
+	$NPC.reset_incorrect_ingredient()
+
+func _on_oven_display_baking_indicator() -> void:
+	$HUD.update_order_state("BAKING")

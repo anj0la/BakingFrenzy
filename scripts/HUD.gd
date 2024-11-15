@@ -61,7 +61,7 @@ func display_goal(show_second_goal: bool = false) -> void:
 	if show_second_goal:
 		$MainControl/GoalsContainer/SecondGoal.text = _generate_goal()
 		
-# Updates recipe order status, whether it is completed (green) or not (grey).
+# Updates order status, whether it is completed (green) or not (grey).
 func update_order_status(completed: bool) -> void:
 	if completed:
 		$MainControl/OrderStatusContainer/CompletedStatus.add_theme_color_override("font_color", Color.LIME_GREEN)
@@ -76,7 +76,10 @@ func update_order(recipe_name: String) -> void:
 # Updates the order state.
 func update_order_state(new_state: String) -> void:
 	$MainControl/OrderStateContainer/OrderState.text = new_state
+	await get_tree().create_timer(1.0).timeout
+	$MainControl/OrderStateContainer/OrderState.text = ""
 	
+# Updates the open status.
 func _update_open_status(in_game_hour: float) -> void:
 	if int(in_game_hour) == FINAL_HOUR:
 		# NOTE: We would add flashing animations to showcase that the store is closing soon.
