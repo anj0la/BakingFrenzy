@@ -1,8 +1,8 @@
 extends CanvasLayer
 
 const BASE_RATE: int = 5
-const FINAL_HOUR: int = 5
-const CLOSED_HOUR: int = 6
+const FINAL_HOUR: int = 17 # 5 PM
+const CLOSED_HOUR: int = 18 # 6 PM
 # May store the following array into a CustomResource file.
 const GOALS: Array = [{"name": "goal_coins", "target": 500}, {"name": "goal_customers", "target": 10}]
 @export var seconds_per_in_game_hour: int = 12 # 6, 12, 18
@@ -77,17 +77,16 @@ func update_order(recipe_name: String) -> void:
 func update_order_state(new_state: String) -> void:
 	$MainControl/OrderStateContainer/OrderState.text = new_state
 	
-	
 func _update_open_status(in_game_hour: float) -> void:
 	if int(in_game_hour) == FINAL_HOUR:
 		# NOTE: We would add flashing animations to showcase that the store is closing soon.
+		# NOTE: Use tween to animate 
 		$MainControl/StatusTimeContainer/OpenStatus.text = "CLOSING"
 		$MainControl/StatusTimeContainer/OpenStatus.add_theme_color_override("font_color", Color.ORANGE)
 	elif int(in_game_hour) == CLOSED_HOUR:
 		$MainControl/StatusTimeContainer/OpenStatus.text = "CLOSED"
 		$MainControl/StatusTimeContainer/OpenStatus.add_theme_color_override("font_color", Color.BLACK)
 		
-
 # Displays the in-game time on the HUD.
 func _display_time_in_hud(in_game_hour: float) -> void:
 	# Get hours, minutes and AM/PM indicator.
