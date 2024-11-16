@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=3 uid="uid://cetdbvols3lf5"]
+
+[ext_resource type="Script" path="res://scripts/PauseMenu.gd" id="1_gpe0r"]
+[ext_resource type="Texture2D" uid="uid://ycwfcdipkcnf" path="res://art/rotate.png" id="2_inw6d"]
+[ext_resource type="Texture2D" uid="uid://bniqwmr2frkw7" path="res://art/resume.png" id="2_k6s30"]
+[ext_resource type="Texture2D" uid="uid://b586lm63mv2d" path="res://art/arrow_right.png" id="3_iyvdg"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+script = ExtResource("1_gpe0r")
+
+[node name="MainControl" type="Control" parent="."]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuTexture" type="ColorRect" parent="MainControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -104.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.807843, 0.541176, 0.435294, 1)
+
+[node name="MenuContainer" type="VBoxContainer" parent="MainControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -102.0
+offset_right = 200.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="DayCompleted" type="Label" parent="MainControl/MenuContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="NavContainer" type="HBoxContainer" parent="MainControl/MenuContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="ResumeButton" type="TextureButton" parent="MainControl/MenuContainer/NavContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_k6s30")
+
+[node name="RestartButton" type="TextureButton" parent="MainControl/MenuContainer/NavContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_inw6d")
+
+[node name="LevelSelectionButton" type="TextureButton" parent="MainControl/MenuContainer/NavContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_iyvdg")
+
+[connection signal="pressed" from="MainControl/MenuContainer/NavContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="MainControl/MenuContainer/NavContainer/RestartButton" to="." method="_on_restart_button_pressed"]

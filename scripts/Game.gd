@@ -28,12 +28,17 @@ func _ready():
 func _process(delta: float) -> void:
 	elapsed_time += delta
 	if elapsed_time >= 1.0:
-		$HUD.update_time_indicator(int($Timer.time_left))
+		$HUD.update_time_indicator(int($CountdownTimer.time_left))
 		elapsed_time = 0.0
+	
+func _input(event):
+	if event.is_action_pressed("pause_game"):
+		_toggle_pause_menu()	
 	
 # Resets the game.
 func reset_game():
 	$Player.start($StartPosition.position)
+	get_tree().call_group("active_ingredient", "queue_free")
 	$StartTimer.start()
 	$NPC.generate_order()
 	$HUD.reset_time_indicator()
@@ -56,18 +61,18 @@ func _on_countdown_timer_timeout() -> void:
 func _on_ingredient_timer_timeout() -> void:
 	# Create a new instance of the Ingredient scene.
 	var ingredient = ingredient_scene.instantiate()
-	
+		
 	# Choose a random location on Path2D.
 	var ingredient_spawn_location = $IngredientPath/IngredientSpawnLocation
 	ingredient_spawn_location.progress_ratio = randf()
-	
+		
 	# Set the ingredient's position perpendicular to the path direction (direction -> horizontial, path -> vertical).
 	var direction = ingredient_spawn_location.rotation + PI / 2
-	
+		
 	# Set the ingredient's position to a random location.
 	ingredient.position = ingredient_spawn_location.position
 	ingredient.rotation = direction
-	
+		
 	# Spawn the ingredient by adding it to the Game scene.
 	add_child(ingredient)
 	
@@ -75,7 +80,6 @@ func _on_ingredient_timer_timeout() -> void:
 func _on_start_timer_timeout() -> void:
 	$IngredientTimer.start()
 	$CountdownTimer.start()
-	$Timer.start()
 	# print('Started ingredient timer.')
 
 # Called every time an object enters the player's body.
@@ -138,5 +142,34 @@ func _on_trash_can_ingredient_discarded(test_string) -> void:
 	print("Thrown ingredient!")
 	$NPC.reset_incorrect_ingredient()
 
+# Displays to the game screen that the ingredients are baking.
 func _on_oven_display_baking_indicator() -> void:
 	$HUD.update_order_state("BAKING")
+
+# Displays to the game screen that the incorrect ingredients is being thrown out.
+func _on_trash_can_display_throwing_indicator() -> void:
+	$HUD.update_order_state("THROWING")
+	
+# Toggles the pause menu.
+func _toggle_pause_menu():
+	if $PauseMenu.visible:
+		$PauseMenu.hide()
+		get_tree().paused = false
+	else:
+		$PauseMenu.show()
+		get_tree().paused = true
+
+# Toggles the pause menu through pressing the Menu button.
+func _on_hud_pause_game() -> void:
+	_toggle_pause_menu()
+	
+# Restarts the game from the beginning.
+func _on_pause_menu_reset_game() -> void:
+	$PauseMenu.hide()
+	reset_game()
+	get_tree().paused = false
+
+# Resumes the game.
+func _on_pause_menu_resume_game() -> void:
+	$PauseMenu.hide()
+	get_tree().paused = false

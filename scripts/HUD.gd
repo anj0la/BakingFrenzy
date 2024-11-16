@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal pause_game
+
 const BASE_RATE: int = 5
 const FINAL_HOUR: int = 17 # 5 PM
 const CLOSED_HOUR: int = 18 # 6 PM
@@ -125,6 +127,7 @@ func reset_ingredient_completion() -> void:
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.add_theme_color_override("font_color", Color.BLACK)
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.add_theme_color_override("font_color", Color.BLACK)
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientName.add_theme_color_override("font_color", Color.BLACK)
+		
 
 # Generates a goal.
 # To do so, need to have goals separated into 2 categories: goal_coins & goal_customers
@@ -141,3 +144,6 @@ func _generate_goal() -> String:
 	else:
 		return "Serve " + str(goal.target) + " customers"
 		
+# Emits signal to pause the game.
+func _on_menu_button_pressed() -> void:
+	pause_game.emit()

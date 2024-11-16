@@ -143,6 +143,7 @@ func _select_random_order() -> Array:
 func _is_off_screen():
 	return position.x > screen_size.x + OFFSET
 
+# Handles collision with the SaleCounter to stop NPC from moving.
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	print('NPC at counter: ', npc_at_counter)
 	print('The body the NPC entered in is: ', body.name)

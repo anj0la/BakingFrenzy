@@ -2,11 +2,11 @@ extends CanvasLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	visible = false
+	hide()
 	
 # Displays the game over menu.
-func display_game_over_menu(day: String, stars_earned: int, coins_earned: int, customers_served: int) -> void:
-	visible = true
+func display_game_over_menu(day: int, stars_earned: int, coins_earned: int, customers_served: int) -> void:
+	show()
 	_display_day_completed(day)
 	_display_stars_earned(stars_earned)
 	_display_coins_earned(coins_earned)
@@ -14,11 +14,11 @@ func display_game_over_menu(day: String, stars_earned: int, coins_earned: int, c
 	
 # Hides the game over menu.
 func remove_game_over_menu() -> void:
-	visible = false
+	hide()
 
 # Displays the day (i.e., level) the player has completed.
-func _display_day_completed(day: String) -> void:
-	$MainControl/MenuContainer/DayCompleted.text = day.to_upper()
+func _display_day_completed(day: int) -> void:
+	$MainControl/MenuContainer/DayCompleted.text = "DAY " + str(day)
 
 # Displays the number of stars the player has earned.
 func _display_stars_earned(stars_earned: int) -> void:

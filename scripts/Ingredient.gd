@@ -12,7 +12,7 @@ func _physics_process(delta):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var rand_index = randi() % ingredient_names.size()
-	ingredient_name = ingredient_names[rand_index] 
+	ingredient_name = ingredient_names[rand_index]
 	$Sprite2D.texture = _get_texture(rand_index)
 	# Make ingredient available to player for collision detection.
 	add_to_group("active_ingredient")
@@ -23,6 +23,7 @@ func _get_texture(index: int) -> Texture2D:
 	var texture = load(image_path)
 	return texture
 
+# Removes ingredients from the scene when they collide with the floor.
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == 'Floor':
 		# Make ingredient inactive (cannot be collected by player).

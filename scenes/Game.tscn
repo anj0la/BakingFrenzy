@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ohh7bftd3kvo"]
+[gd_scene load_steps=14 format=3 uid="uid://ohh7bftd3kvo"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_6itma"]
 [ext_resource type="PackedScene" uid="uid://6gofu3xm83fx" path="res://scenes/Ingredient.tscn" id="2_8ut5c"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dqfwvvi6rb8gb" path="res://scenes/HUD.tscn" id="8_660gl"]
 [ext_resource type="PackedScene" uid="uid://dmh4v6n6e4d3g" path="res://scenes/TrashCan.tscn" id="9_dushb"]
 [ext_resource type="PackedScene" uid="uid://dgh7j3kb520y4" path="res://scenes/GameOverMenu.tscn" id="10_15l6u"]
+[ext_resource type="PackedScene" uid="uid://cetdbvols3lf5" path="res://scenes/PauseMenu.tscn" id="11_0uekj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xyenl"]
 size = Vector2(1921, 202)
@@ -83,13 +84,20 @@ one_shot = true
 [node name="GameOverMenu" parent="." instance=ExtResource("10_15l6u")]
 visible = false
 
+[node name="PauseMenu" parent="." instance=ExtResource("11_0uekj")]
+visible = false
+
 [connection signal="completed_baking" from="Oven" to="." method="_on_oven_completed_baking"]
 [connection signal="display_baking_indicator" from="Oven" to="." method="_on_oven_display_baking_indicator"]
 [connection signal="order_sold" from="SaleCounter" to="." method="_on_sale_counter_order_sold"]
+[connection signal="display_throwing_indicator" from="TrashCan" to="." method="_on_trash_can_display_throwing_indicator"]
 [connection signal="ingredient_discarded" from="TrashCan" to="." method="_on_trash_can_ingredient_discarded"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="IngredientTimer" to="." method="_on_ingredient_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="bake_ingredients" from="NPC" to="." method="_on_npc_bake_ingredients"]
 [connection signal="order_completed" from="NPC" to="." method="_on_npc_order_completed"]
+[connection signal="pause_game" from="HUD" to="." method="_on_hud_pause_game"]
 [connection signal="timeout" from="CountdownTimer" to="." method="_on_countdown_timer_timeout"]
+[connection signal="reset_game" from="PauseMenu" to="." method="_on_pause_menu_reset_game"]
+[connection signal="resume_game" from="PauseMenu" to="." method="_on_pause_menu_resume_game"]

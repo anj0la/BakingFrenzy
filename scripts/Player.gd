@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal hit
+signal pause_movement
 
 const WALK_SPEED = 600
 var screen_size
@@ -41,5 +42,6 @@ func start(pos: Vector2) -> void:
 	show()
 	$CollisionShape2D.disabled = false
 
+# Signals that the player has been hit by a Node2D body.
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	hit.emit(body)
