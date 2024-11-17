@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://wm64m4p8ix3d"]
+
+[ext_resource type="Script" path="res://scripts/SaleCounter.gd" id="1_6bm1k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0esjh"]
+size = Vector2(136, 218)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_boage"]
+size = Vector2(304, 242)
+
+[node name="SaleCounter" type="StaticBody2D"]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_6bm1k")
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -40.0
+offset_right = 96.0
+offset_bottom = 216.0
+color = Color(0.639216, 0.172549, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(28, 107)
+shape = SubResource("RectangleShape2D_0esjh")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(24, 119)
+shape = SubResource("RectangleShape2D_boage")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
