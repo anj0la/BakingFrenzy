@@ -12,6 +12,7 @@ enum MovementStage {
 
 const OFFSET: float = 100.0
 @export var speed: float = 250.0
+@export var recipe_manager: Resource
 
 # May store the following array into a CustomResource file.
 var orders: Dictionary = {"purple": ["red", "blue", "white"], "cyan": ["blue", "green", "white"], "pink": ["red", "yellow", "white"]}
@@ -32,6 +33,7 @@ func _ready() -> void:
 	seen_ingredients = Array() # Initalizes an empty array
 	screen_size = get_viewport_rect().size
 	movement_stage = MovementStage.ENTERING
+	generate_order()
 
 # Called before physics step and in sync with physics server.
 func _physics_process(delta):
@@ -67,7 +69,10 @@ func _physics_process(delta):
 		
 # Generates a new order.
 func generate_order():
-	selected_order = _select_random_order()
+	recipe_manager.reset_weights()
+	selected_order = recipe_manager.select_recipe()
+	recipe_manager.initialize_weights(selected_order)
+	## selected_order = _select_random_order()
 	seen_ingredients.clear() # Clear all seen ingredients
 	ingredient_count = selected_order[1].size()
 	collected_ingredient_count = 0
@@ -89,6 +94,8 @@ func increase_collected_count(collided_ingredient: String) -> void:
 	if collided_ingredient not in seen_ingredients:
 		collected_ingredient_count += 1
 		seen_ingredients.append(collided_ingredient)
+		# Collected ingredient is not seen again.
+		## recipe_manager.exclude_ingredient(collided_ingredient)
 		
 		# All ingredients have been collected and can be put into the oven.
 		if collected_ingredient_count == ingredient_count:
@@ -108,8 +115,10 @@ func check_if_in_order(collided_ingredient: String) -> bool:
 	return false
 	
 # Sets the incorrect ingredient flag to true.
-func mark_incorrect_ingredient() -> void:
+func mark_incorrect_ingredient(collided_ingredient: String) -> void:
 	incorrect_ingredient = true
+	# Collected ingredient is not seen again.
+	recipe_manager.exclude_ingredient(collided_ingredient)
 
 # Sets the incorrect ingredient flag to false.
 func reset_incorrect_ingredient() -> void:

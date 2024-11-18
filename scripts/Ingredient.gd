@@ -1,9 +1,11 @@
 extends StaticBody2D
 
-var ingredient_names = ["blue", "red", "white", "green", "yellow"]
-
 @export var speed: float = 400.0 # WAS SUPPOSED TO BE DELTA ALL ALONG
 @export var ingredient_name: String
+
+var ingredient_names = ["blue", "red", "white", "green", "yellow"]
+
+## var recipes: RecipeManager
 
 # Called before physics step and in sync with physics server.
 func _physics_process(delta):
@@ -13,6 +15,8 @@ func _physics_process(delta):
 func _ready() -> void:
 	var rand_index = randi() % ingredient_names.size()
 	ingredient_name = ingredient_names[rand_index]
+	# It is assumed that the RecipeManager has been 
+	## ingredient_name = recipes.select
 	$Sprite2D.texture = _get_texture(rand_index)
 	# Make ingredient available to player for collision detection.
 	add_to_group("active_ingredient")

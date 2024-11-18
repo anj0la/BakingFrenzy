@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ctng3jds3j4mm"]
+
+[ext_resource type="Script" path="res://resources/RecipeManager.gd" id="1_usjej"]
+
+[resource]
+script = ExtResource("1_usjej")
+recipes = {
+"cyan": ["blue", "green", "white"],
+"pink": ["red", "yellow", "white"],
+"purple": ["red", "blue", "white"]
+}
+ingredient_weights = {
+"blue": 1.0,
+"green": 1.0,
+"red": 1.0,
+"white": 1.0,
+"yellow": 1.0
+}
+default_weight = 1.0
+multiplier = 4.0

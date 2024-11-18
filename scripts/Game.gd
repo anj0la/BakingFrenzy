@@ -15,7 +15,6 @@ func _ready():
 	$NPC.generate_order()
 	# NOTE: Temp function to display ingredients. Replace with $HUD.update_order_image(selected_order[0])
 	$HUD.update_list_ingredients($NPC.selected_order[1][0], $NPC.selected_order[1][1], $NPC.selected_order[1][2])
-	print($NPC.selected_order)
 	coins_earned = 0
 	customers_served = 0
 	elapsed_time = 0.0
@@ -31,6 +30,7 @@ func _process(delta: float) -> void:
 		$HUD.update_time_indicator(int($CountdownTimer.time_left))
 		elapsed_time = 0.0
 	
+# Handles input events for pausing the game.
 func _input(event):
 	if event.is_action_pressed("pause_game"):
 		_toggle_pause_menu()	
@@ -92,12 +92,12 @@ func _on_player_hit(body: Node2D) -> void:
 		# Ignore collision detection if the recipe has been completed or the player has collected the wrong ingredient.
 		if not $NPC.completed_ingredient_collection and not $NPC.incorrect_ingredient:
 			if $NPC.check_if_in_order(body.ingredient_name):
-				print('Collected a correct ingredient!')
+				# print('Collected a correct ingredient!')
 				$NPC.increase_collected_count(body.ingredient_name)
 				$HUD.update_ingredient_completion(body.ingredient_name)
 			else:
-				print('Uh oh. Collected the wrong ingredient!')
-				$NPC.mark_incorrect_ingredient()
+				# print('Uh oh. Collected the wrong ingredient!')
+				$NPC.mark_incorrect_ingredient(body.ingredient_name)
 				# Activate trash detection to throw away the wrong ingredient.
 				$TrashCan.activate_trash_detection()
 			
@@ -139,7 +139,7 @@ func _on_sale_counter_order_sold(test_string) -> void:
 
 # Activates ingredient collection again.	
 func _on_trash_can_ingredient_discarded(test_string) -> void:
-	print("Thrown ingredient!")
+	# print("Thrown ingredient!")
 	$NPC.reset_incorrect_ingredient()
 
 # Displays to the game screen that the ingredients are baking.
