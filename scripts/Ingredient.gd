@@ -1,11 +1,8 @@
 extends StaticBody2D
 
-@export var speed: float = 400.0 # WAS SUPPOSED TO BE DELTA ALL ALONG
+@export var speed: float = 400.0
 @export var ingredient_name: String
-
-var ingredient_names = ["blue", "red", "white", "green", "yellow"]
-
-## var recipes: RecipeManager
+@export var recipe_manager: Resource
 
 # Called before physics step and in sync with physics server.
 func _physics_process(delta):
@@ -13,17 +10,14 @@ func _physics_process(delta):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var rand_index = randi() % ingredient_names.size()
-	ingredient_name = ingredient_names[rand_index]
-	# It is assumed that the RecipeManager has been 
-	## ingredient_name = recipes.select
-	$Sprite2D.texture = _get_texture(rand_index)
+	ingredient_name = recipe_manager.select_ingredient()
+	$Sprite2D.texture = _get_texture(ingredient_name)
 	# Make ingredient available to player for collision detection.
 	add_to_group("active_ingredient")
 	
 # Gets an ingredient image texture based on its index.
-func _get_texture(index: int) -> Texture2D:
-	var image_path = "res://art/rect_" + ingredient_names[index] + ".png"
+func _get_texture(ingredient_name: String) -> Texture2D:
+	var image_path = "res://art/rect_" + ingredient_name + ".png"
 	var texture = load(image_path)
 	return texture
 

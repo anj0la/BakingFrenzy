@@ -19,21 +19,17 @@ var orders: Dictionary = {"purple": ["red", "blue", "white"], "cyan": ["blue", "
 
 var movement_stage: MovementStage
 var selected_order: Array
-var seen_ingredients: Array
 var screen_size: Vector2
 var ingredient_count: int
 var collected_ingredient_count: int
 var completed_ingredient_collection: bool
 var incorrect_ingredient: bool
-var order_ready: bool
 var npc_at_counter: bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	seen_ingredients = Array() # Initalizes an empty array
 	screen_size = get_viewport_rect().size
 	movement_stage = MovementStage.ENTERING
-	generate_order()
 
 # Called before physics step and in sync with physics server.
 func _physics_process(delta):
@@ -55,10 +51,10 @@ func _physics_process(delta):
 		move_and_collide(Vector2(speed * delta, 0))
 		velocity.x = speed * delta
 		
-		# Delays reentering of NPC.
+		# NPC reenters the scene.
 		if _is_off_screen():
+			## NOTE: Change NPC image.
 			movement_stage = MovementStage.ENTERING
-			# $ExitTimer.start()
 
 	# Animate the NPC movement.
 	if velocity.x != 0:
@@ -72,18 +68,10 @@ func generate_order():
 	recipe_manager.reset_weights()
 	selected_order = recipe_manager.select_recipe()
 	recipe_manager.initialize_weights(selected_order)
-	## selected_order = _select_random_order()
-	seen_ingredients.clear() # Clear all seen ingredients
 	ingredient_count = selected_order[1].size()
 	collected_ingredient_count = 0
 	incorrect_ingredient = false 
-
-	# May delete the following vars
 	completed_ingredient_collection = false
-	order_ready = false
-	
-	print('Collected ingredient count: ', collected_ingredient_count)
-	print('Ingredient count: ', ingredient_count)
 	
 # Returns the selected order. Used for UI display.
 func get_selected_order() -> Array:
@@ -91,23 +79,18 @@ func get_selected_order() -> Array:
 	
 # Increases the number of ingredients the player has collected.
 func increase_collected_count(collided_ingredient: String) -> void:
-	if collided_ingredient not in seen_ingredients:
-		collected_ingredient_count += 1
-		seen_ingredients.append(collided_ingredient)
-		# Collected ingredient is not seen again.
-		## recipe_manager.exclude_ingredient(collided_ingredient)
+	# Increment collected count.
+	collected_ingredient_count += 1
 		
-		# All ingredients have been collected and can be put into the oven.
-		if collected_ingredient_count == ingredient_count:
-			mark_required_ingredients_collected()
-			bake_ingredients.emit()
-			print('Onto the Oven stage!')
-	else:
-		print('Did not collect anything!\n')
+	# Avoid seeing the collected ingredient again.
+	recipe_manager.exclude_ingredient(collided_ingredient)
 		
-	print('Seen ingredients: ', seen_ingredients)
-	print('Collected ingredient count: ', collected_ingredient_count)
-	
+	# All ingredients have been collected and can be put into the oven.
+	if collected_ingredient_count == ingredient_count:
+		mark_required_ingredients_collected()
+		bake_ingredients.emit()
+		#print('Onto the Oven stage!')
+			
 # Checks if the collided ingredient is in the order.
 func check_if_in_order(collided_ingredient: String) -> bool:
 	if collided_ingredient in selected_order[1]: # selected_recipe[1] = ["ingredient_1", ... "ingredient_n"] 

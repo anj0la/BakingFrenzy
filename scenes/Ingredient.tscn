@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://6gofu3xm83fx"]
+[gd_scene load_steps=6 format=3 uid="uid://6gofu3xm83fx"]
 
 [ext_resource type="Script" path="res://scripts/Ingredient.gd" id="1_s48xm"]
 [ext_resource type="Texture2D" uid="uid://uw01w40pmj3y" path="res://art/rect_purple.png" id="1_uyc37"]
+[ext_resource type="Resource" uid="uid://ctng3jds3j4mm" path="res://resources/RecipeManager.tres" id="2_0crm3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5q3xf"]
 size = Vector2(76, 74)
@@ -14,6 +15,7 @@ position = Vector2(500, -50)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_s48xm")
+recipe_manager = ExtResource("2_0crm3")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
