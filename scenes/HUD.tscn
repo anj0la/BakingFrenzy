@@ -99,8 +99,6 @@ fit_content = true
 scroll_active = false
 deselect_on_focus_loss_enabled = false
 drag_and_drop_selection_enabled = false
-visible_characters = 8
-visible_ratio = 1.33333
 
 [node name="TimeIndicator" type="Label" parent="MainControl/StatusTimeContainer"]
 layout_mode = 2

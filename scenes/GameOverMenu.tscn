@@ -106,3 +106,7 @@ texture_normal = ExtResource("5_8vn1p")
 [node name="LevelSelectionButton" type="TextureButton" parent="MainControl/MenuContainer/NavContainer"]
 layout_mode = 2
 texture_normal = ExtResource("6_1d77x")
+
+[connection signal="pressed" from="MainControl/MenuContainer/NavContainer/HomeButton" to="." method="_on_home_button_pressed"]
+[connection signal="pressed" from="MainControl/MenuContainer/NavContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="MainControl/MenuContainer/NavContainer/LevelSelectionButton" to="." method="_on_level_selection_button_pressed"]

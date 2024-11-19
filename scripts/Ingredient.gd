@@ -16,8 +16,8 @@ func _ready() -> void:
 	add_to_group("active_ingredient")
 	
 # Gets an ingredient image texture based on its index.
-func _get_texture(ingredient_name: String) -> Texture2D:
-	var image_path = "res://art/rect_" + ingredient_name + ".png"
+func _get_texture(ingredient: String) -> Texture2D:
+	var image_path = "res://art/rect_" + ingredient + ".png"
 	var texture = load(image_path)
 	return texture
 

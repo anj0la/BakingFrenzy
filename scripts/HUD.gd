@@ -17,7 +17,7 @@ func _ready() -> void:
 	print('increment interval: ', increment_interval)
 	current_in_game_hour = 8.0 # Start at 8:00 AM.
 	_display_time_in_hud(current_in_game_hour)
-	display_goal()
+	# display_goal()
 	update_order_status(false)
 	update_order_state("")
 
@@ -55,13 +55,21 @@ func update_customers_served(customers_served: int) -> void:
 	$MainControl/GameStatsContainer/Customers.text = str(customers_served)
 	
 # Displays the objective(s) that a Player must achieve to complete the day (i.e., pass the level).
-func display_goal(show_second_goal: bool = false) -> void:
-	$MainControl/GoalsContainer/FirstGoal.text = _generate_goal()
+func display_goal(first_goal: Array, second_goal: Array = [], show_second_goal: bool = false) -> void:
+	# NOTE: first_goal[0] == goal_name, first_goal[1] = target.
+	if first_goal[0] == "coins_earned":
+		$MainControl/GoalsContainer/FirstGoal.text = "Earn " + str(first_goal[1]) + " coins"
+	else: # first_goal[0] == "customers_served:
+		$MainControl/GoalsContainer/FirstGoal.text = "Serve " + str(first_goal[1]) + " customers"
+		
 	$MainControl/GoalsContainer/SecondGoal.visible = show_second_goal
 	
-	# Generate and display second objective.
+	# Generate and display second objective (if it exists).
 	if show_second_goal:
-		$MainControl/GoalsContainer/SecondGoal.text = _generate_goal()
+		if second_goal[0] == "coins_earned":
+			$MainControl/GoalsContainer/FirstGoal.text = "Earn " + str(second_goal[1]) + " coins"
+		else: # second_goal[0] == "customers_served:
+			$MainControl/GoalsContainer/FirstGoal.text = "Serve " + str(second_goal[1]) + " customers"
 		
 # Updates order status, whether it is completed (green) or not (grey).
 func update_order_status(completed: bool) -> void:

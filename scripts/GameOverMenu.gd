@@ -1,5 +1,9 @@
 extends CanvasLayer
 
+signal to_main_menu
+signal reset_game
+signal to_level_selection
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hide()
@@ -16,6 +20,18 @@ func display_game_over_menu(day: int, stars_earned: int, coins_earned: int, cust
 func remove_game_over_menu() -> void:
 	hide()
 
+# Sends player back to home screen (main menu).	
+func _on_home_button_pressed() -> void:
+	to_main_menu.emit()
+
+# Restarts the game.
+func _on_restart_button_pressed() -> void:
+	reset_game.emit()
+	
+# Sends player back to level selection menu.
+func _on_level_selection_button_pressed() -> void:
+	to_level_selection.emit()
+
 # Displays the day (i.e., level) the player has completed.
 func _display_day_completed(day: int) -> void:
 	$MainControl/MenuContainer/DayCompleted.text = "DAY " + str(day)
@@ -23,7 +39,7 @@ func _display_day_completed(day: int) -> void:
 # Displays the number of stars the player has earned.
 func _display_stars_earned(stars_earned: int) -> void:
 	var image_path = "res://art/" + str(stars_earned) + "_stars.png"
-	$MainControl/MenuContainer/StarsEarned.texture = load("res://art/three_stars.png")
+	$MainControl/MenuContainer/StarsEarned.texture = load(image_path)
 	
 # Displays the total coins earned.
 func _display_coins_earned(coins_earned: int) -> void:

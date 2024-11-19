@@ -14,9 +14,6 @@ const OFFSET: float = 100.0
 @export var speed: float = 250.0
 @export var recipe_manager: Resource
 
-# May store the following array into a CustomResource file.
-var orders: Dictionary = {"purple": ["red", "blue", "white"], "cyan": ["blue", "green", "white"], "pink": ["red", "yellow", "white"]}
-
 var movement_stage: MovementStage
 var selected_order: Array
 var screen_size: Vector2
@@ -124,12 +121,6 @@ func enter() -> void:
 func exit() -> void:
 	npc_at_counter = false # Make sure npc_at_counter is false when exiting.
 	movement_stage = MovementStage.EXITING
-	
-# Selects a random order. TODO: Update to select a random NPC which will have an order attached to them to make gameplay more realistic.
-func _select_random_order() -> Array:
-	var rand_index = randi() % orders.size()
-	var rand_key = orders.keys()[rand_index]
-	return [rand_key, orders[rand_key]] # selected_order[0] = recipe name, selected_order[1] = ["ingredient_1", ... "ingredient_n"] 
 	
 # Checks if the NPC is out of the screen.
 func _is_off_screen():

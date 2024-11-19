@@ -1,30 +1,55 @@
 extends Node
 
+const SINGLE_CUSTOMER: int = 1
 @export var ingredient_scene: PackedScene
-var coins_earned: int
-var customers_served: int
+@export var game_stats: Resource
 var elapsed_time: float
-var stars_earned: int 
-# Will store the Goals array into a CustomResource file. to get the goal and divide it into 3 to get to 1 star, 2 stars and 3 stars (completing the goal).
-const GOALS: Array = [{"name": "goal_coins", "target": 500}, {"name": "goal_customers", "target": 10}]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Load game stats (uncomment after completing a full game.)
+	game_stats.load_game_stats()
+	
+	print("current level: ", game_stats.current_level)
+	print("total coins: ", game_stats.total_coins)
+	print("total customers served: ", game_stats.total_customers_served)
+	print("total stars: ", game_stats.total_stars)
+	print("level stars: ", game_stats.level_stars)
+
+	get_tree().quit()
+	
+	# Place player at starting position.
 	$Player.start($StartPosition.position)
-	$StartTimer.start()
+	
+	# Generate an order for the NPC.
 	$NPC.generate_order()
-	# NOTE: Temp function to display ingredients. Replace with $HUD.update_order_image(selected_order[0])
-	$HUD.update_list_ingredients($NPC.selected_order[1][0], $NPC.selected_order[1][1], $NPC.selected_order[1][2])
-	coins_earned = 0
-	customers_served = 0
+	
+	# Update list of ingredients.
+	$HUD.update_list_ingredients($NPC.selected_order[1][0], $NPC.selected_order[1][1], $NPC.selected_order[1][2]) # NOTE: Temp function to display ingredients.
+	
+	# Generate the goal for the level and thresholds to get three stars.
+	game_stats.generate_goal()
+	game_stats.setup_level_goal()
+	
+	# Display the goal.
+	$HUD.display_goal(game_stats.selected_goal)
+	
+	# Set elasped time.
 	elapsed_time = 0.0
-	stars_earned = 1
-	# Updates the coins and customers served.
-	$HUD.update_coins(coins_earned)
-	$HUD.update_customers_served(customers_served)
+	
+	# Update the coins and customers served.
+	$HUD.update_coins(game_stats.current_level_coins)
+	$HUD.update_customers_served(game_stats.current_level_customers_served)
+	
+	# Start the game timer and ingredient spawn timer.
+	$StartTimer.start()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	# Check if player has passed threshold every frame.
+	game_stats.update_current_level_stars()
+	
+	# Updates time in-game every second.
 	elapsed_time += delta
 	if elapsed_time >= 1.0:
 		$HUD.update_time_indicator(int($CountdownTimer.time_left))
@@ -37,26 +62,49 @@ func _input(event):
 	
 # Resets the game.
 func reset_game():
+	# Place player at starting position.
 	$Player.start($StartPosition.position)
+	
+	# Free any active ingredients.
 	get_tree().call_group("active_ingredient", "queue_free")
-	$StartTimer.start()
+	
+	# Generate an order for the NPC.
 	$NPC.generate_order()
+	
+	# Reset time indicator and list of ingredients.
 	$HUD.reset_time_indicator()
-	# NOTE: Temp function to display ingredients. Replace with $HUD.update_order_image(selected_order[0])
-	$HUD.update_list_ingredients($NPC.selected_order[1][0], $NPC.selected_order[1][1], $NPC.selected_order[1][2])
+	$HUD.update_list_ingredients($NPC.selected_order[1][0], $NPC.selected_order[1][1], $NPC.selected_order[1][2]) # NOTE: Temp function to display ingredients.
+	
+	# Reset level stats.
+	game_stats.reset_level_stats()
+	
 	print($NPC.selected_order)
-	coins_earned = 0
-	customers_served = 0
-	# Updates the coins and customers served.
-	$HUD.update_coins(coins_earned)
-	$HUD.update_customers_served(customers_served)
+	
+	# Update the coins and customers served.
+	$HUD.update_coins(game_stats.current_level_coins)
+	$HUD.update_customers_served(game_stats.current_level_customers_served)
+	
+	# Start the game timer and ingredient spawn timer.
+	$StartTimer.start()
 	
 # Ends the game.
 func _on_countdown_timer_timeout() -> void:
 	print("GAME OVER!")
-	# NOTE: Day is put as 1, will change because we will have set the day from the level scene.
-	$GameOverMenu.display_game_over_menu(1, stars_earned, coins_earned, customers_served)
-
+	
+	# Stop spawning ingredients and clear all active ingredients from the scene.
+	$IngredientTimer.stop()
+	get_tree().call_group("active_ingredient", "queue_free")
+	
+	# Stop player movement from being processed.
+	$Player.stop_movement()
+	
+	# Display game over menu.
+	$GameOverMenu.display_game_over_menu(game_stats.current_level, game_stats.current_level_stars, game_stats.current_level_coins, game_stats.current_level_customers_served)
+	
+	# Unlock next level and save stats.
+	game_stats.complete_level()
+	game_stats.save_game_stats()
+	
 # Creates a new ingredient every time the timer is completed.
 func _on_ingredient_timer_timeout() -> void:
 	# Create a new instance of the Ingredient scene.
@@ -123,18 +171,27 @@ func _on_oven_completed_baking(test_string) -> void:
 # Called once the order has been sold.
 func _on_sale_counter_order_sold(test_string) -> void:
 	print(test_string)
+	
+	# Update order state to SOLD.
 	$HUD.update_order_state("SOLD")
+	
+	# Remove NPC from screen.
 	$NPC.exit()
-	coins_earned += 100
-	customers_served += 1
-	$HUD.update_coins(coins_earned)
-	$HUD.update_customers_served(customers_served)
+
+	# Update and display coins earned and customers served.
+	game_stats.update_level_coins_and_customers_served($NPC.selected_order[2], SINGLE_CUSTOMER)
+	$HUD.update_coins(game_stats.current_level_coins)
+	$HUD.update_customers_served(game_stats.current_level_customers_served)
+	
+	# Remove order state from game screen.
 	$HUD.update_order_status(false)
+	
+	# Generate new order.
 	$NPC.generate_order()
-	# NOTE: Temp function to display ingredients. Replace with $HUD.update_order_image(selected_order[0])
 	$HUD.reset_ingredient_completion()
+	
+	# TODO: Replace with ingredient pictures.
 	$HUD.update_list_ingredients($NPC.selected_order[1][0], $NPC.selected_order[1][1], $NPC.selected_order[1][2])
-	# $NPC.enter()
 	print($NPC.selected_order)
 
 # Activates ingredient collection again.	
@@ -163,13 +220,17 @@ func _toggle_pause_menu():
 func _on_hud_pause_game() -> void:
 	_toggle_pause_menu()
 	
-# Restarts the game from the beginning.
+# Restarts the game from the beginning (from the paused menu).
 func _on_pause_menu_reset_game() -> void:
 	$PauseMenu.hide()
 	reset_game()
 	get_tree().paused = false
 
-# Resumes the game.
+# Resumes the game from the paused menu.
 func _on_pause_menu_resume_game() -> void:
 	$PauseMenu.hide()
 	get_tree().paused = false
+
+# Restarts the game from the beginning (from game over menu).
+func _on_game_over_menu_reset_game() -> void:
+	reset_game()

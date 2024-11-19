@@ -1,13 +1,36 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://ctng3jds3j4mm"]
 
-[ext_resource type="Script" path="res://resources/RecipeManager.gd" id="1_usjej"]
+[ext_resource type="Script" path="res://scripts/RecipeManager.gd" id="1_usjej"]
 
 [resource]
 script = ExtResource("1_usjej")
 recipes = {
-"cyan": ["blue", "green", "white"],
-"pink": ["red", "yellow", "white"],
-"purple": ["red", "blue", "white"]
+"cyan": {
+"cost": 12,
+"ingredients": ["blue", "green", "white"]
+},
+"pink": {
+"cost": 8,
+"ingredients": ["red", "yellow", "white"]
+},
+"purple": {
+"cost": 10,
+"ingredients": ["red", "blue", "white"]
+}
+}
+test = {
+"cyan": {
+"cost": 12,
+"ingredients": ["blue", "green", "white"]
+},
+"pink": {
+"cost": 8,
+"ingredients": ["red", "yellow", "white"]
+},
+"purple": {
+"cost": 10,
+"ingredients": ["red", "blue", "white"]
+}
 }
 ingredient_weights = {
 "blue": 1.0,

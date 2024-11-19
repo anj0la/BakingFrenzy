@@ -101,6 +101,5 @@ visible = false
 [connection signal="order_completed" from="NPC" to="." method="_on_npc_order_completed"]
 [connection signal="pause_game" from="HUD" to="." method="_on_hud_pause_game"]
 [connection signal="timeout" from="CountdownTimer" to="." method="_on_countdown_timer_timeout"]
-[connection signal="reset_game" from="GameOverMenu" to="." method="_on_game_over_menu_reset_game"]
 [connection signal="reset_game" from="PauseMenu" to="." method="_on_pause_menu_reset_game"]
 [connection signal="resume_game" from="PauseMenu" to="." method="_on_pause_menu_resume_game"]

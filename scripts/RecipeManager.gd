@@ -1,9 +1,9 @@
 extends Resource
 
 @export var recipes: Dictionary = {
-	"purple": ["red", "blue", "white"],
-	"cyan": ["blue", "green", "white"],
-	"pink": ["red", "yellow", "white"]
+	"purple": {"ingredients": ["red", "blue", "white"], "cost": 10},
+	"cyan": {"ingredients": ["blue", "green", "white"], "cost": 12},
+	"pink": {"ingredients": ["red", "yellow", "white"], "cost": 8}
 }
 
 @export var ingredient_weights: Dictionary = {
@@ -24,8 +24,10 @@ func _init() -> void:
 # Selects a recupe from the recipes dictionary.
 func select_recipe() -> Array:
 	var rand_index = randi() % recipes.size()
-	var rand_key = recipes.keys()[rand_index]
-	return [rand_key, recipes[rand_key]] # selected_recipe[0] = recipe name, selected_recipe[1] = ["ingredient_1", ... "ingredient_n"] 
+	var rand_recipe_name = recipes.keys()[rand_index]
+	var ingredients = recipes[rand_recipe_name]["ingredients"]
+	var cost = recipes[rand_recipe_name]["cost"]
+	return [rand_recipe_name, ingredients, cost] # selected_recipe[0] = recipe name, selected_recipe[1] = ["ingredient_1", ... "ingredient_n"], selected_recipe[2] = cost
 	
 # Initializes the weights, adding more importance (i.e., increasing the chance of selection) to the ingredients in the selected recipe.
 func initialize_weights(selected_recipe: Array) -> void:
