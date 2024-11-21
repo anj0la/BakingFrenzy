@@ -7,17 +7,6 @@ var elapsed_time: float
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Load game stats (uncomment after completing a full game.)
-	game_stats.load_game_stats()
-	
-	print("current level: ", game_stats.current_level)
-	print("total coins: ", game_stats.total_coins)
-	print("total customers served: ", game_stats.total_customers_served)
-	print("total stars: ", game_stats.total_stars)
-	print("level stars: ", game_stats.level_stars)
-
-	get_tree().quit()
-	
 	# Place player at starting position.
 	$Player.start($StartPosition.position)
 	
@@ -33,7 +22,7 @@ func _ready():
 	
 	# Display the goal.
 	$HUD.display_goal(game_stats.selected_goal)
-	
+		
 	# Set elasped time.
 	elapsed_time = 0.0
 	
@@ -43,6 +32,7 @@ func _ready():
 	
 	# Start the game timer and ingredient spawn timer.
 	$StartTimer.start()
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -1,14 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://jtks6fdmpap6"]
+[gd_scene load_steps=4 format=3 uid="uid://jtks6fdmpap6"]
 
 [ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_3cbe2"]
-[ext_resource type="Texture2D" uid="uid://dmd8bi6t15j6f" path="res://art/gold_coin.png" id="1_7mvp1"]
-[ext_resource type="Texture2D" uid="uid://cmwr0efdp8ul1" path="res://art/shop.png" id="2_virm4"]
-[ext_resource type="Texture2D" uid="uid://tl66fye22gkh" path="res://art/box.png" id="3_ijq1p"]
+[ext_resource type="Resource" uid="uid://cfbsynjsw6ejt" path="res://resources/GameStats.tres" id="2_4ur4q"]
+[ext_resource type="PackedScene" uid="uid://bpaum5m4hpce5" path="res://scenes/OptionsMenu.tscn" id="5_osjo6"]
 
-[node name="MainMenu" type="CanvasLayer"]
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_3cbe2")
+game_stats = ExtResource("2_4ur4q")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -16,98 +23,48 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.69682, 1, 0.995453, 1)
 
-[node name="MainControl" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MenuStatsContainer" type="HBoxContainer" parent="MainControl"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -216.0
-offset_top = 10.0
-offset_bottom = 66.0
-grow_horizontal = 0
-
-[node name="Coins" type="Label" parent="MainControl/MenuStatsContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
-text = "0"
-
-[node name="CoinsImage" type="TextureRect" parent="MainControl/MenuStatsContainer"]
-layout_mode = 2
-texture = ExtResource("1_7mvp1")
-stretch_mode = 2
-
-[node name="ShopButton" type="TextureButton" parent="MainControl/MenuStatsContainer"]
-layout_mode = 2
-texture_normal = ExtResource("2_virm4")
-
-[node name="InventoryButton" type="TextureButton" parent="MainControl/MenuStatsContainer"]
-layout_mode = 2
-texture_normal = ExtResource("3_ijq1p")
-
-[node name="MenuOptionsContainer" type="VBoxContainer" parent="MainControl"]
+[node name="MenuOptionsContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -23.5
-offset_top = -15.5
-offset_right = 23.5
-offset_bottom = 15.5
+offset_left = -215.5
+offset_top = -156.5
+offset_right = 215.5
+offset_bottom = 156.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
 
-[node name="Title" type="Label" parent="MainControl/MenuOptionsContainer"]
+[node name="Title" type="Label" parent="MenuOptionsContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 64
 text = "Baking Frenzy"
 
-[node name="PlayButton" type="Button" parent="MainControl/MenuOptionsContainer"]
+[node name="PlayButton" type="Button" parent="MenuOptionsContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "PLAY"
 
-[node name="OptionsButton" type="Button" parent="MainControl/MenuOptionsContainer"]
+[node name="OptionsButton" type="Button" parent="MenuOptionsContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "OPTIONS
 "
 
-[node name="QuitButton" type="Button" parent="MainControl/MenuOptionsContainer"]
+[node name="QuitButton" type="Button" parent="MenuOptionsContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "QUIT
 "
 
-[node name="OpenShopButton" type="Button" parent="MainControl"]
-visible = false
+[node name="OptionsMenu" parent="." instance=ExtResource("5_osjo6")]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -61.0
-offset_top = -25.0
-offset_right = 61.0
-offset_bottom = 25.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 30
-text = "CLOSED"
 
-[connection signal="pressed" from="MainControl/MenuOptionsContainer/PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="MainControl/MenuOptionsContainer/OptionsButton" to="." method="_on_options_button_pressed"]
-[connection signal="pressed" from="MainControl/MenuOptionsContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MenuOptionsContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MenuOptionsContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MenuOptionsContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="display_main_menu" from="OptionsMenu" to="." method="_on_options_menu_display_main_menu"]

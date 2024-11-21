@@ -12,14 +12,72 @@ var total_customers_served: int = 0
 var total_stars: int = 0
 
 # Per-level stats
-var level_stars: Dictionary = {"day_1": 0, "day_2": 0, "day_3": 0}
-var level_goals: Dictionary = {
-	"day_1": {"customers_served": 5, "coins_collected": 50},
-	"day_2": {"customers_served": 7, "coins_collected": 75},
-	"day_3": {"customers_served": 10, "coins_collected": 100},
-}
 var selected_goal: Array = []
 var star_thresholds: Array = []
+
+# Level information
+var level_info: Dictionary = {
+	"day_1" : {
+		"locked": false,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 50}
+	},
+	"day_2" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 75}
+	},
+	"day_3" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 100}
+	},
+	"day_4" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 125}
+	},
+	"day_5" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 150}
+	},
+	"day_6" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 175}
+	},
+	"day_7" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 200}
+	},
+	"day_8" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 225}
+	},
+	"day_9" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 250}
+	},
+	"day_10" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 275}
+	},
+	"day_11" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 300}
+	},
+	"day_12" : {
+		"locked": true,
+		"stars_collected": 0,
+		"goals": {"coins_collected": 325}
+	},
+}
 
 # Goal setup.
 func setup_level_goal():
@@ -49,13 +107,13 @@ func reset_current_level_stats() -> void:
 	current_level_customers_served = 0
 	current_level_stars = 0
 	
-# Generates a random goal.
+# Generates a goal.
 func generate_goal() -> void:
-	if "day_" + str(current_level) in level_goals:
-		var potential_goals = level_goals["day_" + str(current_level)]
-		var rand_index = randi() % potential_goals.size()
-		var goal_name = potential_goals.keys()[rand_index]
-		selected_goal = [goal_name, potential_goals[goal_name]]
+	if "day_" + str(current_level) in level_info:
+		var current_level_info = level_info["day_" + str(current_level)]
+		var goal = current_level_info["goals"]
+		var goal_name = goal.keys()[0]
+		selected_goal = [goal_name, goal[goal_name]]
 		print("Selected Goal: ", selected_goal)
 	else:
 		print("No goals defined for level", current_level)
@@ -66,9 +124,12 @@ func complete_level():
 	
 	# Update stars for the current level
 	var earned_stars = current_level_stars
-	var previous_stars = level_stars.get("day_" + str(current_level), 0)
+	var current_level_info = level_info["day_" + str(current_level)]
+	var previous_stars = level_info.get("stars_collected", 0)
+
+	
 	if earned_stars > previous_stars:
-		level_stars["day_" + str(current_level)] = earned_stars
+		level_info["stars_collected"] = earned_stars
 		print("Updated stars for level ", current_level, "to ", earned_stars)
 
 	# Update total stats
@@ -92,9 +153,13 @@ func progress_to_next_level() -> void:
 # Calculate total stars across all levels.
 func get_total_stars() -> int:
 	var total = 0
-	for stars in level_stars.values():
-		total += stars
+	for child in level_info.values():
+		total += child["stars_collected"]
 	return total
+	
+# Deletes file containing game stats. Only used when a player wants to start over again.
+func delete_game_stats(path: String = "user://game_stats.json") -> void:
+	DirAccess.remove_absolute(path)
 
 # Saves game stats to file.
 func save_game_stats(path: String = "user://game_stats.json") -> void:
@@ -126,7 +191,7 @@ func load_game_stats(path: String = "user://game_stats.json") -> void:
 			print("Failed to parse game stats:", error)
 			file.close()
 	else:
-		print("Failed to load game stats from", path)
+		print("Failed to load game stats from ", path)
 
 # Converts the resource data to a savable dictionary.
 func _to_dict() -> Dictionary:
@@ -135,15 +200,13 @@ func _to_dict() -> Dictionary:
 		"total_coins": total_coins,
 		"total_customers_served": total_customers_served,
  		"total_stars": total_stars,
-		"level_stars": level_stars,
-		"level_goals": level_goals,
+		"level_info": level_info,
 	}
 
-# Loads data from a dictionary into this resource.
+# Loads data from a dictionary into the resource.
 func _from_dict(data: Dictionary) -> void:
 	current_level = data.get("current_level", 1)
 	total_coins = data.get("total_coins", 0)
 	total_customers_served = data.get("total_customers_served", 0)
 	total_stars = data.get("total_stars", 0)
-	level_stars = data.get("level_stars", {})
-	level_goals = data.get("level_goals", {})
+	level_info = data.get("level_info", {})

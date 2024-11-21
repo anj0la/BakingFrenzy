@@ -1,0 +1,111 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpaum5m4hpce5"]
+
+[ext_resource type="Script" path="res://scripts/OptionsMenu.gd" id="1_nip0v"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nip0v")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.521141, 0.521141, 0.521141, 1)
+
+[node name="OptionsContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -176.0
+offset_top = -96.5
+offset_right = 176.0
+offset_bottom = 96.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OptionsLabel" type="Label" parent="OptionsContainer"]
+layout_mode = 2
+text = "OPTIONS"
+horizontal_alignment = 1
+
+[node name="SoundContainer" type="HBoxContainer" parent="OptionsContainer"]
+layout_mode = 2
+
+[node name="SoundLabel" type="Label" parent="OptionsContainer/SoundContainer"]
+layout_mode = 2
+text = "SOUND"
+
+[node name="Label2" type="Label" parent="OptionsContainer/SoundContainer"]
+layout_mode = 2
+text = "[INSERT SLIDER FOR SOUND]"
+
+[node name="MusicContainer" type="HBoxContainer" parent="OptionsContainer"]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="OptionsContainer/MusicContainer"]
+layout_mode = 2
+text = "MUSIC
+"
+
+[node name="Label2" type="Label" parent="OptionsContainer/MusicContainer"]
+layout_mode = 2
+text = "[INSERT SLIDER FOR MUSIC]"
+
+[node name="GraphicsContainer" type="HBoxContainer" parent="OptionsContainer"]
+layout_mode = 2
+
+[node name="GraphicsLabel" type="Label" parent="OptionsContainer/GraphicsContainer"]
+layout_mode = 2
+text = "GRAPHICS
+"
+
+[node name="Label2" type="Label" parent="OptionsContainer/GraphicsContainer"]
+layout_mode = 2
+text = "[INSERT TOGGLE FOR FULLSCREEN]"
+
+[node name="GameplayContainer" type="HBoxContainer" parent="OptionsContainer"]
+layout_mode = 2
+
+[node name="GameplayLabel" type="Label" parent="OptionsContainer/GameplayContainer"]
+layout_mode = 2
+text = "GAMEPLAY
+"
+
+[node name="Label2" type="Label" parent="OptionsContainer/GameplayContainer"]
+layout_mode = 2
+text = "[RESTART PROGRESS]"
+
+[node name="CreditsContainer" type="HBoxContainer" parent="OptionsContainer"]
+layout_mode = 2
+
+[node name="CreditsContainer" type="Label" parent="OptionsContainer/CreditsContainer"]
+layout_mode = 2
+text = "CREDITS
+"
+
+[node name="Label2" type="Label" parent="OptionsContainer/CreditsContainer"]
+layout_mode = 2
+text = "[CREDITS BUTTON]"
+
+[node name="CloseButton" type="Button" parent="OptionsContainer"]
+layout_mode = 2
+text = "X"
+
+[connection signal="pressed" from="OptionsContainer/CloseButton" to="." method="_on_close_button_pressed"]

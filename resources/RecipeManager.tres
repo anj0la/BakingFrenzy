@@ -18,20 +18,6 @@ recipes = {
 "ingredients": ["red", "blue", "white"]
 }
 }
-test = {
-"cyan": {
-"cost": 12,
-"ingredients": ["blue", "green", "white"]
-},
-"pink": {
-"cost": 8,
-"ingredients": ["red", "yellow", "white"]
-},
-"purple": {
-"cost": 10,
-"ingredients": ["red", "blue", "white"]
-}
-}
 ingredient_weights = {
 "blue": 1.0,
 "green": 1.0,

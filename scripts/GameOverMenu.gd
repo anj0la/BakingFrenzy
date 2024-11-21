@@ -1,8 +1,6 @@
 extends CanvasLayer
 
-signal to_main_menu
 signal reset_game
-signal to_level_selection
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,7 +20,7 @@ func remove_game_over_menu() -> void:
 
 # Sends player back to home screen (main menu).	
 func _on_home_button_pressed() -> void:
-	to_main_menu.emit()
+	get_tree().change_scene_to_file("res://scenes/BakeryHub.tscn")
 
 # Restarts the game.
 func _on_restart_button_pressed() -> void:
@@ -30,7 +28,7 @@ func _on_restart_button_pressed() -> void:
 	
 # Sends player back to level selection menu.
 func _on_level_selection_button_pressed() -> void:
-	to_level_selection.emit()
+	get_tree().change_scene_to_file("res://scenes/LevelSelectionMenu.tscn")
 
 # Displays the day (i.e., level) the player has completed.
 func _display_day_completed(day: int) -> void:
