@@ -36,6 +36,8 @@ func update_time_indicator(remaining_seconds: int) -> void:
 		else:
 			# Move to next full hour if we're at 0.5
 			current_in_game_hour = floor(current_in_game_hour) + 1.0
+	#elif remaining_seconds == 0:
+	#	current_in_game_hour = CLOSED_HOUR
 			
 	# Display in HUD
 	_display_time_in_hud(current_in_game_hour)

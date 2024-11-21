@@ -1,6 +1,7 @@
 extends Resource
 
 # Level-related stats
+var furthest_level: int = 1
 var current_level: int = 1
 var current_level_coins: int = 0
 var current_level_customers_served: int = 0
@@ -120,37 +121,46 @@ func generate_goal() -> void:
 
 # Completes the current level.
 func complete_level():
-	print("Completing Level:", current_level)
+	print("Completing Level: ", current_level)
 	
-	# Update stars for the current level
+	# Update stars for the current level.
 	var earned_stars = current_level_stars
 	var current_level_info = level_info["day_" + str(current_level)]
-	var previous_stars = level_info.get("stars_collected", 0)
+	var previous_stars = current_level_info.get("stars_collected", 0)
 
-	
 	if earned_stars > previous_stars:
-		level_info["stars_collected"] = earned_stars
-		print("Updated stars for level ", current_level, "to ", earned_stars)
+		current_level_info["stars_collected"] = earned_stars
+		print("Updated stars for level ", current_level, " to ", earned_stars)
 
-	# Update total stats
+	# Update total stats.
 	total_coins += current_level_coins
 	total_customers_served += current_level_customers_served
 	total_stars = get_total_stars()
 
-	# Reset current level stats
-	current_level_coins = 0
-	current_level_customers_served = 0
-	current_level_stars = 0
+	# Reset current level stats.
+	reset_current_level_stats()
+	
+	# Unlock next level only if on the furthest level.
+	if current_level == furthest_level:
+		unlock_next_level()
 
-	# Unlock next level
-	progress_to_next_level()
+# Moves the player to the next level.
+func unlock_next_level() -> void:
+	if "day_" + str(furthest_level + 1) in level_info:
+		furthest_level += 1
+		level_info["day_" + str(furthest_level)]["locked"] = false
+		print("Next Level: ", furthest_level)
+		
+# Replays a level.
+func replay_level(level: int):
+	if level > 0 and level <= furthest_level:
+		current_level = level
+		reset_current_level_stats()
+		print("Replaying Level: ", current_level)
+	else:
+		print("Cannot replay Level:", level, "as it is locked.")
 
-# Progress to the next level.
-func progress_to_next_level() -> void:
-	current_level += 1
-	print("Progressed to Level: ", current_level)
-
-# Calculate total stars across all levels.
+# Calculates total stars across all levels.
 func get_total_stars() -> int:
 	var total = 0
 	for child in level_info.values():

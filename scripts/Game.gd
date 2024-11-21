@@ -33,7 +33,6 @@ func _ready():
 	# Start the game timer and ingredient spawn timer.
 	$StartTimer.start()
 	
-	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# Check if player has passed threshold every frame.
@@ -68,6 +67,9 @@ func reset_game():
 	# Reset level stats.
 	game_stats.reset_level_stats()
 	
+	# Start processing game events.
+	set_process(true)
+	
 	print($NPC.selected_order)
 	
 	# Update the coins and customers served.
@@ -90,6 +92,9 @@ func _on_countdown_timer_timeout() -> void:
 	
 	# Display game over menu.
 	$GameOverMenu.display_game_over_menu(game_stats.current_level, game_stats.current_level_stars, game_stats.current_level_coins, game_stats.current_level_customers_served)
+	
+	# Stop processing game events.
+	set_process(false)
 	
 	# Unlock next level and save stats.
 	game_stats.complete_level()

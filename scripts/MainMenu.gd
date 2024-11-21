@@ -8,7 +8,7 @@ func _ready() -> void:
 	# Loads player game stats.
 	game_stats.load_game_stats()
 	# Testing
-	print("current level: ", game_stats.current_level)
+	print("Furthest level: ", game_stats.furthest_level)
 	#print("total coins: ", game_stats.total_coins)
 	#print("total customers served: ", game_stats.total_customers_served)
 	#print("total stars: ", game_stats.total_stars)
