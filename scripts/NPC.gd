@@ -124,14 +124,18 @@ func mark_order_completed() -> void:
 	
 # Reduces the cost of the selected recipe.
 func apply_trash_penalty() -> void:
+	print('Total cost before deduction: ', selected_order[2])
+	# Get total penalty.
 	var total_penalty = game_stats.get_base_penalty() + game_stats.current_level # Penalty increases with level
-
+	
 	# Calculate reduction.
 	var reduction = game_stats.get_reduction_level() * game_stats.get_reduction_amount()
 
 	# Ensure the reduction does not make the penalty negative.
 	total_penalty = max(total_penalty - reduction, 0)
-	$NPC.selected_order[2] = max($NPC.selected_order[2] - total_penalty, 0)
+	selected_order[2] = max(selected_order[2] - total_penalty, 0)
+	
+	print('Total cost after deduction: ', selected_order[2])
 	
 # Moves the NPC into the screen.
 func enter() -> void:

@@ -226,6 +226,10 @@ func get_reduction_amount() -> int:
 func get_upgrade_level(item: String) -> int:
 	return kitchen_upgrades[item]["level"]
 	
+# Returns the upgrade cost for the player.
+func get_upgrade_cost(item: String) -> int:
+	return kitchen_upgrades[item]["upgrade_cost"]
+	
 # Checks if the kitchen item can be upgraded. 
 func can_upgrade_kitchen_item(item: String) -> bool:
 	var item_data = kitchen_upgrades[item]

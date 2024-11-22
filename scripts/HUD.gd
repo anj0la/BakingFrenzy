@@ -57,21 +57,8 @@ func update_customers_served(customers_served: int) -> void:
 	$MainControl/GameStatsContainer/Customers.text = str(customers_served)
 	
 # Displays the objective(s) that a Player must achieve to complete the day (i.e., pass the level).
-func display_goal(first_goal: Array, second_goal: Array = [], show_second_goal: bool = false) -> void:
-	# NOTE: first_goal[0] == goal_name, first_goal[1] = target.
-	if first_goal[0] == "coins_earned":
-		$MainControl/GoalsContainer/FirstGoal.text = "Earn " + str(first_goal[1]) + " coins"
-	else: # first_goal[0] == "customers_served:
-		$MainControl/GoalsContainer/FirstGoal.text = "Serve " + str(first_goal[1]) + " customers"
-		
-	$MainControl/GoalsContainer/SecondGoal.visible = show_second_goal
-	
-	# Generate and display second objective (if it exists).
-	if show_second_goal:
-		if second_goal[0] == "coins_earned":
-			$MainControl/GoalsContainer/FirstGoal.text = "Earn " + str(second_goal[1]) + " coins"
-		else: # second_goal[0] == "customers_served:
-			$MainControl/GoalsContainer/FirstGoal.text = "Serve " + str(second_goal[1]) + " customers"
+func display_goal(first_goal: Array) -> void:
+	$MainControl/GoalsContainer/FirstGoal.text = "Earn " + str(first_goal[1]) + " coins"
 		
 # Updates order status, whether it is completed (green) or not (grey).
 func update_order_status(completed: bool) -> void:

@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://cis7biqpxt55a"]
+[gd_scene load_steps=7 format=3 uid="uid://cis7biqpxt55a"]
 
 [ext_resource type="Texture2D" uid="uid://cl3afyaiaw7yt" path="res://art/game_background_outline.png" id="1_7nonl"]
 [ext_resource type="Script" path="res://scripts/UpgradeHub.gd" id="1_hbg0o"]
 [ext_resource type="Resource" uid="uid://cfbsynjsw6ejt" path="res://resources/GameStats.tres" id="2_jss0f"]
+[ext_resource type="Texture2D" uid="uid://dmd8bi6t15j6f" path="res://art/gold_coin.png" id="4_rq02n"]
+[ext_resource type="Texture2D" uid="uid://ctsnd2j2xy65y" path="res://art/home.png" id="5_bq0pg"]
+[ext_resource type="Texture2D" uid="uid://qbyx7brg113i" path="res://art/close_icon.png" id="6_54jms"]
 
 [node name="UpgradeHub" type="Control"]
 layout_mode = 3
@@ -41,7 +44,10 @@ horizontal_alignment = 1
 [node name="UpgradeButton" type="Button" parent="SaleCounter"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "UPGRADE"
+text = "100"
+icon = ExtResource("4_rq02n")
+alignment = 2
+icon_alignment = 2
 
 [node name="Oven" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -67,7 +73,10 @@ horizontal_alignment = 1
 [node name="UpgradeButton" type="Button" parent="Oven"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "UPGRADE"
+text = "75"
+icon = ExtResource("4_rq02n")
+alignment = 2
+icon_alignment = 2
 
 [node name="Counters" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -93,7 +102,10 @@ horizontal_alignment = 1
 [node name="UpgradeButton" type="Button" parent="Counters"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "UPGRADE"
+text = "75"
+icon = ExtResource("4_rq02n")
+alignment = 2
+icon_alignment = 2
 
 [node name="Fridge" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -103,8 +115,8 @@ anchor_top = 0.375
 anchor_right = 0.68
 anchor_bottom = 0.375
 offset_left = -148.0
-offset_top = -48.0
-offset_bottom = 48.0
+offset_top = -52.0
+offset_bottom = 52.0
 grow_horizontal = 0
 grow_vertical = 2
 
@@ -118,7 +130,10 @@ horizontal_alignment = 1
 [node name="UpgradeButton" type="Button" parent="Fridge"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "UPGRADE"
+text = "75"
+icon = ExtResource("4_rq02n")
+alignment = 2
+icon_alignment = 2
 
 [node name="Trash" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -127,8 +142,8 @@ anchor_left = 0.015
 anchor_top = 0.55
 anchor_right = 0.015
 anchor_bottom = 0.6
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 148.0
+offset_bottom = 50.0
 
 [node name="Level" type="Label" parent="Trash"]
 layout_mode = 2
@@ -140,4 +155,39 @@ horizontal_alignment = 1
 [node name="UpgradeButton" type="Button" parent="Trash"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "UPGRADE"
+text = "50"
+icon = ExtResource("4_rq02n")
+alignment = 2
+icon_alignment = 2
+
+[node name="MenuStatsContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -216.0
+offset_top = 10.0
+offset_bottom = 74.0
+grow_horizontal = 0
+
+[node name="Coins" type="Label" parent="MenuStatsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "0"
+
+[node name="CoinsImage" type="TextureRect" parent="MenuStatsContainer"]
+layout_mode = 2
+texture = ExtResource("4_rq02n")
+stretch_mode = 2
+
+[node name="HomeButton" type="TextureButton" parent="MenuStatsContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_bq0pg")
+
+[node name="CloseButton" type="TextureButton" parent="MenuStatsContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_54jms")
+
+[connection signal="pressed" from="MenuStatsContainer/HomeButton" to="." method="_on_home_button_pressed"]
+[connection signal="pressed" from="MenuStatsContainer/CloseButton" to="." method="_on_close_button_pressed"]

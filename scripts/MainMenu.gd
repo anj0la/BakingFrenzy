@@ -4,15 +4,16 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# game_stats,delete_game_stats()
+	game_stats.delete_game_stats()
 	# Loads player game stats.
 	game_stats.load_game_stats()
 	# Testing
 	print("Furthest level: ", game_stats.furthest_level)
-	#print("total coins: ", game_stats.total_coins)
-	#print("total customers served: ", game_stats.total_customers_served)
-	#print("total stars: ", game_stats.total_stars)
-	#print("level info: ", game_stats.level_info)
+	print("total coins: ", game_stats.total_coins)
+	print("total customers served: ", game_stats.total_customers_served)
+	print("total stars: ", game_stats.total_stars)
+	print("level info: ", game_stats.level_info)
+	print("kitchen upgrades: ", game_stats.kitchen_upgrades)
 
 # Remves start menu options, allowing the player to enter the level selection menu, customize their shop and view their inventory.
 func _on_play_button_pressed() -> void:
@@ -25,6 +26,7 @@ func _on_options_button_pressed() -> void:
 
 # Quits the game.
 func _on_quit_button_pressed() -> void:
+	game_stats.save_game_stats()
 	get_tree().quit()
 
 # Displays the main menu again.
