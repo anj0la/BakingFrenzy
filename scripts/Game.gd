@@ -141,6 +141,7 @@ func _on_player_hit(body: Node2D) -> void:
 			else:
 				# print('Uh oh. Collected the wrong ingredient!')
 				$NPC.mark_incorrect_ingredient(body.ingredient_name)
+				$NPC.apply_trash_penalty()
 				# Activate trash detection to throw away the wrong ingredient.
 				$TrashCan.activate_trash_detection()
 			

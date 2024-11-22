@@ -13,6 +13,7 @@ enum MovementStage {
 const OFFSET: float = 100.0
 @export var speed: float = 250.0
 @export var recipe_manager: Resource
+@export var game_stats: Resource
 
 var movement_stage: MovementStage
 var selected_order: Array
@@ -62,13 +63,21 @@ func _physics_process(delta):
 		
 # Generates a new order.
 func generate_order():
+	# Reset and initialize weights for spawning ingredients.
 	recipe_manager.reset_weights()
 	selected_order = recipe_manager.select_recipe()
 	recipe_manager.initialize_weights(selected_order)
+	
+	# Reset ingredient counts to their default values.
 	ingredient_count = selected_order[1].size()
 	collected_ingredient_count = 0
+	
+	# Set flags.
 	incorrect_ingredient = false 
 	completed_ingredient_collection = false
+	
+	# Change the price to the correct price.
+	selected_order[2] = game_stats.calculate_recipe_earnings(selected_order[2], selected_order[0]) # selected_order[2] = cost, selected_order[0] = recipe_name
 	
 # Returns the selected order. Used for UI display.
 func get_selected_order() -> Array:
@@ -111,7 +120,18 @@ func mark_required_ingredients_collected() -> void:
 # Sends a signal that the order has been completed.
 func mark_order_completed() -> void:
 	# order_ready = true
-	order_completed.emit("Ready to sell recipe!") # Signals that recipe is ready for collection.
+	order_completed.emit("Ready to sell recipe!") # Signals that recipe is ready for collection
+	
+# Reduces the cost of the selected recipe.
+func apply_trash_penalty() -> void:
+	var total_penalty = game_stats.get_base_penalty() + game_stats.current_level # Penalty increases with level
+
+	# Calculate reduction.
+	var reduction = game_stats.get_reduction_level() * game_stats.get_reduction_amount()
+
+	# Ensure the reduction does not make the penalty negative.
+	total_penalty = max(total_penalty - reduction, 0)
+	$NPC.selected_order[2] = max($NPC.selected_order[2] - total_penalty, 0)
 	
 # Moves the NPC into the screen.
 func enter() -> void:

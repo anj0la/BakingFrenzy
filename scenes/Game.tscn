@@ -76,6 +76,7 @@ one_shot = true
 
 [node name="NPC" parent="." instance=ExtResource("3_eot5w")]
 position = Vector2(2020, 700)
+game_stats = ExtResource("3_g56op")
 
 [node name="HUD" parent="." instance=ExtResource("8_660gl")]
 
