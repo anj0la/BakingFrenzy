@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgh7j3kb520y4"]
+[gd_scene load_steps=10 format=3 uid="uid://dgh7j3kb520y4"]
 
 [ext_resource type="Texture2D" uid="uid://dj2f5dbd0ajfo" path="res://art/3_stars.png" id="1_lnd0q"]
 [ext_resource type="Script" path="res://scripts/GameOverMenu.gd" id="1_p5or7"]
+[ext_resource type="Texture2D" uid="uid://bypf4316f4cmb" path="res://art/game_over_background.png" id="2_48v2c"]
 [ext_resource type="Texture2D" uid="uid://dmd8bi6t15j6f" path="res://art/gold_coin.png" id="2_aacg2"]
 [ext_resource type="Texture2D" uid="uid://c0by4gbg7w3xs" path="res://art/customer_icon.png" id="3_ipdqt"]
+[ext_resource type="FontFile" uid="uid://b0ws8x23iavyc" path="res://fonts/Modak-Regular.ttf" id="3_sch1k"]
 [ext_resource type="Texture2D" uid="uid://ctsnd2j2xy65y" path="res://art/home.png" id="4_em5hb"]
 [ext_resource type="Texture2D" uid="uid://ycwfcdipkcnf" path="res://art/rotate.png" id="5_8vn1p"]
 [ext_resource type="Texture2D" uid="uid://b586lm63mv2d" path="res://art/arrow_right.png" id="6_1d77x"]
@@ -19,7 +21,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuTexture" type="ColorRect" parent="MainControl"]
+[node name="MenuTexture" type="TextureRect" parent="MainControl"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -32,7 +34,7 @@ offset_right = 200.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.267173, 0.0966387, 1.20327e-08, 1)
+texture = ExtResource("2_48v2c")
 
 [node name="MenuContainer" type="VBoxContainer" parent="MainControl"]
 layout_mode = 1
@@ -41,25 +43,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -172.0
-offset_right = 200.0
-offset_bottom = 200.0
+offset_left = -344.0
+offset_top = -380.0
+offset_right = 336.0
+offset_bottom = 348.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
+
+[node name="DayCompleted" type="Label" parent="MainControl/MenuContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_sch1k")
+theme_override_font_sizes/font_size = 100
+text = "DAY 1
+"
+horizontal_alignment = 1
 
 [node name="StarsEarned" type="TextureRect" parent="MainControl/MenuContainer"]
 layout_mode = 2
 texture = ExtResource("1_lnd0q")
 stretch_mode = 3
-
-[node name="DayCompleted" type="Label" parent="MainControl/MenuContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 36
-text = "DAY 1
-"
-horizontal_alignment = 1
 
 [node name="GameStatsContainer" type="VBoxContainer" parent="MainControl/MenuContainer"]
 layout_mode = 2

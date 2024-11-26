@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://BakeryHub.gd" id="1_gyl1f"]
 [ext_resource type="Resource" uid="uid://cfbsynjsw6ejt" path="res://resources/GameStats.tres" id="2_h4aom"]
-[ext_resource type="Texture2D" uid="uid://dmd8bi6t15j6f" path="res://art/gold_coin.png" id="2_ygajx"]
+[ext_resource type="Texture2D" uid="uid://bln6pr4hv72lf" path="res://art/bakery_coin.png" id="3_wy641"]
 [ext_resource type="Texture2D" uid="uid://dkrbt2piibats" path="res://art/build_icon.png" id="4_l26sq"]
 [ext_resource type="Texture2D" uid="uid://qbyx7brg113i" path="res://art/close_icon.png" id="5_jotiy"]
 
@@ -43,7 +43,7 @@ text = "0"
 
 [node name="CoinsImage" type="TextureRect" parent="MenuStatsContainer"]
 layout_mode = 2
-texture = ExtResource("2_ygajx")
+texture = ExtResource("3_wy641")
 stretch_mode = 2
 
 [node name="UpgradeButton" type="TextureButton" parent="MenuStatsContainer"]
