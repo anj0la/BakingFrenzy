@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cetdbvols3lf5"]
+[gd_scene load_steps=7 format=3 uid="uid://cetdbvols3lf5"]
 
 [ext_resource type="Script" path="res://scripts/PauseMenu.gd" id="1_gpe0r"]
-[ext_resource type="Texture2D" uid="uid://ycwfcdipkcnf" path="res://art/rotate.png" id="2_inw6d"]
-[ext_resource type="Texture2D" uid="uid://bniqwmr2frkw7" path="res://art/resume.png" id="2_k6s30"]
-[ext_resource type="Texture2D" uid="uid://b586lm63mv2d" path="res://art/arrow_right.png" id="3_iyvdg"]
+[ext_resource type="Texture2D" uid="uid://bbo3apguwmcc6" path="res://art/game_paused.png" id="2_l2psu"]
+[ext_resource type="FontFile" uid="uid://b0ws8x23iavyc" path="res://fonts/Modak-Regular.ttf" id="3_xjldm"]
+[ext_resource type="Texture2D" uid="uid://ce810r388wf8x" path="res://art/play_button.png" id="4_qytb0"]
+[ext_resource type="Texture2D" uid="uid://bfmk8wg5yvglk" path="res://art/restart_button_game_over.png" id="5_ovaqj"]
+[ext_resource type="Texture2D" uid="uid://bwkjn3p5dcsvh" path="res://art/right_arrow_game_over.png" id="6_nagyc"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 script = ExtResource("1_gpe0r")
@@ -17,7 +19,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuTexture" type="ColorRect" parent="MainControl"]
+[node name="MenuTexture" type="TextureRect" parent="MainControl"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -30,45 +32,53 @@ offset_right = 200.0
 offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.807843, 0.541176, 0.435294, 1)
+texture = ExtResource("2_l2psu")
 
-[node name="MenuContainer" type="VBoxContainer" parent="MainControl"]
+[node name="PausedLabel" type="Label" parent="MainControl"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.36
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -102.0
-offset_right = 200.0
-offset_bottom = 102.0
+anchor_bottom = 0.36
+offset_left = -340.0
+offset_top = -76.0
+offset_right = 340.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 25
-
-[node name="DayCompleted" type="Label" parent="MainControl/MenuContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 36
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_xjldm")
+theme_override_font_sizes/font_size = 100
 text = "PAUSED"
 horizontal_alignment = 1
 
-[node name="NavContainer" type="HBoxContainer" parent="MainControl/MenuContainer"]
-layout_mode = 2
+[node name="NavContainer" type="HBoxContainer" parent="MainControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.525
+anchor_right = 0.5
+anchor_bottom = 0.525
+offset_left = -242.0
+offset_top = -66.5
+offset_right = 242.0
+offset_bottom = 66.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 50
-alignment = 1
 
-[node name="ResumeButton" type="TextureButton" parent="MainControl/MenuContainer/NavContainer"]
+[node name="ResumeButton" type="TextureButton" parent="MainControl/NavContainer"]
 layout_mode = 2
-texture_normal = ExtResource("2_k6s30")
+texture_normal = ExtResource("4_qytb0")
 
-[node name="RestartButton" type="TextureButton" parent="MainControl/MenuContainer/NavContainer"]
+[node name="RestartButton" type="TextureButton" parent="MainControl/NavContainer"]
 layout_mode = 2
-texture_normal = ExtResource("2_inw6d")
+texture_normal = ExtResource("5_ovaqj")
 
-[node name="LevelSelectionButton" type="TextureButton" parent="MainControl/MenuContainer/NavContainer"]
+[node name="LevelSelectionButton" type="TextureButton" parent="MainControl/NavContainer"]
 layout_mode = 2
-texture_normal = ExtResource("3_iyvdg")
+texture_normal = ExtResource("6_nagyc")
 
-[connection signal="pressed" from="MainControl/MenuContainer/NavContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="MainControl/MenuContainer/NavContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="MainControl/NavContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="MainControl/NavContainer/RestartButton" to="." method="_on_restart_button_pressed"]

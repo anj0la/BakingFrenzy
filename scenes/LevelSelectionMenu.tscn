@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://f5df00tq3x2u"]
 
-[ext_resource type="Texture2D" uid="uid://b586lm63mv2d" path="res://art/arrow_right.png" id="1_3k75s"]
 [ext_resource type="Script" path="res://scripts/LevelSelectionMenu.gd" id="1_ahqkm"]
 [ext_resource type="Resource" uid="uid://cfbsynjsw6ejt" path="res://resources/GameStats.tres" id="2_yak52"]
-[ext_resource type="Texture2D" uid="uid://ctsnd2j2xy65y" path="res://art/home.png" id="3_ld4qs"]
+[ext_resource type="Texture2D" uid="uid://bwkjn3p5dcsvh" path="res://art/right_arrow_game_over.png" id="3_60ya5"]
+[ext_resource type="Texture2D" uid="uid://3ntlyreascun" path="res://art/home_button_game_over.png" id="4_gibvi"]
 
 [node name="LevelSelectionMenu" type="Control"]
 layout_mode = 3
@@ -118,7 +118,7 @@ offset_top = -32.0
 offset_bottom = 32.0
 grow_horizontal = 0
 grow_vertical = 2
-texture_normal = ExtResource("1_3k75s")
+texture_normal = ExtResource("3_60ya5")
 
 [node name="PrevButton" type="TextureButton" parent="."]
 layout_mode = 1
@@ -131,7 +131,7 @@ offset_top = -32.0
 offset_right = 64.0
 offset_bottom = 32.0
 grow_vertical = 2
-texture_normal = ExtResource("1_3k75s")
+texture_normal = ExtResource("3_60ya5")
 flip_h = true
 
 [node name="HomeButton" type="TextureButton" parent="."]
@@ -146,6 +146,6 @@ offset_top = -64.0
 offset_right = 32.0
 grow_horizontal = 2
 grow_vertical = 0
-texture_normal = ExtResource("3_ld4qs")
+texture_normal = ExtResource("4_gibvi")
 
 [connection signal="pressed" from="HomeButton" to="." method="_on_home_button_pressed"]

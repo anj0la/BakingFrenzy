@@ -4,7 +4,8 @@ signal reset_game
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	hide()
+	pass
+	# hide()
 	
 # Displays the game over menu.
 func display_game_over_menu(day: int, stars_earned: int, coins_earned: int, customers_served: int) -> void:

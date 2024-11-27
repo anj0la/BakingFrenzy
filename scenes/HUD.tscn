@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://dqfwvvi6rb8gb"]
 
 [ext_resource type="Texture2D" uid="uid://c1uakdggq2pls" path="res://art/game_background_outline_recipe.png" id="1_cyc50"]
-[ext_resource type="Texture2D" uid="uid://dmd8bi6t15j6f" path="res://art/gold_coin.png" id="1_r51x3"]
 [ext_resource type="Script" path="res://scripts/HUD.gd" id="1_xlsrd"]
 [ext_resource type="Texture2D" uid="uid://c0by4gbg7w3xs" path="res://art/customer_icon.png" id="2_xlj4a"]
+[ext_resource type="Texture2D" uid="uid://bln6pr4hv72lf" path="res://art/bakery_coin.png" id="3_kgrly"]
 [ext_resource type="Texture2D" uid="uid://cbnbca3ng6pt7" path="res://art/rect_white.png" id="4_ygfvq"]
 [ext_resource type="Texture2D" uid="uid://5m4t80pnsul" path="res://art/menu.png" id="5_s0jyg"]
 
@@ -42,7 +42,7 @@ text = "0"
 
 [node name="CoinsImage" type="TextureRect" parent="MainControl/GameStatsContainer"]
 layout_mode = 2
-texture = ExtResource("1_r51x3")
+texture = ExtResource("3_kgrly")
 stretch_mode = 2
 
 [node name="Customers" type="Label" parent="MainControl/GameStatsContainer"]
