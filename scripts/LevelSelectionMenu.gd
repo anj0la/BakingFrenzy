@@ -3,8 +3,8 @@ extends Control
 @export var game_stats: Resource
 
 ## NOTE: Need to get information on levels.
-const LEVELS_PER_PAGE: int = 12
-const MAX_LEVEL: int = 60 
+const LEVELS_PER_PAGE: int = 8
+const MAX_LEVEL: int = 40
 var current_page: int
 
 # Called when the node enters the scene tree for the first time.
@@ -26,9 +26,17 @@ func _update_level_buttons() -> void:
 		var level_index = start_index + i
 		var level_data = game_stats.level_info["day_" + str(level_index)]
 		var button = $LevelGridContainer.get_child(i)
-		button.text = str(level_index)  # Display level number on the button
+		var label = button.get_child(0)
+		label.text = str(level_index)  # Display level number on the button
 		button.disabled = level_data["locked"]
 		
+		# Update the button texture (if disabled).
+		if not button.disabled:
+			var normal_image_path = "res://art/" + str(level_data["stars_collected"]) + "_stars_unlocked_button.png"
+			var highlighted_image_path = "res://art/" + str(level_data["stars_collected"]) + "_stars_unlocked__selected_button.png"
+			button.texture_normal = load(normal_image_path)
+			button.texture_hover = load(highlighted_image_path)
+
 		# Connect the button signal to handle level selection.
 		if button.pressed.is_connected(_on_button_pressed):
 			button.pressed.disconnect(_on_button_pressed)  # Avoid duplicate connections.

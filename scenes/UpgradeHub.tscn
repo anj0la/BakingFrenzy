@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://cis7biqpxt55a"]
+[gd_scene load_steps=9 format=3 uid="uid://cis7biqpxt55a"]
 
-[ext_resource type="Texture2D" uid="uid://cl3afyaiaw7yt" path="res://art/game_background_outline.png" id="1_7nonl"]
 [ext_resource type="Script" path="res://scripts/UpgradeHub.gd" id="1_hbg0o"]
 [ext_resource type="Resource" uid="uid://cfbsynjsw6ejt" path="res://resources/GameStats.tres" id="2_jss0f"]
+[ext_resource type="Texture2D" uid="uid://cns8anoy8ce7v" path="res://art/game_background_coloring.png" id="3_uugsp"]
 [ext_resource type="Texture2D" uid="uid://dmd8bi6t15j6f" path="res://art/gold_coin.png" id="4_rq02n"]
-[ext_resource type="Texture2D" uid="uid://ctsnd2j2xy65y" path="res://art/home.png" id="5_bq0pg"]
-[ext_resource type="Texture2D" uid="uid://qbyx7brg113i" path="res://art/close_icon.png" id="6_54jms"]
+[ext_resource type="Texture2D" uid="uid://bln6pr4hv72lf" path="res://art/bakery_coin.png" id="5_3oheu"]
+[ext_resource type="FontFile" uid="uid://b0ws8x23iavyc" path="res://fonts/Modak-Regular.ttf" id="5_r0pqc"]
+[ext_resource type="Texture2D" uid="uid://cyxpmp222tju5" path="res://art/home_button_80x80.png" id="6_vjr2r"]
+[ext_resource type="Texture2D" uid="uid://fljjue430n1h" path="res://art/close_button_80x80.png" id="7_26v7c"]
 
 [node name="UpgradeHub" type="Control"]
 layout_mode = 3
@@ -17,9 +19,14 @@ grow_vertical = 2
 script = ExtResource("1_hbg0o")
 game_stats = ExtResource("2_jss0f")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(960, 540)
-texture = ExtResource("1_7nonl")
+[node name="BakeryBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_uugsp")
 
 [node name="SaleCounter" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -169,25 +176,28 @@ offset_left = -216.0
 offset_top = 10.0
 offset_bottom = 74.0
 grow_horizontal = 0
+theme_override_constants/separation = 15
 
 [node name="Coins" type="Label" parent="MenuStatsContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_colors/font_outline_color = Color(0.517184, 0.517184, 0.517184, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 70
 text = "0"
 
 [node name="CoinsImage" type="TextureRect" parent="MenuStatsContainer"]
 layout_mode = 2
-texture = ExtResource("4_rq02n")
+texture = ExtResource("5_3oheu")
 stretch_mode = 2
 
 [node name="HomeButton" type="TextureButton" parent="MenuStatsContainer"]
 layout_mode = 2
-texture_normal = ExtResource("5_bq0pg")
+texture_normal = ExtResource("6_vjr2r")
 
 [node name="CloseButton" type="TextureButton" parent="MenuStatsContainer"]
 layout_mode = 2
-texture_normal = ExtResource("6_54jms")
+texture_normal = ExtResource("7_26v7c")
 
 [connection signal="pressed" from="MenuStatsContainer/HomeButton" to="." method="_on_home_button_pressed"]
 [connection signal="pressed" from="MenuStatsContainer/CloseButton" to="." method="_on_close_button_pressed"]

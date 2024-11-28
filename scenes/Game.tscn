@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://du048arfkmk7" path="res://scenes/Player.tscn" id="3_5vw5y"]
 [ext_resource type="PackedScene" uid="uid://bgdmk5wd6i8uo" path="res://scenes/NPC.tscn" id="3_eot5w"]
 [ext_resource type="Resource" uid="uid://cfbsynjsw6ejt" path="res://resources/GameStats.tres" id="3_g56op"]
-[ext_resource type="Texture2D" uid="uid://cp4wjueo4f4t5" path="res://art/new_game_background.png" id="4_0aofs"]
+[ext_resource type="Texture2D" uid="uid://cns8anoy8ce7v" path="res://art/game_background_coloring.png" id="4_4w3xo"]
 [ext_resource type="PackedScene" uid="uid://dv4baml1twpu2" path="res://scenes/Oven.tscn" id="6_8y440"]
 [ext_resource type="PackedScene" uid="uid://wm64m4p8ix3d" path="res://scenes/SaleCounter.tscn" id="7_pwdfb"]
 [ext_resource type="PackedScene" uid="uid://dqfwvvi6rb8gb" path="res://scenes/HUD.tscn" id="8_660gl"]
@@ -27,9 +27,13 @@ script = ExtResource("1_6itma")
 ingredient_scene = ExtResource("2_8ut5c")
 game_stats = ExtResource("3_g56op")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(960, 540)
-texture = ExtResource("4_0aofs")
+[node name="BakeryBackground" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_4w3xo")
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(-8, 0)
