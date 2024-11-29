@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dgh7j3kb520y4"]
+[gd_scene load_steps=15 format=3 uid="uid://dgh7j3kb520y4"]
 
 [ext_resource type="Script" path="res://scripts/GameOverMenu.gd" id="1_p5or7"]
 [ext_resource type="Texture2D" uid="uid://bypf4316f4cmb" path="res://art/game_over_background.png" id="2_48v2c"]
@@ -7,10 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://dexksbn4yc218" path="res://art/three_stars.png" id="4_nvsk5"]
 [ext_resource type="Texture2D" uid="uid://bln6pr4hv72lf" path="res://art/bakery_coin.png" id="5_vckw8"]
 [ext_resource type="Texture2D" uid="uid://3ntlyreascun" path="res://art/home_button_game_over.png" id="7_2tcsv"]
+[ext_resource type="Texture2D" uid="uid://dckfovwmpql8a" path="res://art/home_button_hover_game_over.png" id="8_8vxf8"]
 [ext_resource type="Texture2D" uid="uid://bfmk8wg5yvglk" path="res://art/restart_button_game_over.png" id="8_au63u"]
 [ext_resource type="Texture2D" uid="uid://bwkjn3p5dcsvh" path="res://art/right_arrow_game_over.png" id="9_4vdjr"]
+[ext_resource type="Texture2D" uid="uid://dhc78a82vvi47" path="res://art/restart_button_hover_game_over.png" id="10_s4idq"]
 [ext_resource type="Texture2D" uid="uid://d27rlyik6hyqn" path="res://art/text_bar_smaller.png" id="10_wvvam"]
 [ext_resource type="Texture2D" uid="uid://bnjkb5edloo0y" path="res://art/bakery_coin_game_over.png" id="11_06gcy"]
+[ext_resource type="Texture2D" uid="uid://gjcfpfn1lco4" path="res://art/right_arrow_hover_game_over.png" id="12_y2dcm"]
 
 [node name="GameOverMenu" type="CanvasLayer"]
 script = ExtResource("1_p5or7")
@@ -156,14 +159,17 @@ alignment = 1
 [node name="HomeButton" type="TextureButton" parent="MainControl/NavContainer"]
 layout_mode = 2
 texture_normal = ExtResource("7_2tcsv")
+texture_hover = ExtResource("8_8vxf8")
 
 [node name="RestartButton" type="TextureButton" parent="MainControl/NavContainer"]
 layout_mode = 2
 texture_normal = ExtResource("8_au63u")
+texture_hover = ExtResource("10_s4idq")
 
 [node name="LevelSelectionButton" type="TextureButton" parent="MainControl/NavContainer"]
 layout_mode = 2
 texture_normal = ExtResource("9_4vdjr")
+texture_hover = ExtResource("12_y2dcm")
 
 [node name="GameStatsContainer" type="VBoxContainer" parent="MainControl"]
 layout_mode = 1

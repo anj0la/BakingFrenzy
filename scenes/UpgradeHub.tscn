@@ -1,13 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://cis7biqpxt55a"]
+[gd_scene load_steps=15 format=3 uid="uid://cis7biqpxt55a"]
 
 [ext_resource type="Script" path="res://scripts/UpgradeHub.gd" id="1_hbg0o"]
 [ext_resource type="Resource" uid="uid://cfbsynjsw6ejt" path="res://resources/GameStats.tres" id="2_jss0f"]
 [ext_resource type="Texture2D" uid="uid://cns8anoy8ce7v" path="res://art/game_background_coloring.png" id="3_uugsp"]
-[ext_resource type="Texture2D" uid="uid://dmd8bi6t15j6f" path="res://art/gold_coin.png" id="4_rq02n"]
 [ext_resource type="Texture2D" uid="uid://bln6pr4hv72lf" path="res://art/bakery_coin.png" id="5_3oheu"]
 [ext_resource type="FontFile" uid="uid://b0ws8x23iavyc" path="res://fonts/Modak-Regular.ttf" id="5_r0pqc"]
+[ext_resource type="Texture2D" uid="uid://uqi2eoqv6j12" path="res://art/upgrade_button.png" id="5_ueii7"]
+[ext_resource type="Texture2D" uid="uid://bnjkb5edloo0y" path="res://art/bakery_coin_game_over.png" id="6_1kq1a"]
+[ext_resource type="Texture2D" uid="uid://cg2bn0rt8mygs" path="res://art/upgrade_button_hover.png" id="6_5f5m2"]
 [ext_resource type="Texture2D" uid="uid://cyxpmp222tju5" path="res://art/home_button_80x80.png" id="6_vjr2r"]
 [ext_resource type="Texture2D" uid="uid://fljjue430n1h" path="res://art/close_button_80x80.png" id="7_26v7c"]
+[ext_resource type="Texture2D" uid="uid://4ylebtvxenc2" path="res://art/upgrade_button_disabled.png" id="7_utl0d"]
+[ext_resource type="Texture2D" uid="uid://dsgbsk4kxqm6c" path="res://art/home_button_hover_80x80.png" id="8_0wsge"]
+[ext_resource type="Texture2D" uid="uid://bgpsj68eke50y" path="res://art/upgrade_arrow.png" id="9_3l3wy"]
+[ext_resource type="Texture2D" uid="uid://bdicms8g7t1no" path="res://art/close_button_hover_80x80.png" id="10_sx076"]
 
 [node name="UpgradeHub" type="Control"]
 layout_mode = 3
@@ -31,9 +37,9 @@ texture = ExtResource("3_uugsp")
 [node name="SaleCounter" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.867
+anchor_left = 0.875
 anchor_top = 0.6
-anchor_right = 0.867
+anchor_right = 0.875
 anchor_bottom = 0.6
 offset_left = -148.0
 offset_top = -48.0
@@ -43,18 +49,55 @@ grow_vertical = 2
 
 [node name="Level" type="Label" parent="SaleCounter"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 50
 text = "LVL 0"
 horizontal_alignment = 1
 
-[node name="UpgradeButton" type="Button" parent="SaleCounter"]
+[node name="UpgradeButton" type="TextureButton" parent="SaleCounter"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+texture_normal = ExtResource("5_ueii7")
+texture_hover = ExtResource("6_5f5m2")
+texture_disabled = ExtResource("7_utl0d")
+
+[node name="UpgradeContainer" type="HBoxContainer" parent="SaleCounter/UpgradeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="ReqCoins" type="Label" parent="SaleCounter/UpgradeButton/UpgradeContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 50
 text = "100"
-icon = ExtResource("4_rq02n")
-alignment = 2
-icon_alignment = 2
+
+[node name="CoinImage" type="TextureRect" parent="SaleCounter/UpgradeButton/UpgradeContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_1kq1a")
+stretch_mode = 2
+
+[node name="UpgradeArrow" type="TextureRect" parent="SaleCounter/UpgradeButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -35.0
+offset_top = -17.0
+offset_right = -5.0
+offset_bottom = 25.0
+grow_horizontal = 0
+texture = ExtResource("9_3l3wy")
 
 [node name="Oven" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -72,25 +115,62 @@ grow_vertical = 2
 
 [node name="Level" type="Label" parent="Oven"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 50
 text = "LVL 0"
 horizontal_alignment = 1
 
-[node name="UpgradeButton" type="Button" parent="Oven"]
+[node name="UpgradeButton" type="TextureButton" parent="Oven"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "75"
-icon = ExtResource("4_rq02n")
-alignment = 2
-icon_alignment = 2
+texture_normal = ExtResource("5_ueii7")
+texture_hover = ExtResource("6_5f5m2")
+texture_disabled = ExtResource("7_utl0d")
+
+[node name="UpgradeContainer" type="HBoxContainer" parent="Oven/UpgradeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="ReqCoins" type="Label" parent="Oven/UpgradeButton/UpgradeContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 50
+text = "100"
+
+[node name="CoinImage" type="TextureRect" parent="Oven/UpgradeButton/UpgradeContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_1kq1a")
+stretch_mode = 2
+
+[node name="UpgradeArrow" type="TextureRect" parent="Oven/UpgradeButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -35.0
+offset_top = -17.0
+offset_right = -5.0
+offset_bottom = 25.0
+grow_horizontal = 0
+texture = ExtResource("9_3l3wy")
 
 [node name="Counters" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.505
+anchor_left = 0.45
 anchor_top = 0.49
-anchor_right = 0.505
+anchor_right = 0.45
 anchor_bottom = 0.49
 offset_left = -74.0
 offset_top = -48.0
@@ -101,25 +181,62 @@ grow_vertical = 2
 
 [node name="Level" type="Label" parent="Counters"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 50
 text = "LVL 0"
 horizontal_alignment = 1
 
-[node name="UpgradeButton" type="Button" parent="Counters"]
+[node name="UpgradeButton" type="TextureButton" parent="Counters"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "75"
-icon = ExtResource("4_rq02n")
-alignment = 2
-icon_alignment = 2
+texture_normal = ExtResource("5_ueii7")
+texture_hover = ExtResource("6_5f5m2")
+texture_disabled = ExtResource("7_utl0d")
+
+[node name="UpgradeContainer" type="HBoxContainer" parent="Counters/UpgradeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="ReqCoins" type="Label" parent="Counters/UpgradeButton/UpgradeContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 50
+text = "100"
+
+[node name="CoinImage" type="TextureRect" parent="Counters/UpgradeButton/UpgradeContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_1kq1a")
+stretch_mode = 2
+
+[node name="UpgradeArrow" type="TextureRect" parent="Counters/UpgradeButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -35.0
+offset_top = -17.0
+offset_right = -5.0
+offset_bottom = 25.0
+grow_horizontal = 0
+texture = ExtResource("9_3l3wy")
 
 [node name="Fridge" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.68
+anchor_left = 0.695
 anchor_top = 0.375
-anchor_right = 0.68
+anchor_right = 0.695
 anchor_bottom = 0.375
 offset_left = -148.0
 offset_top = -52.0
@@ -129,43 +246,117 @@ grow_vertical = 2
 
 [node name="Level" type="Label" parent="Fridge"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 50
 text = "LVL 0"
 horizontal_alignment = 1
 
-[node name="UpgradeButton" type="Button" parent="Fridge"]
+[node name="UpgradeButton" type="TextureButton" parent="Fridge"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "75"
-icon = ExtResource("4_rq02n")
-alignment = 2
-icon_alignment = 2
+texture_normal = ExtResource("5_ueii7")
+texture_hover = ExtResource("6_5f5m2")
+texture_disabled = ExtResource("7_utl0d")
+
+[node name="UpgradeContainer" type="HBoxContainer" parent="Fridge/UpgradeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="ReqCoins" type="Label" parent="Fridge/UpgradeButton/UpgradeContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 50
+text = "100"
+
+[node name="CoinImage" type="TextureRect" parent="Fridge/UpgradeButton/UpgradeContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_1kq1a")
+stretch_mode = 2
+
+[node name="UpgradeArrow" type="TextureRect" parent="Fridge/UpgradeButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -35.0
+offset_top = -17.0
+offset_right = -5.0
+offset_bottom = 25.0
+grow_horizontal = 0
+texture = ExtResource("9_3l3wy")
 
 [node name="Trash" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.015
+anchor_left = 0.005
 anchor_top = 0.55
-anchor_right = 0.015
+anchor_right = 0.005
 anchor_bottom = 0.6
 offset_right = 148.0
 offset_bottom = 50.0
 
 [node name="Level" type="Label" parent="Trash"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 50
 text = "LVL 0"
 horizontal_alignment = 1
 
-[node name="UpgradeButton" type="Button" parent="Trash"]
+[node name="UpgradeButton" type="TextureButton" parent="Trash"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "50"
-icon = ExtResource("4_rq02n")
-alignment = 2
-icon_alignment = 2
+texture_normal = ExtResource("5_ueii7")
+texture_hover = ExtResource("6_5f5m2")
+texture_disabled = ExtResource("7_utl0d")
+
+[node name="UpgradeContainer" type="HBoxContainer" parent="Trash/UpgradeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="ReqCoins" type="Label" parent="Trash/UpgradeButton/UpgradeContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_r0pqc")
+theme_override_font_sizes/font_size = 50
+text = "100"
+
+[node name="CoinImage" type="TextureRect" parent="Trash/UpgradeButton/UpgradeContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_1kq1a")
+stretch_mode = 2
+
+[node name="UpgradeArrow" type="TextureRect" parent="Trash/UpgradeButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -35.0
+offset_top = -17.0
+offset_right = -5.0
+offset_bottom = 25.0
+grow_horizontal = 0
+texture = ExtResource("9_3l3wy")
 
 [node name="MenuStatsContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -180,7 +371,7 @@ theme_override_constants/separation = 15
 
 [node name="Coins" type="Label" parent="MenuStatsContainer"]
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.517184, 0.517184, 0.517184, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("5_r0pqc")
 theme_override_font_sizes/font_size = 70
@@ -194,10 +385,12 @@ stretch_mode = 2
 [node name="HomeButton" type="TextureButton" parent="MenuStatsContainer"]
 layout_mode = 2
 texture_normal = ExtResource("6_vjr2r")
+texture_hover = ExtResource("8_0wsge")
 
 [node name="CloseButton" type="TextureButton" parent="MenuStatsContainer"]
 layout_mode = 2
 texture_normal = ExtResource("7_26v7c")
+texture_hover = ExtResource("10_sx076")
 
 [connection signal="pressed" from="MenuStatsContainer/HomeButton" to="." method="_on_home_button_pressed"]
 [connection signal="pressed" from="MenuStatsContainer/CloseButton" to="." method="_on_close_button_pressed"]

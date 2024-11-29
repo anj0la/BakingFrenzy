@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqfwvvi6rb8gb"]
+[gd_scene load_steps=8 format=3 uid="uid://dqfwvvi6rb8gb"]
 
 [ext_resource type="Texture2D" uid="uid://c1uakdggq2pls" path="res://art/game_background_outline_recipe.png" id="1_cyc50"]
 [ext_resource type="Script" path="res://scripts/HUD.gd" id="1_xlsrd"]
 [ext_resource type="Texture2D" uid="uid://c0by4gbg7w3xs" path="res://art/customer_icon.png" id="2_xlj4a"]
+[ext_resource type="FontFile" uid="uid://b0ws8x23iavyc" path="res://fonts/Modak-Regular.ttf" id="3_1tc0h"]
 [ext_resource type="Texture2D" uid="uid://bln6pr4hv72lf" path="res://art/bakery_coin.png" id="3_kgrly"]
 [ext_resource type="Texture2D" uid="uid://cbnbca3ng6pt7" path="res://art/rect_white.png" id="4_ygfvq"]
 [ext_resource type="Texture2D" uid="uid://5m4t80pnsul" path="res://art/menu.png" id="5_s0jyg"]
@@ -24,71 +25,161 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="ColorRect" type="ColorRect" parent="MainControl"]
+modulate = Color(1, 1, 1, 0.501961)
+show_behind_parent = true
+offset_left = 720.0
+offset_top = 72.0
+offset_right = 1200.0
+offset_bottom = 192.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="MainControl"]
+visible = false
+modulate = Color(1, 1, 1, 0.501961)
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 352.0
+offset_bottom = 112.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="MainControl"]
+visible = false
+modulate = Color(1, 1, 1, 0.494118)
+offset_left = 1480.0
+offset_top = 8.0
+offset_right = 1822.0
+offset_bottom = 104.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="MainControl"]
+modulate = Color(1, 1, 1, 0.501961)
+offset_left = 8.0
+offset_top = 920.0
+offset_right = 593.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="MainControl"]
+modulate = Color(1, 1, 1, 0.501961)
+offset_left = 8.0
+offset_top = 864.0
+offset_right = 232.0
+offset_bottom = 912.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect6" type="ColorRect" parent="MainControl"]
+visible = false
+offset_left = 1648.0
+offset_top = 965.0
+offset_right = 1872.0
+offset_bottom = 1013.0
+color = Color(0.46, 0.261433, 0.138, 1)
+
+[node name="ColorRect7" type="ColorRect" parent="MainControl"]
+modulate = Color(1, 1, 1, 0.501961)
+offset_left = 856.0
+offset_top = 8.0
+offset_right = 1080.0
+offset_bottom = 56.0
+color = Color(0, 0, 0, 1)
+
 [node name="GameStatsContainer" type="HBoxContainer" parent="MainControl"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
+anchors_preset = -1
+anchor_left = 0.975
+anchor_top = 0.05
+anchor_right = 0.975
+anchor_bottom = 0.05
 offset_left = -216.0
 offset_top = 10.0
 offset_bottom = 66.0
 grow_horizontal = 0
+theme_override_constants/separation = 20
 
-[node name="Coins" type="Label" parent="MainControl/GameStatsContainer"]
+[node name="CoinsContainer" type="HBoxContainer" parent="MainControl/GameStatsContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
-text = "0"
 
-[node name="CoinsImage" type="TextureRect" parent="MainControl/GameStatsContainer"]
+[node name="Coins" type="Label" parent="MainControl/GameStatsContainer/CoinsContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_1tc0h")
+theme_override_font_sizes/font_size = 60
+text = "100"
+
+[node name="CoinsImage" type="TextureRect" parent="MainControl/GameStatsContainer/CoinsContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_vertical = 4
 texture = ExtResource("3_kgrly")
 stretch_mode = 2
 
-[node name="Customers" type="Label" parent="MainControl/GameStatsContainer"]
+[node name="CustomersContainer" type="HBoxContainer" parent="MainControl/GameStatsContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
-text = "0 "
 
-[node name="CustomersImage" type="TextureRect" parent="MainControl/GameStatsContainer"]
+[node name="Customers" type="Label" parent="MainControl/GameStatsContainer/CustomersContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_1tc0h")
+theme_override_font_sizes/font_size = 60
+text = "10"
+
+[node name="CustomersImage" type="TextureRect" parent="MainControl/GameStatsContainer/CustomersContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_vertical = 4
 texture = ExtResource("2_xlj4a")
 stretch_mode = 2
 
 [node name="MenuButton" type="TextureButton" parent="MainControl/GameStatsContainer"]
+custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
+size_flags_vertical = 4
 texture_normal = ExtResource("5_s0jyg")
 
-[node name="GoalsContainer" type="VBoxContainer" parent="MainControl"]
-layout_mode = 2
+[node name="GoalsContainer" type="HBoxContainer" parent="MainControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.05
+anchor_right = 0.025
+anchor_bottom = 0.05
 offset_left = 10.0
 offset_top = 10.0
-offset_right = 251.0
-offset_bottom = 98.0
+offset_right = 329.0
+offset_bottom = 101.0
 
-[node name="FirstGoal" type="Label" parent="MainControl/GoalsContainer"]
+[node name="GoalLabel" type="Label" parent="MainControl/GoalsContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
-text = "Goal: Earn 500 Coins"
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_1tc0h")
+theme_override_font_sizes/font_size = 60
+text = "Earn 100"
+
+[node name="CoinsImage" type="TextureRect" parent="MainControl/GoalsContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_kgrly")
+stretch_mode = 2
 
 [node name="StatusTimeContainer" type="VBoxContainer" parent="MainControl"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -110.5
-offset_top = 10.0
-offset_right = 110.5
-offset_bottom = 115.0
+offset_left = -212.0
+offset_right = 212.0
+offset_bottom = 217.0
 grow_horizontal = 2
 
 [node name="OpenStatus" type="RichTextLabel" parent="MainControl/StatusTimeContainer"]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 30
+theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("3_1tc0h")
+theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
-text = "[center][color=black]OPEN[/color][/center]"
+text = "[center][color=white]OPEN[/color][/center]"
 fit_content = true
 scroll_active = false
 deselect_on_focus_loss_enabled = false
@@ -96,8 +187,9 @@ drag_and_drop_selection_enabled = false
 
 [node name="TimeIndicator" type="Label" parent="MainControl/StatusTimeContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 54
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_1tc0h")
+theme_override_font_sizes/font_size = 100
 text = "08:00 AM"
 horizontal_alignment = 1
 
@@ -112,8 +204,9 @@ grow_vertical = 0
 
 [node name="CompletedStatus" type="Label" parent="MainControl/OrderStatusContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_1tc0h")
+theme_override_font_sizes/font_size = 40
 text = "COMPLETED"
 
 [node name="OrderImage" type="TextureRect" parent="MainControl/OrderStatusContainer"]
@@ -144,22 +237,20 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 text = "Ingredient #1"
 
-[node name="OrderStateContainer" type="HBoxContainer" parent="MainControl"]
+[node name="OrderState" type="Label" parent="MainControl"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -122.0
+anchors_preset = -1
+anchor_left = 0.95
+anchor_top = 0.95
+anchor_right = 0.95
+anchor_bottom = 0.95
+offset_left = -139.0
+offset_top = -61.0
 grow_horizontal = 0
 grow_vertical = 0
-
-[node name="OrderState" type="Label" parent="MainControl/OrderStateContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_1tc0h")
+theme_override_font_sizes/font_size = 40
 text = "BAKING"
 
 [connection signal="pressed" from="MainControl/GameStatsContainer/MenuButton" to="." method="_on_menu_button_pressed"]

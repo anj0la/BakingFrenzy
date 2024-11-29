@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cyawmxyy2slrs"]
+[gd_scene load_steps=12 format=3 uid="uid://cyawmxyy2slrs"]
 
 [ext_resource type="Script" path="res://BakeryHub.gd" id="1_gyl1f"]
 [ext_resource type="Resource" uid="uid://cfbsynjsw6ejt" path="res://resources/GameStats.tres" id="2_h4aom"]
@@ -6,9 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://bln6pr4hv72lf" path="res://art/bakery_coin.png" id="3_wy641"]
 [ext_resource type="Texture2D" uid="uid://ban2sebxm6gxu" path="res://art/enter_shop_button.png" id="4_8m8ki"]
 [ext_resource type="Texture2D" uid="uid://dw8pmqut844o3" path="res://art/build_button_80x80.png" id="4_fwadh"]
+[ext_resource type="Texture2D" uid="uid://dsg0kr5gw0arn" path="res://art/enter_shop_hover_button.png" id="5_3uvrv"]
 [ext_resource type="Texture2D" uid="uid://fljjue430n1h" path="res://art/close_button_80x80.png" id="5_gego5"]
-[ext_resource type="Texture2D" uid="uid://dabms05ah0fau" path="res://art/highlighted_enter_shop_button.png" id="5_m8mo3"]
 [ext_resource type="FontFile" uid="uid://b0ws8x23iavyc" path="res://fonts/Modak-Regular.ttf" id="7_brrd7"]
+[ext_resource type="Texture2D" uid="uid://bqt53mbl12g6k" path="res://art/build_button_hover_80x80.png" id="9_xx2rj"]
+[ext_resource type="Texture2D" uid="uid://bdicms8g7t1no" path="res://art/close_button_hover_80x80.png" id="11_xxvjc"]
 
 [node name="BakeryHub" type="Control"]
 layout_mode = 3
@@ -42,7 +44,7 @@ offset_right = 248.0
 grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("4_8m8ki")
-texture_hover = ExtResource("5_m8mo3")
+texture_hover = ExtResource("5_3uvrv")
 
 [node name="MenuStatsContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -57,7 +59,7 @@ theme_override_constants/separation = 15
 
 [node name="Coins" type="Label" parent="MenuStatsContainer"]
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.517184, 0.517184, 0.517184, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("7_brrd7")
 theme_override_font_sizes/font_size = 70
@@ -71,10 +73,12 @@ stretch_mode = 2
 [node name="UpgradeButton" type="TextureButton" parent="MenuStatsContainer"]
 layout_mode = 2
 texture_normal = ExtResource("4_fwadh")
+texture_hover = ExtResource("9_xx2rj")
 
 [node name="CloseButton" type="TextureButton" parent="MenuStatsContainer"]
 layout_mode = 2
 texture_normal = ExtResource("5_gego5")
+texture_hover = ExtResource("11_xxvjc")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0

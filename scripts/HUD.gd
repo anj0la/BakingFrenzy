@@ -5,8 +5,6 @@ signal pause_game
 const BASE_RATE: int = 5
 const FINAL_HOUR: int = 17 # 5 PM
 const CLOSED_HOUR: int = 18 # 6 PM
-# May store the following array into a CustomResource file.
-const GOALS: Array = [{"name": "goal_coins", "target": 500}, {"name": "goal_customers", "target": 10}]
 @export var seconds_per_in_game_hour: int = 12 # 6, 12, 18
 var current_in_game_hour: float # 8.0, 8.1
 var increment_interval: int # Define the interval at which to increment in-game time by 0.1 hours.
@@ -17,7 +15,6 @@ func _ready() -> void:
 	print('increment interval: ', increment_interval)
 	current_in_game_hour = 8.0 # Start at 8:00 AM.
 	_display_time_in_hud(current_in_game_hour)
-	# display_goal()
 	update_order_status(false)
 	update_order_state("")
 
@@ -50,15 +47,15 @@ func reset_time_indicator() -> void:
 	
 # Updates the amount of coins the Player has collected.
 func update_coins(coins: int) -> void:
-	$MainControl/GameStatsContainer/Coins.text = str(coins)
+	$MainControl/GameStatsContainer/CoinsContainer/Coins.text = str(coins)
 	
 # Updates the amount of customers the Player has served.
 func update_customers_served(customers_served: int) -> void:
-	$MainControl/GameStatsContainer/Customers.text = str(customers_served)
+	$MainControl/GameStatsContainer/CustomersContainer/Customers.text = str(customers_served)
 	
 # Displays the objective(s) that a Player must achieve to complete the day (i.e., pass the level).
 func display_goal(first_goal: Array) -> void:
-	$MainControl/GoalsContainer/FirstGoal.text = "Earn " + str(first_goal[1]) + " coins"
+	$MainControl/GoalsContainer/GoalLabel.text = "Earn " + str(first_goal[1])
 		
 # Updates order status, whether it is completed (green) or not (grey).
 func update_order_status(completed: bool) -> void:
@@ -74,9 +71,9 @@ func update_order(recipe_name: String) -> void:
 
 # Updates the order state.
 func update_order_state(new_state: String) -> void:
-	$MainControl/OrderStateContainer/OrderState.text = new_state
+	$MainControl/OrderState.text = new_state
 	await get_tree().create_timer(1.0).timeout
-	$MainControl/OrderStateContainer/OrderState.text = ""
+	$MainControl/OrderState.text = ""
 	
 # Updates the open status.
 func _update_open_status(in_game_hour: float) -> void:
@@ -124,22 +121,6 @@ func reset_ingredient_completion() -> void:
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.add_theme_color_override("font_color", Color.BLACK)
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.add_theme_color_override("font_color", Color.BLACK)
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientName.add_theme_color_override("font_color", Color.BLACK)
-		
-
-# Generates a goal.
-# To do so, need to have goals separated into 2 categories: goal_coins & goal_customers
-# Take a goal from the list of goals. The goals is of the format: {name: goal_coins, target: 500}, {name: goal_customers, target: 10}
-# if name == goal_coins , then string is Earn ____ coins with the coins image later.
-# if name == goal_customers, then string is Serve ______ customers with customers image later.
-func _generate_goal() -> String:
-	var rand_index = randi() % GOALS.size()
-	var goal = GOALS[rand_index]
-	
-	if goal.name == "goal_coins":
-		return "Earn " + str(goal.target) + " coins"
-	# Then goal.name == goal_customers.
-	else:
-		return "Serve " + str(goal.target) + " customers"
 		
 # Emits signal to pause the game.
 func _on_menu_button_pressed() -> void:
