@@ -261,22 +261,26 @@ func upgrade_kitchen_item(item: String) -> bool:
 		return false # Not enough money
 
 # Calculates the total earnings for the specified recipe after adding flat increases and multipliers.
-func calculate_recipe_earnings(base_price: int, recipe: String) -> int:
+func calculate_recipe_earnings(base_price: int, recipe: String, recipe_category: String) -> int:
 	var total_earnings = base_price
-
-	# Apply flat increases (counters or fridge).
-	for item_name in kitchen_upgrades.keys():
+	
+	# Apply increases (either multiplier or flat increases).
+	for item_name in kitchen_upgrades.keys(): # Sale counter is listed first in dictionary, and therefore always goes first.
 		var item_data = kitchen_upgrades[item_name]
-		if item_data["effect"] == "all_recipes":
-			total_earnings += item_data.get("flat_increase", 0)
-		elif item_data["effect"] == "certain_recipes" and recipe in item_data.get("recipes", []):
-			total_earnings += item_data.get("flat_increase", 0)
-
-	# Apply multipliers (oven).
-	for item_name in kitchen_upgrades.keys():
-		var item_data = kitchen_upgrades[item_name]
+		
+		# Handle Sale Counter effects first.
 		if item_data["effect"] == "all_recipes":
 			total_earnings *= item_data.get("multiplier", 1.0)
+		
+		# Handle Counter, Fridge and Oven effects afterwards.
+		if item_data["effect"] == "certain_recipes" and recipe_category == "kneaded_recipes":
+			total_earnings += item_data.get("flat_increase", 0)
+		# Fridge effects.
+		elif item_data["effect"] == "certain_recipes" and recipe_category == "chilled_recipes":
+			total_earnings += item_data.get("flat_increase", 0)
+		# Oven effects.
+		elif item_data["effect"] == "certain_recipes" and recipe_category == "general_recipes":
+			total_earnings += item_data.get("flat_increase", 0)
 
 	return int(total_earnings)
 	

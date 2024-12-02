@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dgh7j3kb520y4"]
+[gd_scene load_steps=16 format=3 uid="uid://dgh7j3kb520y4"]
 
 [ext_resource type="Script" path="res://scripts/GameOverMenu.gd" id="1_p5or7"]
 [ext_resource type="Texture2D" uid="uid://bypf4316f4cmb" path="res://art/game_over_background.png" id="2_48v2c"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://d27rlyik6hyqn" path="res://art/text_bar_smaller.png" id="10_wvvam"]
 [ext_resource type="Texture2D" uid="uid://bnjkb5edloo0y" path="res://art/bakery_coin_game_over.png" id="11_06gcy"]
 [ext_resource type="Texture2D" uid="uid://gjcfpfn1lco4" path="res://art/right_arrow_hover_game_over.png" id="12_y2dcm"]
+[ext_resource type="Texture2D" uid="uid://cghctgjl5kh37" path="res://art/customer_icon_game_over.png" id="15_d1noh"]
 
 [node name="GameOverMenu" type="CanvasLayer"]
 script = ExtResource("1_p5or7")
@@ -301,10 +302,9 @@ horizontal_alignment = 2
 
 [node name="CustomersImage" type="TextureRect" parent="MainControl/GameStatsContainer/CustomersServedTexture/CoinsContainer"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 size_flags_vertical = 4
-texture = ExtResource("3_ipdqt")
+texture = ExtResource("15_d1noh")
 stretch_mode = 2
 
 [connection signal="pressed" from="MainControl/NavContainer/HomeButton" to="." method="_on_home_button_pressed"]

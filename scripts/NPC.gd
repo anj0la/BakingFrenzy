@@ -77,7 +77,8 @@ func generate_order():
 	completed_ingredient_collection = false
 	
 	# Change the price to the correct price.
-	selected_order[2] = game_stats.calculate_recipe_earnings(selected_order[2], selected_order[0]) # selected_order[2] = cost, selected_order[0] = recipe_name
+	var recipe_category = recipe_manager.get_recipe_category(selected_order[0])
+	selected_order[2] = game_stats.calculate_recipe_earnings(selected_order[2], selected_order[0], recipe_category) # selected_order[2] = cost, selected_order[0] = recipe_name
 	
 # Returns the selected order. Used for UI display.
 func get_selected_order() -> Array:
@@ -160,3 +161,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		# movement_stage = MovementStage.WAITING
 		# Allow NPC to collide into Area2D again.
 		$Area2D/CollisionShape2D.set_deferred("disabled", false)
+
+func _update_cost(new_cost) -> void:
+	selected_order[2] = new_cost

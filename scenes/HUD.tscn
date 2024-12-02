@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://scripts/HUD.gd" id="1_xlsrd"]
 [ext_resource type="Texture2D" uid="uid://c0by4gbg7w3xs" path="res://art/customer_icon.png" id="2_xlj4a"]
 [ext_resource type="FontFile" uid="uid://b0ws8x23iavyc" path="res://fonts/Modak-Regular.ttf" id="3_1tc0h"]
+[ext_resource type="Texture2D" uid="uid://4sakwndek7p0" path="res://art/text_bar.png" id="3_e35w1"]
 [ext_resource type="Texture2D" uid="uid://bln6pr4hv72lf" path="res://art/bakery_coin.png" id="3_kgrly"]
-[ext_resource type="Texture2D" uid="uid://cbnbca3ng6pt7" path="res://art/rect_white.png" id="4_ygfvq"]
 [ext_resource type="Texture2D" uid="uid://5m4t80pnsul" path="res://art/menu.png" id="5_s0jyg"]
 
 [node name="HUD" type="CanvasLayer"]
@@ -25,149 +25,164 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="MainControl"]
-modulate = Color(1, 1, 1, 0.501961)
-show_behind_parent = true
-offset_left = 720.0
-offset_top = 72.0
-offset_right = 1200.0
-offset_bottom = 192.0
-color = Color(0, 0, 0, 1)
-
-[node name="ColorRect2" type="ColorRect" parent="MainControl"]
-visible = false
-modulate = Color(1, 1, 1, 0.501961)
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 352.0
-offset_bottom = 112.0
-color = Color(0, 0, 0, 1)
-
-[node name="ColorRect3" type="ColorRect" parent="MainControl"]
-visible = false
-modulate = Color(1, 1, 1, 0.494118)
-offset_left = 1480.0
-offset_top = 8.0
-offset_right = 1822.0
-offset_bottom = 104.0
-color = Color(0, 0, 0, 1)
-
-[node name="ColorRect4" type="ColorRect" parent="MainControl"]
-modulate = Color(1, 1, 1, 0.501961)
-offset_left = 8.0
-offset_top = 920.0
-offset_right = 593.0
-offset_bottom = 1080.0
-color = Color(0, 0, 0, 1)
-
-[node name="ColorRect5" type="ColorRect" parent="MainControl"]
-modulate = Color(1, 1, 1, 0.501961)
-offset_left = 8.0
-offset_top = 864.0
-offset_right = 232.0
-offset_bottom = 912.0
-color = Color(0, 0, 0, 1)
-
-[node name="ColorRect6" type="ColorRect" parent="MainControl"]
-visible = false
-offset_left = 1648.0
-offset_top = 965.0
-offset_right = 1872.0
-offset_bottom = 1013.0
-color = Color(0.46, 0.261433, 0.138, 1)
-
-[node name="ColorRect7" type="ColorRect" parent="MainControl"]
-modulate = Color(1, 1, 1, 0.501961)
-offset_left = 856.0
-offset_top = 8.0
-offset_right = 1080.0
-offset_bottom = 56.0
-color = Color(0, 0, 0, 1)
-
-[node name="GameStatsContainer" type="HBoxContainer" parent="MainControl"]
+[node name="GoalRect" type="TextureRect" parent="MainControl"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.975
-anchor_top = 0.05
-anchor_right = 0.975
-anchor_bottom = 0.05
-offset_left = -216.0
-offset_top = 10.0
-offset_bottom = 66.0
-grow_horizontal = 0
-theme_override_constants/separation = 20
+anchor_left = 0.091
+anchor_top = 0.044
+anchor_right = 0.091
+anchor_bottom = 0.044
+offset_right = 501.0
+offset_bottom = 122.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_e35w1")
 
-[node name="CoinsContainer" type="HBoxContainer" parent="MainControl/GameStatsContainer"]
-layout_mode = 2
+[node name="GoalsContainer" type="HBoxContainer" parent="MainControl/GoalRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01
+anchor_right = 0.99
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
 
-[node name="Coins" type="Label" parent="MainControl/GameStatsContainer/CoinsContainer"]
+[node name="GoalLabel" type="Label" parent="MainControl/GoalRect/GoalsContainer"]
 layout_mode = 2
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("3_1tc0h")
-theme_override_font_sizes/font_size = 60
-text = "100"
+theme_override_font_sizes/font_size = 70
+text = "Goal: 100"
 
-[node name="CoinsImage" type="TextureRect" parent="MainControl/GameStatsContainer/CoinsContainer"]
+[node name="CoinsImage" type="TextureRect" parent="MainControl/GoalRect/GoalsContainer"]
 custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("3_kgrly")
 stretch_mode = 2
 
-[node name="CustomersContainer" type="HBoxContainer" parent="MainControl/GameStatsContainer"]
+[node name="GameStatsRect" type="TextureRect" parent="MainControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 0.044
+anchor_right = 0.7
+anchor_bottom = 0.044
+offset_top = 0.479996
+offset_right = 561.0
+offset_bottom = 122.48
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_e35w1")
+
+[node name="GameStatsContainer" type="HBoxContainer" parent="MainControl/GameStatsRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_right = 0.975
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 2
+
+[node name="CoinsContainer" type="HBoxContainer" parent="MainControl/GameStatsRect/GameStatsContainer"]
 layout_mode = 2
 
-[node name="Customers" type="Label" parent="MainControl/GameStatsContainer/CustomersContainer"]
+[node name="Coins" type="Label" parent="MainControl/GameStatsRect/GameStatsContainer/CoinsContainer"]
 layout_mode = 2
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("3_1tc0h")
 theme_override_font_sizes/font_size = 60
-text = "10"
+text = "99999+"
+visible_characters = 7
+visible_ratio = 1.16667
 
-[node name="CustomersImage" type="TextureRect" parent="MainControl/GameStatsContainer/CustomersContainer"]
+[node name="CoinsImage" type="TextureRect" parent="MainControl/GameStatsRect/GameStatsContainer/CoinsContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_kgrly")
+stretch_mode = 2
+
+[node name="CustomersContainer" type="HBoxContainer" parent="MainControl/GameStatsRect/GameStatsContainer"]
+layout_mode = 2
+
+[node name="Customers" type="Label" parent="MainControl/GameStatsRect/GameStatsContainer/CustomersContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_1tc0h")
+theme_override_font_sizes/font_size = 60
+text = "999+"
+
+[node name="CustomersImage" type="TextureRect" parent="MainControl/GameStatsRect/GameStatsContainer/CustomersContainer"]
 custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("2_xlj4a")
 stretch_mode = 2
 
-[node name="MenuButton" type="TextureButton" parent="MainControl/GameStatsContainer"]
-custom_minimum_size = Vector2(0, 90)
-layout_mode = 2
-size_flags_vertical = 4
-texture_normal = ExtResource("5_s0jyg")
-
-[node name="GoalsContainer" type="HBoxContainer" parent="MainControl"]
+[node name="StatusRect" type="TextureRect" parent="MainControl"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.025
-anchor_top = 0.05
-anchor_right = 0.025
-anchor_bottom = 0.05
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 329.0
-offset_bottom = 101.0
+anchor_left = 0.5
+anchor_top = 0.015
+anchor_right = 0.5
+anchor_bottom = 0.015
+offset_left = -100.5
+offset_right = 400.5
+offset_bottom = 122.0
+grow_horizontal = 2
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_e35w1")
 
-[node name="GoalLabel" type="Label" parent="MainControl/GoalsContainer"]
-layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("3_1tc0h")
-theme_override_font_sizes/font_size = 60
-text = "Earn 100"
+[node name="TimeIndicatorRect" type="TextureRect" parent="MainControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.08
+anchor_right = 0.5
+anchor_bottom = 0.08
+offset_left = -250.5
+offset_right = 250.5
+offset_bottom = 122.0
+grow_horizontal = 2
+texture = ExtResource("3_e35w1")
 
-[node name="CoinsImage" type="TextureRect" parent="MainControl/GoalsContainer"]
-custom_minimum_size = Vector2(0, 90)
-layout_mode = 2
-size_flags_vertical = 4
-texture = ExtResource("3_kgrly")
-stretch_mode = 2
+[node name="TimeIndicatorRect2" type="TextureRect" parent="MainControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01
+anchor_top = 1.0
+anchor_right = 0.01
+anchor_bottom = 1.0
+offset_top = -184.0
+offset_right = 501.0
+offset_bottom = -61.9999
+grow_vertical = 0
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_e35w1")
+
+[node name="CompletedRect" type="TextureRect" parent="MainControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.14
+anchor_top = 0.828
+anchor_right = 0.14
+anchor_bottom = 0.828
+offset_top = -30.76
+offset_right = 501.0
+offset_bottom = 91.24
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_e35w1")
 
 [node name="StatusTimeContainer" type="VBoxContainer" parent="MainControl"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = -1
 anchor_left = 0.5
+anchor_top = 0.01
 anchor_right = 0.5
+anchor_bottom = 0.01
 offset_left = -212.0
 offset_right = 212.0
 offset_bottom = 217.0
@@ -196,10 +211,13 @@ horizontal_alignment = 1
 [node name="OrderStatusContainer" type="VBoxContainer" parent="MainControl"]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.015
 anchor_top = 0.9
+anchor_right = 0.015
 anchor_bottom = 0.9
-offset_top = -88.0
-offset_right = 593.0
+offset_left = 0.200001
+offset_top = -107.0
+offset_right = 731.2
 grow_vertical = 0
 
 [node name="CompletedStatus" type="Label" parent="MainControl/OrderStatusContainer"]
@@ -208,12 +226,7 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("3_1tc0h")
 theme_override_font_sizes/font_size = 40
 text = "COMPLETED"
-
-[node name="OrderImage" type="TextureRect" parent="MainControl/OrderStatusContainer"]
-visible = false
-layout_mode = 2
-texture = ExtResource("4_ygfvq")
-expand_mode = 4
+horizontal_alignment = 1
 
 [node name="IngredientsTempContainer" type="HBoxContainer" parent="MainControl/OrderStatusContainer"]
 layout_mode = 2
@@ -237,20 +250,67 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 text = "Ingredient #1"
 
-[node name="OrderState" type="Label" parent="MainControl"]
+[node name="MenuButton" type="TextureButton" parent="MainControl"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.95
-anchor_top = 0.95
-anchor_right = 0.95
-anchor_bottom = 0.95
-offset_left = -139.0
-offset_top = -61.0
+anchor_left = 0.99
+anchor_top = 0.048
+anchor_right = 0.99
+anchor_bottom = 0.048
+offset_left = -79.8
+offset_top = -0.400002
+offset_right = 0.199951
+offset_bottom = 84.6
+grow_horizontal = 0
+size_flags_vertical = 4
+texture_normal = ExtResource("5_s0jyg")
+
+[node name="OrderStateRect" type="TextureRect" parent="MainControl"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.965
+anchor_top = 0.942
+anchor_right = 0.965
+anchor_bottom = 0.944
+offset_left = -200.0
+offset_top = -47.9999
+offset_right = 301.0
+offset_bottom = 74.0001
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("3_1tc0h")
-theme_override_font_sizes/font_size = 40
-text = "BAKING"
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_e35w1")
 
-[connection signal="pressed" from="MainControl/GameStatsContainer/MenuButton" to="." method="_on_menu_button_pressed"]
+[node name="OrderState" type="Label" parent="MainControl/OrderStateRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("3_1tc0h")
+theme_override_font_sizes/font_size = 80
+text = "BAKING"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GoalProgressBar" type="ProgressBar" parent="MainControl"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01
+anchor_top = 0.065
+anchor_right = 0.01
+anchor_bottom = 0.065
+offset_left = -0.199999
+offset_top = 0.200005
+offset_right = 140.8
+offset_bottom = 50.2
+size_flags_horizontal = 0
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("3_1tc0h")
+theme_override_font_sizes/font_size = 30
+
+[connection signal="pressed" from="MainControl/MenuButton" to="." method="_on_menu_button_pressed"]

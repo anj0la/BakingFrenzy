@@ -2,6 +2,8 @@ extends CanvasLayer
 
 signal pause_game
 
+const MAX_COINS: int = 99999
+const MAX_CUSTOMERS: int = 999
 const BASE_RATE: int = 5
 const FINAL_HOUR: int = 17 # 5 PM
 const CLOSED_HOUR: int = 18 # 6 PM
@@ -16,7 +18,6 @@ func _ready() -> void:
 	current_in_game_hour = 8.0 # Start at 8:00 AM.
 	_display_time_in_hud(current_in_game_hour)
 	update_order_status(false)
-	update_order_state("")
 
 # Updates the in-game time based on the remaining seconds.
 # IMPORTANT NOTES
@@ -47,15 +48,21 @@ func reset_time_indicator() -> void:
 	
 # Updates the amount of coins the Player has collected.
 func update_coins(coins: int) -> void:
-	$MainControl/GameStatsContainer/CoinsContainer/Coins.text = str(coins)
+	if coins > MAX_COINS:
+		$MainControl/GameStatsRect/GameStatsContainer/CoinsContainer/Coins.text = str(MAX_COINS) + "+"
+	else:
+		$MainControl/GameStatsRect/GameStatsContainer/CoinsContainer/Coins.text = str(coins)
 	
 # Updates the amount of customers the Player has served.
 func update_customers_served(customers_served: int) -> void:
-	$MainControl/GameStatsContainer/CustomersContainer/Customers.text = str(customers_served)
+	if customers_served > 999:
+		$MainControl/GameStatsRect/GameStatsContainer/CustomersContainer/Customers.text = str(MAX_CUSTOMERS) + "+"
+	else:	
+		$MainControl/GameStatsRect/GameStatsContainer/CustomersContainer/Customers.text = str(customers_served)
 	
-# Displays the objective(s) that a Player must achieve to complete the day (i.e., pass the level).
+# Displays the objective that a player must achieve to complete the day (i.e., pass the level).
 func display_goal(first_goal: Array) -> void:
-	$MainControl/GoalsContainer/GoalLabel.text = "Earn " + str(first_goal[1])
+	$MainControl/GoalRect/GoalsContainer/GoalLabel.text = "Goal: " + str(first_goal[1])
 		
 # Updates order status, whether it is completed (green) or not (grey).
 func update_order_status(completed: bool) -> void:
@@ -71,9 +78,11 @@ func update_order(recipe_name: String) -> void:
 
 # Updates the order state.
 func update_order_state(new_state: String) -> void:
-	$MainControl/OrderState.text = new_state
+	$MainControl/OrderStateRect.visible = true
+	$MainControl/OrderStateRect/OrderState.text = new_state
 	await get_tree().create_timer(1.0).timeout
-	$MainControl/OrderState.text = ""
+	$MainControl/OrderStateRect/OrderState.text = ""
+	$MainControl/OrderStateRect.visible = false
 	
 # Updates the open status.
 func _update_open_status(in_game_hour: float) -> void:

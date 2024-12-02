@@ -1,27 +1,70 @@
 extends Resource
 
-@export var recipes: Dictionary = {
-	"purple": {"ingredients": ["red", "blue", "white"], "cost": 10},
-	"cyan": {"ingredients": ["blue", "green", "white"], "cost": 12},
-	"pink": {"ingredients": ["red", "yellow", "white"], "cost": 8}
+# Separate recipe dictionaries
+@export var kneaded_recipes: Dictionary = {
+	"cinnamon_buns": {"ingredients": ["cinnamon", "sugar", "dough"], "cost": 10},
+	"chocolate_croissants": {"ingredients": ["butter", "dough", "chocolate"], "cost": 12},
+	"butter_croissants": {"ingredients": ["butter", "dough", "sugar"], "cost": 10},
+	"garlic_knots": {"ingredients": ["garlic", "dough", "butter"], "cost": 8},
+	"honey_glazed_rolls": {"ingredients": ["honey", "dough", "butter"], "cost": 10},
+	"jam_filled_buns": {"ingredients": ["jam", "dough", "sugar"], "cost": 9}
 }
 
+@export var chilled_recipes: Dictionary = {
+	"cheesecake": {"ingredients": ["cream_cheese", "sugar", "graham_crackers"], "cost": 15},
+	"vanilla_cupcakes": {"ingredients": ["flour", "sugar", "vanilla_extract"], "cost": 10},
+	"chocolate_cupcakes": {"ingredients": ["flour", "cocoa_powder", "sugar"], "cost": 12},
+	"mocha_cupcakes": {"ingredients": ["flour", "cocoa_powder", "coffee"], "cost": 14},
+	"brownies": {"ingredients": ["cocoa_powder", "sugar", "eggs"], "cost": 13},
+	"fudge": {"ingredients": ["chocolate", "butter", "sugar"], "cost": 12},
+	"peanut_butter_fudge": {"ingredients": ["peanut_butter", "sugar", "chocolate"], "cost": 14}
+}
+
+@export var general_recipes: Dictionary = {
+	"banana_bread": {"ingredients": ["banana", "flour", "sugar"], "cost": 11},
+	"chocolate_chip_cookies": {"ingredients": ["chocolate_chips", "sugar", "flour"], "cost": 10},
+	"muffins": {"ingredients": ["flour", "sugar", "butter"], "cost": 9},
+	"pancakes": {"ingredients": ["flour", "eggs", "milk"], "cost": 8},
+	"waffles": {"ingredients": ["flour", "eggs", "butter"], "cost": 10}
+}
+
+# Combined recipes dictionary (useful for random selection)
+var recipes: Dictionary
+
 @export var ingredient_weights: Dictionary = {
-	"red": 1.0,
-	"blue": 1.0,
-	"green": 1.0,
-	"yellow": 1.0,
-	"white": 1.0
+	"cinnamon": 1.0,
+	"sugar": 1.0,
+	"dough": 1.0,
+	"butter": 1.0,
+	"chocolate": 1.0,
+	"garlic": 1.0,
+	"honey": 1.0,
+	"jam": 1.0,
+	"cream_cheese": 1.0,
+	"graham_crackers": 1.0,
+	"flour": 1.0,
+	"vanilla_extract": 1.0,
+	"cocoa_powder": 1.0,
+	"coffee": 1.0,
+	"eggs": 1.0,
+	"peanut_butter": 1.0,
+	"banana": 1.0,
+	"chocolate_chips": 1.0,
+	"milk": 1.0
 }
 
 @export var default_weight: float = 1.0
 @export var multiplier: float = 4.0
 
 # NOTE: For testing purposes.
+# Merges all recipe categories into one recipe dictionary.
 func _init() -> void:
-	pass
+	recipes.merge(kneaded_recipes)
+	recipes.merge(chilled_recipes)
+	recipes.merge(general_recipes)
+	print(recipes)
 	
-# Selects a recupe from the recipes dictionary.
+# Selects a recipe from the recipes dictionary.
 func select_recipe() -> Array:
 	var rand_index = randi() % recipes.size()
 	var rand_recipe_name = recipes.keys()[rand_index]
@@ -29,6 +72,17 @@ func select_recipe() -> Array:
 	var cost = recipes[rand_recipe_name]["cost"]
 	return [rand_recipe_name, ingredients, cost] # selected_recipe[0] = recipe name, selected_recipe[1] = ["ingredient_1", ... "ingredient_n"], selected_recipe[2] = cost
 	
+# Gets the recipe category of the specified recipe name.
+func get_recipe_category(recipe_name: String) -> String:
+	if recipe_name in kneaded_recipes:
+		return "kneaded_recipes"
+	elif recipe_name in chilled_recipes:
+		return "chilled_recipes"
+	elif recipe_name in general_recipes:
+		return "general_recipes"
+	else:
+		return "The recipe does not exist in any of the following categories: Kneaded, Chilled and General."
+		
 # Initializes the weights, adding more importance (i.e., increasing the chance of selection) to the ingredients in the selected recipe.
 func initialize_weights(selected_recipe: Array) -> void:
 	for ingredient in ingredient_weights:
