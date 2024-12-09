@@ -110,11 +110,11 @@ func _on_ingredient_timer_timeout() -> void:
 	ingredient_spawn_location.progress_ratio = randf()
 		
 	# Set the ingredient's position perpendicular to the path direction (direction -> horizontial, path -> vertical).
-	var direction = ingredient_spawn_location.rotation + PI / 2
+	# var direction = ingredient_spawn_location.rotation + PI / 2
 		
 	# Set the ingredient's position to a random location.
 	ingredient.position = ingredient_spawn_location.position
-	ingredient.rotation = direction
+	# ingredient.rotation = direction
 		
 	# Spawn the ingredient by adding it to the Game scene.
 	add_child(ingredient)
@@ -142,6 +142,7 @@ func _on_player_hit(body: Node2D) -> void:
 				# print('Uh oh. Collected the wrong ingredient!')
 				$NPC.mark_incorrect_ingredient(body.ingredient_name)
 				$NPC.apply_trash_penalty()
+				$HUD.update_wrong_ingredient(body.ingredient_name)
 				# Activate trash detection to throw away the wrong ingredient.
 				$TrashCan.activate_trash_detection()
 			

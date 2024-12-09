@@ -17,7 +17,8 @@ func _ready() -> void:
 	
 # Gets an ingredient image texture based on its index.
 func _get_texture(ingredient: String) -> Texture2D:
-	var image_path = "res://art/rect_" + ingredient + ".png"
+	print("ingredient name: ", ingredient)
+	var image_path = "res://art/" + ingredient + ".png"
 	var texture = load(image_path)
 	return texture
 

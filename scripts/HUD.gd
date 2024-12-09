@@ -2,18 +2,21 @@ extends CanvasLayer
 
 signal pause_game
 
+@export var seconds_per_in_game_hour: int = 12 # 6, 12, 18
+
 const MAX_COINS: int = 99999
 const MAX_CUSTOMERS: int = 999
 const BASE_RATE: int = 5
 const FINAL_HOUR: int = 17 # 5 PM
 const CLOSED_HOUR: int = 18 # 6 PM
-@export var seconds_per_in_game_hour: int = 12 # 6, 12, 18
+
 var current_in_game_hour: float # 8.0, 8.1
 var increment_interval: int # Define the interval at which to increment in-game time by 0.1 hours.
+var ingredient_names: Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void: 
-	increment_interval = seconds_per_in_game_hour / BASE_RATE # 6 / 5 = 
+	increment_interval = seconds_per_in_game_hour / BASE_RATE
 	print('increment interval: ', increment_interval)
 	current_in_game_hour = 8.0 # Start at 8:00 AM.
 	_display_time_in_hud(current_in_game_hour)
@@ -114,22 +117,47 @@ func _display_time_in_hud(in_game_hour: float) -> void:
 	
 # Updates the list of ingredients. TODO: Replace with order image.
 func update_list_ingredients(first_name: String, second_name: String, third_name: String) -> void:
-	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.text = first_name
-	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.text = second_name
-	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientName.text = third_name
+	var first_image_path = "res://art/" + first_name + ".png"
+	var second_image_path = "res://art/" + second_name + ".png"
+	var third_image_path = "res://art/" + third_name + ".png"
+	
+	ingredient_names = [first_name, second_name, third_name]
+
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect.texture = load(first_image_path)
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect.texture = load(second_image_path)
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect.texture = load(third_image_path)
+	
+	# Make collected rect invisible.
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible = false
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible = false
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.visible = false
 
 func update_ingredient_completion(ingredient_name: String) -> void:
-	if $MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.text == ingredient_name:
-		$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.add_theme_color_override("font_color", Color.LIME_GREEN)
-	elif $MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.text == ingredient_name:
-		$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.add_theme_color_override("font_color", Color.LIME_GREEN)
+	if ingredient_name == ingredient_names[0]:
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.texture = load("res://art/green_checkmark.png")
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible = true
+	elif ingredient_name == ingredient_names[1]:
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.texture = load("res://art/green_checkmark.png")
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible = true
 	else:
-		$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientName.add_theme_color_override("font_color", Color.LIME_GREEN)
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.texture = load("res://art/green_checkmark.png")
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.visible = true
+		
+func update_wrong_ingredient(ingredient_name: String) -> void:
+	if ingredient_name == ingredient_names[0]:
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.texture = load("res://art/red_x.png")
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible = true
+	elif ingredient_name == ingredient_names[1]:
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.texture = load("res://art/red_x.png")
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible = true
+	else:
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.texture = load("res://art/red_x.png")
+		$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.visible = true
 
 func reset_ingredient_completion() -> void:
-	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientName.add_theme_color_override("font_color", Color.BLACK)
-	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientName.add_theme_color_override("font_color", Color.BLACK)
-	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientName.add_theme_color_override("font_color", Color.BLACK)
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible = false
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible = false
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.visible = false
 		
 # Emits signal to pause the game.
 func _on_menu_button_pressed() -> void:

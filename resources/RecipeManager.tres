@@ -4,26 +4,90 @@
 
 [resource]
 script = ExtResource("1_usjej")
-recipes = {
-"cyan": {
-"cost": 12,
-"ingredients": ["blue", "green", "white"]
-},
-"pink": {
-"cost": 8,
-"ingredients": ["red", "yellow", "white"]
-},
-"purple": {
+kneaded_recipes = {
+"butter_croissants": {
 "cost": 10,
-"ingredients": ["red", "blue", "white"]
+"ingredients": ["butter", "dough", "sugar"]
+},
+"chocolate_croissants": {
+"cost": 12,
+"ingredients": ["butter", "dough", "chocolate"]
+},
+"cinnamon_buns": {
+"cost": 10,
+"ingredients": ["cinnamon", "sugar", "dough"]
+},
+"honey_glazed_rolls": {
+"cost": 10,
+"ingredients": ["honey", "dough", "butter"]
+},
+"jelly_donut": {
+"cost": 9,
+"ingredients": ["jam", "dough", "sugar"]
+}
+}
+chilled_recipes = {
+"brownies": {
+"cost": 13,
+"ingredients": ["cocoa_powder", "sugar", "egg"]
+},
+"cheesecake": {
+"cost": 15,
+"ingredients": ["cream_cheese", "sugar", "graham_crackers"]
+},
+"chocolate_cupcakes": {
+"cost": 12,
+"ingredients": ["flour", "cocoa_powder", "sugar"]
+},
+"peanut_butter_fudge": {
+"cost": 14,
+"ingredients": ["peanut_butter", "sugar", "chocolate"]
+},
+"vanilla_cupcakes": {
+"cost": 10,
+"ingredients": ["flour", "sugar", "vanilla_extract"]
+}
+}
+general_recipes = {
+"banana_bread": {
+"cost": 11,
+"ingredients": ["banana", "flour", "sugar"]
+},
+"chocolate_chip_cookies": {
+"cost": 10,
+"ingredients": ["chocolate_chips", "sugar", "flour"]
+},
+"muffins": {
+"cost": 9,
+"ingredients": ["flour", "sugar", "butter"]
+},
+"pancakes": {
+"cost": 8,
+"ingredients": ["flour", "egg", "milk"]
+},
+"waffles": {
+"cost": 10,
+"ingredients": ["flour", "egg", "butter"]
 }
 }
 ingredient_weights = {
-"blue": 1.0,
-"green": 1.0,
-"red": 1.0,
-"white": 1.0,
-"yellow": 1.0
+"banana": 1.0,
+"butter": 1.0,
+"chocolate": 1.0,
+"chocolate_chips": 1.0,
+"cinnamon": 1.0,
+"cocoa_powder": 1.0,
+"cream_cheese": 1.0,
+"dough": 1.0,
+"egg": 1.0,
+"flour": 1.0,
+"graham_crackers": 1.0,
+"honey": 1.0,
+"jam": 1.0,
+"milk": 1.0,
+"peanut_butter": 1.0,
+"sugar": 1.0,
+"vanilla_extract": 1.0
 }
 default_weight = 1.0
 multiplier = 4.0

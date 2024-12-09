@@ -1,17 +1,30 @@
-[gd_scene load_steps=7 format=3 uid="uid://du048arfkmk7"]
+[gd_scene load_steps=9 format=3 uid="uid://du048arfkmk7"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_04t02"]
-[ext_resource type="Texture2D" uid="uid://bpukqnyeyvngc" path="res://art/playerGrey_walk1.png" id="1_ajxtc"]
-[ext_resource type="Texture2D" uid="uid://5ihgdvl10dtr" path="res://art/playerGrey_walk2.png" id="2_qoord"]
+[ext_resource type="Texture2D" uid="uid://2hebd0b7kddj" path="res://art/baker_idle_1.png" id="2_jsech"]
+[ext_resource type="Texture2D" uid="uid://c8ij5n3ndiaql" path="res://art/baker_idle_2.png" id="3_wd04x"]
+[ext_resource type="Texture2D" uid="uid://8lb2pkxbo81j" path="res://art/baker_walk.png" id="4_an7ol"]
+[ext_resource type="Texture2D" uid="uid://b0veg14eh2v7e" path="res://art/baker_walk_2.png" id="5_qijrk"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1xq76"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_ajxtc")
+"texture": ExtResource("2_jsech")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_qoord")
+"texture": ExtResource("3_wd04x")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_an7ol")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qijrk")
 }],
 "loop": true,
 "name": &"walk",
@@ -26,15 +39,14 @@ height = 136.0
 size = Vector2(116, 35.3333)
 
 [node name="Player" type="CharacterBody2D"]
-scale = Vector2(1.5, 1.5)
 collision_layer = 4
 script = ExtResource("1_04t02")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1xq76")
-animation = &"walk"
-frame_progress = 0.331605
+animation = &"idle"
+frame_progress = 0.307539
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_0m1q0")

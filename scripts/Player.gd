@@ -20,10 +20,11 @@ func _physics_process(_delta):
 			velocity.x = 0
 			
 		if velocity.x != 0:
-			$AnimatedSprite2D.flip_h = velocity.x < 0
+			$AnimatedSprite2D.animation = "walk"
+			$AnimatedSprite2D.flip_h = velocity.x > 0
 			$AnimatedSprite2D.play()
 		else:
-			$AnimatedSprite2D.stop()
+			$AnimatedSprite2D.animation = "idle"
 
 		# Move the player.
 		move_and_slide()

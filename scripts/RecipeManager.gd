@@ -5,18 +5,15 @@ extends Resource
 	"cinnamon_buns": {"ingredients": ["cinnamon", "sugar", "dough"], "cost": 10},
 	"chocolate_croissants": {"ingredients": ["butter", "dough", "chocolate"], "cost": 12},
 	"butter_croissants": {"ingredients": ["butter", "dough", "sugar"], "cost": 10},
-	"garlic_knots": {"ingredients": ["garlic", "dough", "butter"], "cost": 8},
 	"honey_glazed_rolls": {"ingredients": ["honey", "dough", "butter"], "cost": 10},
-	"jam_filled_buns": {"ingredients": ["jam", "dough", "sugar"], "cost": 9}
+	"jelly_donut": {"ingredients": ["jam", "dough", "sugar"], "cost": 9}
 }
 
 @export var chilled_recipes: Dictionary = {
 	"cheesecake": {"ingredients": ["cream_cheese", "sugar", "graham_crackers"], "cost": 15},
 	"vanilla_cupcakes": {"ingredients": ["flour", "sugar", "vanilla_extract"], "cost": 10},
 	"chocolate_cupcakes": {"ingredients": ["flour", "cocoa_powder", "sugar"], "cost": 12},
-	"mocha_cupcakes": {"ingredients": ["flour", "cocoa_powder", "coffee"], "cost": 14},
-	"brownies": {"ingredients": ["cocoa_powder", "sugar", "eggs"], "cost": 13},
-	"fudge": {"ingredients": ["chocolate", "butter", "sugar"], "cost": 12},
+	"brownies": {"ingredients": ["cocoa_powder", "sugar", "egg"], "cost": 13},
 	"peanut_butter_fudge": {"ingredients": ["peanut_butter", "sugar", "chocolate"], "cost": 14}
 }
 
@@ -24,8 +21,8 @@ extends Resource
 	"banana_bread": {"ingredients": ["banana", "flour", "sugar"], "cost": 11},
 	"chocolate_chip_cookies": {"ingredients": ["chocolate_chips", "sugar", "flour"], "cost": 10},
 	"muffins": {"ingredients": ["flour", "sugar", "butter"], "cost": 9},
-	"pancakes": {"ingredients": ["flour", "eggs", "milk"], "cost": 8},
-	"waffles": {"ingredients": ["flour", "eggs", "butter"], "cost": 10}
+	"pancakes": {"ingredients": ["flour", "egg", "milk"], "cost": 8},
+	"waffles": {"ingredients": ["flour", "egg", "butter"], "cost": 10}
 }
 
 # Combined recipes dictionary (useful for random selection)
@@ -37,7 +34,6 @@ var recipes: Dictionary
 	"dough": 1.0,
 	"butter": 1.0,
 	"chocolate": 1.0,
-	"garlic": 1.0,
 	"honey": 1.0,
 	"jam": 1.0,
 	"cream_cheese": 1.0,
@@ -45,8 +41,7 @@ var recipes: Dictionary
 	"flour": 1.0,
 	"vanilla_extract": 1.0,
 	"cocoa_powder": 1.0,
-	"coffee": 1.0,
-	"eggs": 1.0,
+	"egg": 1.0,
 	"peanut_butter": 1.0,
 	"banana": 1.0,
 	"chocolate_chips": 1.0,
