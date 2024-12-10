@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dqfwvvi6rb8gb"]
+[gd_scene load_steps=12 format=3 uid="uid://dqfwvvi6rb8gb"]
 
 [ext_resource type="Texture2D" uid="uid://c1uakdggq2pls" path="res://art/game_background_outline_recipe.png" id="1_cyc50"]
 [ext_resource type="Script" path="res://scripts/HUD.gd" id="1_xlsrd"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://5m4t80pnsul" path="res://art/menu.png" id="5_s0jyg"]
 [ext_resource type="Texture2D" uid="uid://bftsr08hji7p3" path="res://art/banana.png" id="7_vssdf"]
 [ext_resource type="Texture2D" uid="uid://dahc840fuv3bd" path="res://art/green_checkmark.png" id="8_cjuu8"]
+[ext_resource type="Texture2D" uid="uid://bwg4xctghgp7j" path="res://art/grey_arrow.png" id="9_loeu7"]
+[ext_resource type="Texture2D" uid="uid://44f76ti0435b" path="res://art/banana_bread.png" id="10_smorj"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_xlsrd")
@@ -28,6 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GoalRect" type="TextureRect" parent="MainControl"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.091
@@ -249,6 +252,7 @@ layout_mode = 2
 texture = ExtResource("7_vssdf")
 
 [node name="CollectedRect" type="TextureRect" parent="MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("8_cjuu8")
@@ -258,6 +262,20 @@ layout_mode = 2
 texture = ExtResource("7_vssdf")
 
 [node name="CollectedRect" type="TextureRect" parent="MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("8_cjuu8")
+
+[node name="ArrowRect" type="TextureRect" parent="MainControl/OrderStatusContainer/IngredientsTempContainer"]
+layout_mode = 2
+texture = ExtResource("9_loeu7")
+
+[node name="RecipeRect" type="TextureRect" parent="MainControl/OrderStatusContainer/IngredientsTempContainer"]
+layout_mode = 2
+texture = ExtResource("10_smorj")
+
+[node name="CollectedRect" type="TextureRect" parent="MainControl/OrderStatusContainer/IngredientsTempContainer/RecipeRect"]
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("8_cjuu8")
@@ -309,6 +327,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="GoalProgressBar" type="ProgressBar" parent="MainControl"]
+visible = false
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 1
 anchors_preset = -1

@@ -15,9 +15,9 @@ func _ready() -> void:
 	print("level info: ", game_stats.level_info)
 	print("kitchen upgrades: ", game_stats.kitchen_upgrades)
 
-# Remves start menu options, allowing the player to enter the level selection menu, customize their shop and view their inventory.
+# Removes start menu options, allowing the player to enter the game.
 func _on_play_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/BakeryHub.tscn")
+	get_tree().change_scene_to_file("res://scenes/Game.tscn")
 
 # Allows player to toggle options in the game.
 func _on_options_button_pressed() -> void:
@@ -26,7 +26,6 @@ func _on_options_button_pressed() -> void:
 
 # Quits the game.
 func _on_quit_button_pressed() -> void:
-	game_stats.save_game_stats()
 	get_tree().quit()
 
 # Displays the main menu again.

@@ -6,9 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://ce810r388wf8x" path="res://art/play_button.png" id="4_qytb0"]
 [ext_resource type="Texture2D" uid="uid://3h2v3tni2a2v" path="res://art/play_button_hover.png" id="5_3igk7"]
 [ext_resource type="Texture2D" uid="uid://bfmk8wg5yvglk" path="res://art/restart_button_game_over.png" id="5_ovaqj"]
-[ext_resource type="Texture2D" uid="uid://bwkjn3p5dcsvh" path="res://art/right_arrow_game_over.png" id="6_nagyc"]
 [ext_resource type="Texture2D" uid="uid://dhc78a82vvi47" path="res://art/restart_button_hover_game_over.png" id="7_2cpq1"]
-[ext_resource type="Texture2D" uid="uid://gjcfpfn1lco4" path="res://art/right_arrow_hover_game_over.png" id="9_1pwl0"]
+[ext_resource type="Texture2D" uid="uid://3ntlyreascun" path="res://art/home_button_game_over.png" id="8_wimt7"]
+[ext_resource type="Texture2D" uid="uid://dckfovwmpql8a" path="res://art/home_button_hover_game_over.png" id="9_j4put"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 script = ExtResource("1_gpe0r")
@@ -81,10 +81,11 @@ layout_mode = 2
 texture_normal = ExtResource("5_ovaqj")
 texture_hover = ExtResource("7_2cpq1")
 
-[node name="LevelSelectionButton" type="TextureButton" parent="MainControl/NavContainer"]
+[node name="HomeButton" type="TextureButton" parent="MainControl/NavContainer"]
 layout_mode = 2
-texture_normal = ExtResource("6_nagyc")
-texture_hover = ExtResource("9_1pwl0")
+texture_normal = ExtResource("8_wimt7")
+texture_hover = ExtResource("9_j4put")
 
 [connection signal="pressed" from="MainControl/NavContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="MainControl/NavContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="MainControl/NavContainer/HomeButton" to="." method="_on_home_button_pressed"]

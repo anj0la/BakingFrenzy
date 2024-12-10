@@ -1,8 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://jtks6fdmpap6"]
+[gd_scene load_steps=12 format=3 uid="uid://jtks6fdmpap6"]
 
 [ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_3cbe2"]
 [ext_resource type="Resource" uid="uid://cfbsynjsw6ejt" path="res://resources/GameStats.tres" id="2_4ur4q"]
+[ext_resource type="Texture2D" uid="uid://cns8anoy8ce7v" path="res://art/game_background_coloring.png" id="3_443mv"]
+[ext_resource type="Texture2D" uid="uid://cyxywc73k5oho" path="res://art/title.png" id="4_cfuwn"]
+[ext_resource type="Texture2D" uid="uid://cucvhi4sch2q4" path="res://art/title_screen_play_button.png" id="5_mmusu"]
 [ext_resource type="PackedScene" uid="uid://bpaum5m4hpce5" path="res://scenes/OptionsMenu.tscn" id="5_osjo6"]
+[ext_resource type="Texture2D" uid="uid://btbc8gbiuqbyv" path="res://art/title_screen_play_button_hover.png" id="6_rdrjw"]
+[ext_resource type="Texture2D" uid="uid://xij4ttp31cwa" path="res://art/title_screen_options_button.png" id="7_3h7vt"]
+[ext_resource type="Texture2D" uid="uid://bv5244f1vx3lv" path="res://art/title_screen_options_button_hover.png" id="8_ulc25"]
+[ext_resource type="Texture2D" uid="uid://d08qsxt4agh56" path="res://art/title_screen_quit_button.png" id="9_4a3ti"]
+[ext_resource type="Texture2D" uid="uid://cihdn6w8kv771" path="res://art/title_screen_quit_button_hover.png" id="10_n5hqu"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -14,14 +22,20 @@ grow_vertical = 2
 script = ExtResource("1_3cbe2")
 game_stats = ExtResource("2_4ur4q")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 584.0
+color = Color(0.415686, 0.690196, 1, 1)
+
+[node name="ColorRect" type="TextureRect" parent="."]
+modulate = Color(0.69, 0.69, 0.69, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.69682, 1, 0.995453, 1)
+texture = ExtResource("3_443mv")
 
 [node name="MenuOptionsContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -37,31 +51,32 @@ offset_bottom = 156.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
+alignment = 1
 
-[node name="Title" type="Label" parent="MenuOptionsContainer"]
+[node name="Title" type="TextureRect" parent="MenuOptionsContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 64
-text = "Baking Frenzy"
+texture = ExtResource("4_cfuwn")
 
-[node name="PlayButton" type="Button" parent="MenuOptionsContainer"]
+[node name="PlayButton" type="TextureButton" parent="MenuOptionsContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "PLAY"
+texture_normal = ExtResource("5_mmusu")
+texture_hover = ExtResource("6_rdrjw")
+stretch_mode = 3
 
-[node name="OptionsButton" type="Button" parent="MenuOptionsContainer"]
+[node name="OptionsButton" type="TextureButton" parent="MenuOptionsContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "OPTIONS
-"
+texture_normal = ExtResource("7_3h7vt")
+texture_hover = ExtResource("8_ulc25")
+stretch_mode = 3
 
-[node name="QuitButton" type="Button" parent="MenuOptionsContainer"]
+[node name="QuitButton" type="TextureButton" parent="MenuOptionsContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "QUIT
-"
+texture_normal = ExtResource("9_4a3ti")
+texture_hover = ExtResource("10_n5hqu")
+stretch_mode = 3
 
 [node name="OptionsMenu" parent="." instance=ExtResource("5_osjo6")]
+visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="MenuOptionsContainer/PlayButton" to="." method="_on_play_button_pressed"]

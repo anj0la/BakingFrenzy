@@ -21,15 +21,15 @@ func remove_game_over_menu() -> void:
 
 # Sends player back to home screen (main menu).	
 func _on_home_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/BakeryHub.tscn")
+	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 
 # Restarts the game.
 func _on_restart_button_pressed() -> void:
 	reset_game.emit()
 	
-# Sends player back to level selection menu.
-func _on_level_selection_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/LevelSelectionMenu.tscn")
+# Quits the game.
+func _on_close_button_pressed() -> void:
+	get_tree().quit()
 
 # Displays the day (i.e., level) the player has completed.
 func _display_day_completed(day: int) -> void:

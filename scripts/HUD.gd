@@ -66,6 +66,9 @@ func update_customers_served(customers_served: int) -> void:
 # Displays the objective that a player must achieve to complete the day (i.e., pass the level).
 func display_goal(first_goal: Array) -> void:
 	$MainControl/GoalRect/GoalsContainer/GoalLabel.text = "Goal: " + str(first_goal[1])
+	
+func update_goal_status() -> void:
+	pass
 		
 # Updates order status, whether it is completed (green) or not (grey).
 func update_order_status(completed: bool) -> void:
@@ -131,6 +134,17 @@ func update_list_ingredients(first_name: String, second_name: String, third_name
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible = false
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible = false
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.visible = false
+	
+func update_recipe_rect(recipe_name: String) -> void:
+	var image_path = "res://art/" + recipe_name + ".png"
+	var grey_arrow_image_path = "res://art/grey_arrow.png"
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/RecipeRect.texture = load(image_path)
+	
+	# Make collected rect invisible.
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/RecipeRect/CollectedRect.visible = false
+	
+	# Change colour of arrow to grey.
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/ArrowRect.texture = load(grey_arrow_image_path)
 
 func update_ingredient_completion(ingredient_name: String) -> void:
 	if ingredient_name == ingredient_names[0]:
@@ -143,21 +157,53 @@ func update_ingredient_completion(ingredient_name: String) -> void:
 		$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.texture = load("res://art/green_checkmark.png")
 		$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.visible = true
 		
-func update_wrong_ingredient(ingredient_name: String) -> void:
-	if ingredient_name == ingredient_names[0]:
+	# Update the green arrow if all collected rects are visible. 
+	if _check_if_all_ingredients_collected():
+		_update_arrow_rect()
+		
+func update_wrong_ingredient() -> void:
+	if $MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible == false:
 		$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.texture = load("res://art/red_x.png")
 		$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible = true
-	elif ingredient_name == ingredient_names[1]:
+	elif $MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible == false:
 		$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.texture = load("res://art/red_x.png")
 		$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible = true
 	else:
 		$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.texture = load("res://art/red_x.png")
 		$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.visible = true
 
+func remove_wrong_ingredient() -> void:
+	if $MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible == true:
+		if $MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.texture.resource_path == "res://art/red_x.png":
+			$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible = false
+	elif $MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible == true:
+		if $MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.texture.resource_path == "res://art/red_x.png":
+			$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible = false
+	else:
+		if $MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.texture.resource_path == "res://art/red_x.png":
+			$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.visible = false
+			
 func reset_ingredient_completion() -> void:
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible = false
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible = false
 	$MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.visible = false
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/RecipeRect/CollectedRect.visible = false
+	
+func update_recipe_completion() -> void:
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/RecipeRect/CollectedRect.visible = true
+	
+func _check_if_all_ingredients_collected() -> bool:
+	if $MainControl/OrderStatusContainer/IngredientsTempContainer/FirstIngredientRect/CollectedRect.visible == true \
+	and $MainControl/OrderStatusContainer/IngredientsTempContainer/SecondIngredientRect/CollectedRect.visible == true \
+	and $MainControl/OrderStatusContainer/IngredientsTempContainer/ThirdIngredientRect/CollectedRect.visible == true:
+		return true
+	return false
+	
+func _update_arrow_rect() -> void:
+	var green_arrow_image_path = "res://art/green_arrow.png"
+	
+	# Change colour of arrow to green.
+	$MainControl/OrderStatusContainer/IngredientsTempContainer/ArrowRect.texture = load(green_arrow_image_path)
 		
 # Emits signal to pause the game.
 func _on_menu_button_pressed() -> void:
