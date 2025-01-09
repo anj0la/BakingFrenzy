@@ -1,33 +1,31 @@
-extends CharacterBody2D
+extends StaticBody2D
 
-"""
-An ingredient represents an object a player can collide with.
+@export var speed: float = 400.0
+@export var ingredient_name: String
+@export var recipe_manager: Resource
 
-If the player collides with the ingreident, we simply output in the terminal "Collided!" for now.
-
-At the beginning (before ready), we'll need to have a list of ingredient names. Ingredients appear at random, so
-we simply need to get the name and change the default image texture of the Sprite2D.
-"""
-
-var ingredient_names = ["purple", "pink", "blue"] # Currently, only one ingredient name for now
-
-@export var speed = 6.0
-
-func _physics_process(_delta):
-	var collision = move_and_collide(Vector2(0, speed))
-	if collision:
-		pass
-		# print("I collided with ", collision.get_collider().name)
-		#await get_tree().create_timer(0.2).timeout
-		#queue_free()
+# Called before physics step and in sync with physics server.
+func _physics_process(delta):
+	move_and_collide(Vector2(0, speed * delta))
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var rand_index = randi() % ingredient_names.size()
-	$Sprite2D.texture = _get_texture(rand_index)
+	ingredient_name = recipe_manager.select_ingredient()
+	$Sprite2D.texture = _get_texture(ingredient_name)
+	# Make ingredient available to player for collision detection.
+	add_to_group("active_ingredient")
 	
-# Gets an ingredient image texture based on its index
-func _get_texture(index: int) -> Texture2D:
-	var image_path = "res://art/rect_" + ingredient_names[index] + ".png"
+# Gets an ingredient image texture based on its index.
+func _get_texture(ingredient: String) -> Texture2D:
+	print("ingredient name: ", ingredient)
+	var image_path = "res://art/" + ingredient + ".png"
 	var texture = load(image_path)
 	return texture
+
+# Removes ingredients from the scene when they collide with the floor.
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.name == 'Floor':
+		# Make ingredient inactive (cannot be collected by player).
+		remove_from_group("active_ingredient")
+		add_to_group("inactive_ingredient")
+		queue_free()

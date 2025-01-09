@@ -1,0 +1,309 @@
+[gd_scene load_steps=15 format=3 uid="uid://dgh7j3kb520y4"]
+
+[ext_resource type="Script" path="res://scripts/GameOverMenu.gd" id="1_p5or7"]
+[ext_resource type="Texture2D" uid="uid://bypf4316f4cmb" path="res://art/game_over_background.png" id="2_48v2c"]
+[ext_resource type="Texture2D" uid="uid://c0by4gbg7w3xs" path="res://art/customer_icon.png" id="3_ipdqt"]
+[ext_resource type="FontFile" uid="uid://b0ws8x23iavyc" path="res://fonts/Modak-Regular.ttf" id="3_sch1k"]
+[ext_resource type="Texture2D" uid="uid://dexksbn4yc218" path="res://art/three_stars.png" id="4_nvsk5"]
+[ext_resource type="Texture2D" uid="uid://bln6pr4hv72lf" path="res://art/bakery_coin.png" id="5_vckw8"]
+[ext_resource type="Texture2D" uid="uid://3ntlyreascun" path="res://art/home_button_game_over.png" id="7_2tcsv"]
+[ext_resource type="Texture2D" uid="uid://dckfovwmpql8a" path="res://art/home_button_hover_game_over.png" id="8_8vxf8"]
+[ext_resource type="Texture2D" uid="uid://bfmk8wg5yvglk" path="res://art/restart_button_game_over.png" id="8_au63u"]
+[ext_resource type="Texture2D" uid="uid://dhc78a82vvi47" path="res://art/restart_button_hover_game_over.png" id="10_s4idq"]
+[ext_resource type="Texture2D" uid="uid://d27rlyik6hyqn" path="res://art/text_bar_smaller.png" id="10_wvvam"]
+[ext_resource type="Texture2D" uid="uid://bnjkb5edloo0y" path="res://art/bakery_coin_game_over.png" id="11_06gcy"]
+[ext_resource type="Texture2D" uid="uid://c3kk4lr7heruw" path="res://art/close_button.png" id="11_sxxfv"]
+[ext_resource type="Texture2D" uid="uid://cghctgjl5kh37" path="res://art/customer_icon_game_over.png" id="15_d1noh"]
+
+[node name="GameOverMenu" type="CanvasLayer"]
+script = ExtResource("1_p5or7")
+
+[node name="MainControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuTexture" type="TextureRect" parent="MainControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -400.0
+offset_right = 400.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_48v2c")
+
+[node name="DayCompleted" type="Label" parent="MainControl"]
+layout_mode = 2
+offset_left = 616.0
+offset_top = 160.0
+offset_right = 1296.0
+offset_bottom = 312.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_sch1k")
+theme_override_font_sizes/font_size = 70
+text = "COMPLETED!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuContainer" type="VBoxContainer" parent="MainControl"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -344.0
+offset_top = -212.0
+offset_right = 336.0
+offset_bottom = 348.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+
+[node name="StarsEarned" type="TextureRect" parent="MainControl/MenuContainer"]
+layout_mode = 2
+texture = ExtResource("4_nvsk5")
+stretch_mode = 3
+
+[node name="GameStatsContainer" type="VBoxContainer" parent="MainControl/MenuContainer"]
+layout_mode = 2
+theme_override_constants/separation = -10
+
+[node name="CoinsEarned2" type="Label" parent="MainControl/MenuContainer/GameStatsContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_sch1k")
+theme_override_font_sizes/font_size = 30
+text = "Earned"
+horizontal_alignment = 1
+
+[node name="CoinsContainer" type="HBoxContainer" parent="MainControl/MenuContainer/GameStatsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CoinsEarned" type="Label" parent="MainControl/MenuContainer/GameStatsContainer/CoinsContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_sch1k")
+theme_override_font_sizes/font_size = 60
+text = "Earned: 10 C"
+
+[node name="CoinsImage" type="TextureRect" parent="MainControl/MenuContainer/GameStatsContainer/CoinsContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("5_vckw8")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="CustomersContainer" type="HBoxContainer" parent="MainControl/MenuContainer/GameStatsContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CustomersServed" type="Label" parent="MainControl/MenuContainer/GameStatsContainer/CustomersContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_sch1k")
+theme_override_font_sizes/font_size = 60
+text = "Served: 10 C"
+
+[node name="CustomersImage" type="TextureRect" parent="MainControl/MenuContainer/GameStatsContainer/CustomersContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_ipdqt")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="StarsEarned" type="TextureRect" parent="MainControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.4
+anchor_right = 0.5
+anchor_bottom = 0.4
+offset_left = -214.0
+offset_top = -113.5
+offset_right = 202.0
+offset_bottom = 57.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_nvsk5")
+stretch_mode = 3
+
+[node name="NavContainer" type="HBoxContainer" parent="MainControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.8
+anchor_right = 0.5
+anchor_bottom = 0.8
+offset_left = -248.0
+offset_top = -141.0
+offset_right = 236.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="HomeButton" type="TextureButton" parent="MainControl/NavContainer"]
+layout_mode = 2
+texture_normal = ExtResource("7_2tcsv")
+texture_hover = ExtResource("8_8vxf8")
+
+[node name="RestartButton" type="TextureButton" parent="MainControl/NavContainer"]
+layout_mode = 2
+texture_normal = ExtResource("8_au63u")
+texture_hover = ExtResource("10_s4idq")
+
+[node name="CloseButton" type="TextureButton" parent="MainControl/NavContainer"]
+layout_mode = 2
+texture_normal = ExtResource("11_sxxfv")
+
+[node name="GameStatsContainer" type="VBoxContainer" parent="MainControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.57
+anchor_right = 0.5
+anchor_bottom = 0.6
+offset_left = -150.0
+offset_top = -161.0
+offset_right = 144.0
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="EarnedLabel" type="Label" parent="MainControl/GameStatsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.624239, 0.951413, 0.538565, 1)
+theme_override_colors/font_outline_color = Color(0.222844, 0.404608, 0.173538, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_sch1k")
+theme_override_font_sizes/font_size = 35
+text = "EARNED"
+horizontal_alignment = 1
+
+[node name="CoinsEarnedTexture" type="TextureRect" parent="MainControl/GameStatsContainer"]
+layout_mode = 2
+texture = ExtResource("10_wvvam")
+
+[node name="CoinsContainer" type="HBoxContainer" parent="MainControl/GameStatsContainer/CoinsEarnedTexture"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -141.5
+offset_top = -45.5
+offset_right = 141.5
+offset_bottom = 45.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="CoinsEarned" type="Label" parent="MainControl/GameStatsContainer/CoinsEarnedTexture/CoinsContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_sch1k")
+theme_override_font_sizes/font_size = 60
+text = "100"
+horizontal_alignment = 2
+
+[node name="CoinsImage" type="TextureRect" parent="MainControl/GameStatsContainer/CoinsEarnedTexture/CoinsContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("11_06gcy")
+stretch_mode = 2
+
+[node name="CoinsEarned" type="Label" parent="MainControl/GameStatsContainer/CoinsEarnedTexture"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -49.0
+offset_top = -78.0
+offset_right = 89.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_sch1k")
+theme_override_font_sizes/font_size = 60
+text = "100"
+horizontal_alignment = 2
+
+[node name="CoinsImage" type="TextureRect" parent="MainControl/GameStatsContainer/CoinsEarnedTexture"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 242.0
+offset_top = 10.0
+offset_right = 292.0
+offset_bottom = 58.0
+texture = ExtResource("5_vckw8")
+expand_mode = 1
+
+[node name="ServedLabel" type="Label" parent="MainControl/GameStatsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.569419, 0.918803, 0.957463, 1)
+theme_override_colors/font_outline_color = Color(0.0698121, 0.285409, 0.307152, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_sch1k")
+theme_override_font_sizes/font_size = 35
+text = "SERVED"
+horizontal_alignment = 1
+
+[node name="CustomersServedTexture" type="TextureRect" parent="MainControl/GameStatsContainer"]
+layout_mode = 2
+texture = ExtResource("10_wvvam")
+
+[node name="CoinsContainer" type="HBoxContainer" parent="MainControl/GameStatsContainer/CustomersServedTexture"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -141.5
+offset_top = -45.5
+offset_right = 141.5
+offset_bottom = 45.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="CustomersServed" type="Label" parent="MainControl/GameStatsContainer/CustomersServedTexture/CoinsContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_sch1k")
+theme_override_font_sizes/font_size = 60
+text = "10"
+horizontal_alignment = 2
+
+[node name="CustomersImage" type="TextureRect" parent="MainControl/GameStatsContainer/CustomersServedTexture/CoinsContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("15_d1noh")
+stretch_mode = 2
+
+[connection signal="pressed" from="MainControl/NavContainer/HomeButton" to="." method="_on_home_button_pressed"]
+[connection signal="pressed" from="MainControl/NavContainer/RestartButton" to="." method="_on_restart_button_pressed"]
