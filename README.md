@@ -18,5 +18,5 @@ Players who enjoy baking will find the ingredient-gathering process engaging, wh
 
 ## Development Stage
 
-**Current Phase**: Prototype  
-The game is in the prototype stage, focusing on implementing basic movement and collision mechanics to test core gameplay concepts.
+**Current Phase**: Alpha  
+The game is in the alpha phase. All of the game logic and most of the game assets have been completed.
